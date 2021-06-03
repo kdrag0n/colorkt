@@ -1,3 +1,8 @@
+package dev.kdrag0n.colorkt.ucs.lab
+
+import dev.kdrag0n.colorkt.core.Color
+import dev.kdrag0n.colorkt.core.srgb.LinearSrgb
+import dev.kdrag0n.colorkt.util.cbrt
 import kotlin.math.pow
 
 data class Srlab2(

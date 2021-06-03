@@ -1,3 +1,5 @@
+package dev.kdrag0n.colorkt.util
+
 import kotlin.math.PI
 import kotlin.math.pow
 

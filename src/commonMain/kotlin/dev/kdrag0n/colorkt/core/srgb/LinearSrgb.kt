@@ -1,3 +1,6 @@
+package dev.kdrag0n.colorkt.core.srgb
+
+import dev.kdrag0n.colorkt.core.Color
 import kotlin.math.pow
 
 data class LinearSrgb(

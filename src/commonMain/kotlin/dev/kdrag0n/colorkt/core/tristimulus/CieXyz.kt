@@ -1,3 +1,8 @@
+package dev.kdrag0n.colorkt.core.tristimulus
+
+import dev.kdrag0n.colorkt.core.Color
+import dev.kdrag0n.colorkt.core.srgb.LinearSrgb
+
 data class CieXyz(
     val x: Double,
     val y: Double,

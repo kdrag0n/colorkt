@@ -1,5 +1,9 @@
-import Lch.Companion.toLab
-import Lch.Companion.toLch
+package dev.kdrag0n.colorkt.ucs.polar
+
+import dev.kdrag0n.colorkt.core.Color
+import dev.kdrag0n.colorkt.ucs.polar.Lch.Companion.toLab
+import dev.kdrag0n.colorkt.ucs.polar.Lch.Companion.toLch
+import dev.kdrag0n.colorkt.ucs.lab.Srlab2
 
 data class Srlch2(
     override val L: Double,

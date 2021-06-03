@@ -1,3 +1,8 @@
+package dev.kdrag0n.colorkt.ucs.polar
+
+import dev.kdrag0n.colorkt.util.toDegrees
+import dev.kdrag0n.colorkt.util.toRadians
+import dev.kdrag0n.colorkt.ucs.lab.Lab
 import kotlin.math.*
 
 interface Lch {

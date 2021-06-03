@@ -1,5 +1,8 @@
+package dev.kdrag0n.colorkt.core.srgb
+
+import dev.kdrag0n.colorkt.core.Color
 import kotlin.math.roundToInt
-import LinearSrgb.Companion.toLinearSrgb as realToLinearSrgb
+import dev.kdrag0n.colorkt.core.srgb.LinearSrgb.Companion.toLinearSrgb as realToLinearSrgb
 
 data class Srgb(
     val r: Double,

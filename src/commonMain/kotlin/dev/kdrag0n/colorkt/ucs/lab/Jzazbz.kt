@@ -1,3 +1,7 @@
+package dev.kdrag0n.colorkt.ucs.lab
+
+import dev.kdrag0n.colorkt.core.tristimulus.CieXyz
+import dev.kdrag0n.colorkt.core.Color
 import kotlin.math.pow
 
 data class Jzazbz(
