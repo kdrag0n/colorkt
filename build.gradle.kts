@@ -1,9 +1,10 @@
 plugins {
     kotlin("multiplatform") version "1.5.10"
+    id("maven-publish")
 }
 
 group = "dev.kdrag0n"
-version = "1.0"
+version = "1.0.0"
 
 repositories {
     mavenCentral()
@@ -44,5 +45,13 @@ kotlin {
         val jsTest by getting
         val nativeMain by getting
         val nativeTest by getting
+    }
+}
+
+publishing {
+    repositories {
+        maven {
+
+        }
     }
 }
