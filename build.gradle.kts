@@ -19,7 +19,7 @@ kotlin {
         }
     }
     js {
-        browser()
+        nodejs()
     }
     val hostOs = System.getProperty("os.name")
     val isMingwX64 = hostOs.startsWith("Windows")
