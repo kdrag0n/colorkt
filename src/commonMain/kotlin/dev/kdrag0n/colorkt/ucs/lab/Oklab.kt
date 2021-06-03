@@ -1,6 +1,5 @@
 package dev.kdrag0n.colorkt.ucs.lab
 
-import dev.kdrag0n.colorkt.core.Color
 import dev.kdrag0n.colorkt.core.srgb.LinearSrgb
 import dev.kdrag0n.colorkt.util.cbrt
 
@@ -17,7 +16,7 @@ data class Oklab(
     override val L: Double,
     override val a: Double,
     override val b: Double,
-) : Color, Lab {
+) : Lab {
     override fun toLinearSrgb(): LinearSrgb {
         val l2 = L + 0.3963377774 * a + 0.2158037573 * b
         val m2 = L - 0.1055613458 * a - 0.0638541728 * b

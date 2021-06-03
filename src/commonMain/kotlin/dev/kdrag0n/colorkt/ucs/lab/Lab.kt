@@ -1,5 +1,7 @@
 package dev.kdrag0n.colorkt.ucs.lab
 
+import dev.kdrag0n.colorkt.core.Color
+
 /**
  * Common interface for color spaces that express color with 3 components:
  *   - L: perceived lightness
@@ -11,7 +13,7 @@ package dev.kdrag0n.colorkt.ucs.lab
  * It may be helpful to convert these colors to polar [dev.kdrag0n.colorkt.ucs.polar.Lch] representations
  * for easier manipulation.
  */
-interface Lab {
+interface Lab : Color {
     /**
      * Perceived lightness component.
      */

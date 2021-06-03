@@ -1,6 +1,5 @@
 package dev.kdrag0n.colorkt.ucs.lab
 
-import dev.kdrag0n.colorkt.core.Color
 import dev.kdrag0n.colorkt.core.srgb.LinearSrgb
 import dev.kdrag0n.colorkt.util.cbrt
 import kotlin.math.pow
@@ -17,7 +16,7 @@ data class Srlab2(
     override val L: Double,
     override val a: Double,
     override val b: Double,
-) : Color, Lab {
+) : Lab {
     override fun toLinearSrgb(): LinearSrgb {
         val x2 = 0.01 * L + 0.000904127 * a + 0.000456344 * b
         val y2 = 0.01 * L - 0.000533159 * a - 0.000269178 * b

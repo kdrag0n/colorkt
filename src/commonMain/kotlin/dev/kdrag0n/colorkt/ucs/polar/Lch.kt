@@ -1,5 +1,6 @@
 package dev.kdrag0n.colorkt.ucs.polar
 
+import dev.kdrag0n.colorkt.core.Color
 import dev.kdrag0n.colorkt.util.toDegrees
 import dev.kdrag0n.colorkt.util.toRadians
 import dev.kdrag0n.colorkt.ucs.lab.Lab
@@ -15,7 +16,7 @@ import kotlin.math.*
  *
  * @see dev.kdrag0n.colorkt.ucs.lab.Lab
  */
-interface Lch {
+interface Lch : Color {
     /**
      * Perceived lightness component.
      */

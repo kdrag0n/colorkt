@@ -1,7 +1,6 @@
 package dev.kdrag0n.colorkt.ucs.lab
 
 import dev.kdrag0n.colorkt.core.tristimulus.CieXyz
-import dev.kdrag0n.colorkt.core.Color
 import kotlin.math.pow
 
 /**
@@ -17,7 +16,7 @@ data class Jzazbz(
     override val L: Double,
     override val a: Double,
     override val b: Double,
-) : Color, Lab {
+) : Lab {
     override fun toLinearSrgb() = toCieXyz().toLinearSrgb()
 
     /**
