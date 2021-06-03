@@ -5,6 +5,14 @@ import dev.kdrag0n.colorkt.core.srgb.LinearSrgb
 import dev.kdrag0n.colorkt.util.cbrt
 import kotlin.math.pow
 
+/**
+ * A color in the SRLAB2 uniform color space, which represents colors in [dev.kdrag0n.colorkt.ucs.lab.Lab] form.
+ * This color space is an improvement upon CIELAB using transformations from CIECAM02.
+ *
+ * Linear sRGB is used as the intermediate color space.
+ *
+ * @see <a href="https://www.magnetkern.de/srlab2.html">SRLAB2 – an alternative to CIE-L*a*b*</a>
+ */
 data class Srlab2(
     override val L: Double,
     override val a: Double,
@@ -39,6 +47,12 @@ data class Srlab2(
             ((x + 0.16) / 1.16).pow(3)
         }
 
+        /**
+         * Convert this color to the SRLAB2 uniform color space.
+         *
+         * @see dev.kdrag0n.colorkt.ucs.lab.Srlab2
+         * @return Color in SRLAB2 UCS
+         */
         fun LinearSrgb.toSrlab2(): Srlab2 {
             val x = 0.320530 * r + 0.636920 * g + 0.042560 * b
             val y = 0.161987 * r + 0.756636 * g + 0.081376 * b

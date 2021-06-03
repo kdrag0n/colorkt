@@ -3,13 +3,39 @@ package dev.kdrag0n.colorkt.core.srgb
 import dev.kdrag0n.colorkt.core.Color
 import kotlin.math.pow
 
+/**
+ * Linear representation of [dev.kdrag0n.colorkt.core.srgb.Srgb].
+ * This is useful as an intermediate color space for conversions.
+ *
+ * The sRGB non-linearity and its inverse are applied accurately, including the linear part of the piecewise function.
+ *
+ * @see <a href="https://en.wikipedia.org/wiki/SRGB">Wikipedia</a>
+ */
 data class LinearSrgb(
+    /**
+     * Red color component.
+     */
     val r: Double,
+
+    /**
+     * Green color component.
+     */
     val g: Double,
+
+    /**
+     * Blue color component.
+     */
     val b: Double,
 ) : Color {
     override fun toLinearSrgb() = this
 
+    /**
+     * Convert this color to standard sRGB.
+     * This delinearizes the sRGB components.
+     *
+     * @see dev.kdrag0n.colorkt.core.srgb.Srgb
+     * @return Color in standard sRGB
+     */
     fun toSrgb(): Srgb {
         return Srgb(
             r = oetf(r),
@@ -39,6 +65,13 @@ data class LinearSrgb(
             }
         }
 
+        /**
+         * Convert this color to linear sRGB.
+         * This linearizes the sRGB components.
+         *
+         * @see dev.kdrag0n.colorkt.core.srgb.LinearSrgb
+         * @return Color in linear sRGB
+         */
         fun Srgb.toLinearSrgb(): LinearSrgb {
             return LinearSrgb(
                 r = eotf(r),

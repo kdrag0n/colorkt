@@ -4,21 +4,60 @@ import dev.kdrag0n.colorkt.core.Color
 import kotlin.math.roundToInt
 import dev.kdrag0n.colorkt.core.srgb.LinearSrgb.Companion.toLinearSrgb as realToLinearSrgb
 
+/**
+ * A color in the standard sRGB color space.
+ * This is the most common device color space, usually used for final output colors.
+ *
+ * @see <a href="https://en.wikipedia.org/wiki/SRGB">Wikipedia</a>
+ */
 data class Srgb(
+    /**
+     * Red color component.
+     */
     val r: Double,
+
+    /**
+     * Green color component.
+     */
     val g: Double,
+
+    /**
+     * Blue color component.
+     */
     val b: Double,
 ) : Color {
     // Convenient constructors for quantized values
-    constructor(r: Int, g: Int, b: Int) : this(r.toDouble() / 255.0, g.toDouble() / 255.0, b.toDouble() / 255.0)
+
+    /**
+     * Constructor for 8-bit integer sRGB components.
+     */
+    constructor(
+        r: Int,
+        g: Int,
+        b: Int,
+    ) : this(
+        r.toDouble() / 255.0,
+        g.toDouble() / 255.0,
+        b.toDouble() / 255.0,
+    )
+
+    /**
+     * Constructor for 8-bit packed integer sRGB colors, such as hex color codes.
+     */
     constructor(color: Int) : this(
-        color shr 16,
-        (color shr 8) and 0xff,
-        color and 0xff,
+        r = color shr 16,
+        g = (color shr 8) and 0xff,
+        b = color and 0xff,
     )
 
     override fun toLinearSrgb() = realToLinearSrgb()
 
+    /**
+     * Convert, or quantize, this color to 8 bits per channel and pack it into a 32-bit integer.
+     * This is equivalent to the common hex color codes (e.g. #FF00FF).
+     *
+     * @return sRGB color packed into 32-bit integer
+     */
     fun quantize8(): Int {
         return (quantize8(r) shl 16) or (quantize8(g) shl 8) or quantize8(b)
     }

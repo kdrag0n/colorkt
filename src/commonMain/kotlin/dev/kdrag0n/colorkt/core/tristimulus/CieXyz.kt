@@ -3,9 +3,28 @@ package dev.kdrag0n.colorkt.core.tristimulus
 import dev.kdrag0n.colorkt.core.Color
 import dev.kdrag0n.colorkt.core.srgb.LinearSrgb
 
+/**
+ * A color in the CIE 1931 XYZ tristimulus color space.
+ * This is often used as an intermediate color space for uniform color spaces.
+ *
+ * Note that this is *not* a uniform color space; see [dev.kdrag0n.colorkt.ucs.lab.Lab] for that.
+ *
+ * @see <a href="https://en.wikipedia.org/wiki/CIE_1931_color_space">Wikipedia</a>
+ */
 data class CieXyz(
+    /**
+     * X component: mix of the non-negative CIE RGB curves.
+     */
     val x: Double,
+
+    /**
+     * Y component: relative luminance.
+     */
     val y: Double,
+
+    /**
+     * Z component: approximately equal to blue from CIE RGB.
+     */
     val z: Double,
 ) : Color {
     override fun toLinearSrgb(): LinearSrgb {
@@ -17,6 +36,11 @@ data class CieXyz(
     }
 
     companion object {
+        /**
+         * Convert a linear sRGB color (D65 white point) to the CIE 1931 XYZ color space.
+         *
+         * @return Color in CIE 1931 XYZ
+         */
         fun LinearSrgb.toCieXyz(): CieXyz {
             return CieXyz(
                 x = 0.4124564 * r + 0.3575761 * g + 0.1804375 * b,

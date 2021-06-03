@@ -4,6 +4,15 @@ import dev.kdrag0n.colorkt.core.tristimulus.CieXyz
 import dev.kdrag0n.colorkt.core.Color
 import kotlin.math.pow
 
+/**
+ * A color in the Jzazbz uniform color space, which represents colors in [dev.kdrag0n.colorkt.ucs.lab.Lab] form.
+ * This color space is designed for HDR use cases, but it also works reasonably well for LDR (e.g. sRGB).
+ *
+ * Note that this implementation maps sRGB white to an absolute luminance of 100 cd/m².
+ * CIE 1931 XYZ is used as the intermediate color space.
+ *
+ * @see <a href="https://doi.org/10.1364/OE.25.015131">Perceptually uniform color space for image signals including high dynamic range and wide gamut</a>
+ */
 data class Jzazbz(
     override val L: Double,
     override val a: Double,
@@ -11,6 +20,12 @@ data class Jzazbz(
 ) : Color, Lab {
     override fun toLinearSrgb() = toCieXyz().toLinearSrgb()
 
+    /**
+     * Convert this color to the CIE 1931 XYZ color space.
+     *
+     * @see dev.kdrag0n.colorkt.core.tristimulus.CieXyz
+     * @return Color in CIE 1931 XYZ
+     */
     fun toCieXyz(): CieXyz {
         val jz = L + 1.6295499532821566e-11
         val iz = jz / (0.44 + 0.56*jz)
@@ -39,6 +54,12 @@ data class Jzazbz(
             return 1e4 * ((0.8359375 - xp) / (18.6875 * xp - 18.8515625)).pow(6.277394636015326)
         }
 
+        /**
+         * Convert this color to the Jzazbz uniform color space.
+         *
+         * @see dev.kdrag0n.colorkt.ucs.lab.Jzazbz
+         * @return Color in Jzazbz UCS
+         */
         fun CieXyz.toJzazbz(): Jzazbz {
             val lp = pq(0.674207838*x + 0.382799340*y - 0.047570458*z)
             val mp = pq(0.149284160*x + 0.739628340*y + 0.083327300*z)

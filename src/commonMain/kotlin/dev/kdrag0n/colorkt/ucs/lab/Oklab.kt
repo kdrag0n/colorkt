@@ -4,6 +4,15 @@ import dev.kdrag0n.colorkt.core.Color
 import dev.kdrag0n.colorkt.core.srgb.LinearSrgb
 import dev.kdrag0n.colorkt.util.cbrt
 
+/**
+ * A color in the Oklab uniform color space, which represents colors in [dev.kdrag0n.colorkt.ucs.lab.Lab] form.
+ * This color space is designed for overall uniformity and does not assume viewing conditions.
+ *
+ * Note that this implementation uses a white point of D65, like sRGB.
+ * Linear sRGB is used as the intermediate color space.
+ *
+ * @see <a href="https://bottosson.github.io/posts/oklab/">A perceptual color space for image processing</a>
+ */
 data class Oklab(
     override val L: Double,
     override val a: Double,
@@ -26,6 +35,12 @@ data class Oklab(
     }
 
     companion object {
+        /**
+         * Convert this color to the SRLAB2 uniform color space.
+         *
+         * @see dev.kdrag0n.colorkt.ucs.lab.Oklab
+         * @return Color in Oklab UCS
+         */
         fun LinearSrgb.toOklab(): Oklab {
             val l = 0.4122214708 * r + 0.5363325363 * g + 0.0514459929 * b
             val m = 0.2119034982 * r + 0.6806995451 * g + 0.1073969566 * b
