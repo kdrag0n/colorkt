@@ -1,8 +1,7 @@
-package dev.kdrag0n.colorkt.core.srgb
+package dev.kdrag0n.colorkt.core.rgb
 
-import dev.kdrag0n.colorkt.core.Color
 import kotlin.math.roundToInt
-import dev.kdrag0n.colorkt.core.srgb.LinearSrgb.Companion.toLinearSrgb as realToLinearSrgb
+import dev.kdrag0n.colorkt.core.rgb.LinearSrgb.Companion.toLinearSrgb as realToLinearSrgb
 
 /**
  * A color in the standard sRGB color space.
@@ -11,21 +10,10 @@ import dev.kdrag0n.colorkt.core.srgb.LinearSrgb.Companion.toLinearSrgb as realTo
  * @see <a href="https://en.wikipedia.org/wiki/SRGB">Wikipedia</a>
  */
 data class Srgb(
-    /**
-     * Red color component.
-     */
-    val r: Double,
-
-    /**
-     * Green color component.
-     */
-    val g: Double,
-
-    /**
-     * Blue color component.
-     */
-    val b: Double,
-) : Color {
+    override val r: Double,
+    override val g: Double,
+    override val b: Double,
+) : Rgb {
     // Convenient constructors for quantized values
 
     /**

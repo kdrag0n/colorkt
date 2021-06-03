@@ -3,7 +3,7 @@ package dev.kdrag0n.colorkt.ucs.lab
 import dev.kdrag0n.colorkt.core.Color
 
 /**
- * Common interface for color spaces that express color with 3 components:
+ * Common interface for color spaces that express color with the following 3 components:
  *   - L: perceived lightness
  *   - a: amount of green/red color
  *   - b: amount of blue/yellow color

@@ -1,6 +1,6 @@
 package dev.kdrag0n.colorkt.core
 
-import dev.kdrag0n.colorkt.core.srgb.LinearSrgb
+import dev.kdrag0n.colorkt.core.rgb.LinearSrgb
 
 /**
  * Common interface for all colors.
@@ -13,7 +13,7 @@ interface Color {
     /**
      * Convert this color to the linear sRGB color space.
      *
-     * @see dev.kdrag0n.colorkt.core.srgb.LinearSrgb
+     * @see dev.kdrag0n.colorkt.core.rgb.LinearSrgb
      * @return Color in linear sRGB
      */
     fun toLinearSrgb(): LinearSrgb
