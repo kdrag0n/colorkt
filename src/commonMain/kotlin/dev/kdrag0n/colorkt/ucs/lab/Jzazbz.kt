@@ -1,6 +1,6 @@
 package dev.kdrag0n.colorkt.ucs.lab
 
-import dev.kdrag0n.colorkt.core.tristimulus.CieXyz
+import dev.kdrag0n.colorkt.tristimulus.CieXyz
 import kotlin.math.pow
 
 /**
@@ -22,7 +22,7 @@ data class Jzazbz(
     /**
      * Convert this color to the CIE 1931 XYZ color space.
      *
-     * @see dev.kdrag0n.colorkt.core.tristimulus.CieXyz
+     * @see dev.kdrag0n.colorkt.tristimulus.CieXyz
      * @return Color in CIE 1931 XYZ
      */
     fun toCieXyz(): CieXyz {
@@ -53,6 +53,23 @@ data class Jzazbz(
             return 1e4 * ((0.8359375 - xp) / (18.6875 * xp - 18.8515625)).pow(6.277394636015326)
         }
 
+        // Individual steps of conversion to share with ZCAM
+        internal fun xyzToLmsp(x: Double, y: Double, z: Double): DoubleArray {
+            val lp = pq(0.674207838*x + 0.382799340*y - 0.047570458*z)
+            val mp = pq(0.149284160*x + 0.739628340*y + 0.083327300*z)
+            val sp = pq(0.070941080*x + 0.174768000*y + 0.670970020*z)
+
+            return doubleArrayOf(lp, mp, sp)
+        }
+
+        internal fun lmspToIzazbz(lp: Double, mp: Double, sp: Double): DoubleArray {
+            val iz = 0.5 * (lp + mp)
+            val az = 3.524000*lp - 4.066708*mp + 0.542708*sp
+            val bz = 0.199076*lp + 1.096799*mp - 1.295875*sp
+
+            return doubleArrayOf(iz, az, bz)
+        }
+
         /**
          * Convert this color to the Jzazbz uniform color space.
          *
@@ -60,13 +77,8 @@ data class Jzazbz(
          * @return Color in Jzazbz UCS
          */
         fun CieXyz.toJzazbz(): Jzazbz {
-            val lp = pq(0.674207838*x + 0.382799340*y - 0.047570458*z)
-            val mp = pq(0.149284160*x + 0.739628340*y + 0.083327300*z)
-            val sp = pq(0.070941080*x + 0.174768000*y + 0.670970020*z)
-
-            val iz = 0.5 * (lp + mp)
-            val az = 3.524000*lp - 4.066708*mp + 0.542708*sp
-            val bz = 0.199076*lp + 1.096799*mp - 1.295875*sp
+            val (lp, mp, sp) = xyzToLmsp(x, y, z)
+            val (iz, az, bz) = lmspToIzazbz(lp, mp, sp)
             val jz = (0.44 * iz) / (1 - 0.56*iz) - 1.6295499532821566e-11
 
             return Jzazbz(

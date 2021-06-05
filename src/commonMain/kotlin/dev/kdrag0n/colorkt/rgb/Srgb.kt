@@ -1,7 +1,7 @@
-package dev.kdrag0n.colorkt.core.rgb
+package dev.kdrag0n.colorkt.rgb
 
 import kotlin.math.roundToInt
-import dev.kdrag0n.colorkt.core.rgb.LinearSrgb.Companion.toLinearSrgb as realToLinearSrgb
+import dev.kdrag0n.colorkt.rgb.LinearSrgb.Companion.toLinearSrgb as realToLinearSrgb
 
 /**
  * A color in the standard sRGB color space.

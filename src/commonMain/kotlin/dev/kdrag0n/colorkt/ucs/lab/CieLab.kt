@@ -1,6 +1,6 @@
 package dev.kdrag0n.colorkt.ucs.lab
 
-import dev.kdrag0n.colorkt.core.tristimulus.CieXyz
+import dev.kdrag0n.colorkt.tristimulus.CieXyz
 import dev.kdrag0n.colorkt.illuminants.Illuminants
 import dev.kdrag0n.colorkt.util.cbrt
 import kotlin.math.pow
@@ -25,7 +25,7 @@ class CieLab(
     /**
      * Convert this color to the CIE 1931 XYZ color space.
      *
-     * @see dev.kdrag0n.colorkt.core.tristimulus.CieXyz
+     * @see dev.kdrag0n.colorkt.tristimulus.CieXyz
      * @return Color in CIE 1931 XYZ
      */
     fun toCieXyz(): CieXyz {

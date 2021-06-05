@@ -1,9 +1,9 @@
-package dev.kdrag0n.colorkt.core.rgb
+package dev.kdrag0n.colorkt.rgb
 
 import kotlin.math.pow
 
 /**
- * Linear representation of [dev.kdrag0n.colorkt.core.rgb.Srgb].
+ * Linear representation of [dev.kdrag0n.colorkt.rgb.Srgb].
  * This is useful as an intermediate color space for conversions.
  *
  * The sRGB non-linearity and its inverse are applied accurately, including the linear part of the piecewise function.
@@ -21,7 +21,7 @@ data class LinearSrgb(
      * Convert this color to standard sRGB.
      * This delinearizes the sRGB components.
      *
-     * @see dev.kdrag0n.colorkt.core.rgb.Srgb
+     * @see dev.kdrag0n.colorkt.rgb.Srgb
      * @return Color in standard sRGB
      */
     fun toSrgb(): Srgb {
@@ -57,7 +57,7 @@ data class LinearSrgb(
          * Convert this color to linear sRGB.
          * This linearizes the sRGB components.
          *
-         * @see dev.kdrag0n.colorkt.core.rgb.LinearSrgb
+         * @see dev.kdrag0n.colorkt.rgb.LinearSrgb
          * @return Color in linear sRGB
          */
         fun Srgb.toLinearSrgb(): LinearSrgb {

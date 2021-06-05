@@ -1,9 +1,9 @@
-package dev.kdrag0n.colorkt.core.rgb
+package dev.kdrag0n.colorkt.rgb
 
-import dev.kdrag0n.colorkt.core.Color
+import dev.kdrag0n.colorkt.Color
 
 /**
- * Cylindrical representation of [dev.kdrag0n.colorkt.core.rgb.Srgb] with the following 3 components:
+ * Cylindrical representation of [dev.kdrag0n.colorkt.rgb.Srgb] with the following 3 components:
  *   - H: hue
  *   - S: saturation
  *   - L: lightness
@@ -35,7 +35,7 @@ data class Hsl(
     /**
      * Convert this color to the standard RGB representation of sRGB.
      *
-     * @see dev.kdrag0n.colorkt.core.rgb.Srgb
+     * @see dev.kdrag0n.colorkt.rgb.Srgb
      * @return Color in standard sRGB
      */
     fun toSrgb(): Srgb {
@@ -72,7 +72,7 @@ data class Hsl(
         /**
          * Convert this color to the cylindrical (HSL) representation of sRGB.
          *
-         * @see dev.kdrag0n.colorkt.core.rgb.Hsl
+         * @see dev.kdrag0n.colorkt.rgb.Hsl
          * @return Color in HSL representation
          */
         fun Srgb.toHsl(): Hsl {

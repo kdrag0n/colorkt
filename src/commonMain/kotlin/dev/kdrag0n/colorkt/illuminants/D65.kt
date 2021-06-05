@@ -1,6 +1,6 @@
 package dev.kdrag0n.colorkt.illuminants
 
-import dev.kdrag0n.colorkt.core.tristimulus.CieXyz
+import dev.kdrag0n.colorkt.tristimulus.CieXyz
 
 object Illuminants {
     val D65 = CieXyz(

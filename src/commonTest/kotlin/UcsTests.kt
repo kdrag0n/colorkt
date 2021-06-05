@@ -1,4 +1,4 @@
-import dev.kdrag0n.colorkt.core.tristimulus.CieXyz
+import dev.kdrag0n.colorkt.tristimulus.CieXyz
 import dev.kdrag0n.colorkt.ucs.lab.Oklab.Companion.toOklab
 import kotlin.test.Test
 

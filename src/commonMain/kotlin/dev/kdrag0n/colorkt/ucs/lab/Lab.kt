@@ -1,6 +1,6 @@
 package dev.kdrag0n.colorkt.ucs.lab
 
-import dev.kdrag0n.colorkt.core.Color
+import dev.kdrag0n.colorkt.Color
 
 /**
  * Common interface for color spaces that express color with the following 3 components:

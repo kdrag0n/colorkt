@@ -1,7 +1,7 @@
-package dev.kdrag0n.colorkt.core.tristimulus
+package dev.kdrag0n.colorkt.tristimulus
 
-import dev.kdrag0n.colorkt.core.Color
-import dev.kdrag0n.colorkt.core.rgb.LinearSrgb
+import dev.kdrag0n.colorkt.Color
+import dev.kdrag0n.colorkt.rgb.LinearSrgb
 
 /**
  * A color in the CIE 1931 XYZ tristimulus color space.
