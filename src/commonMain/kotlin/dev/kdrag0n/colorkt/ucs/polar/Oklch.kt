@@ -14,7 +14,7 @@ import dev.kdrag0n.colorkt.util.ConversionProvider
 data class Oklch(
     override val L: Double,
     override val C: Double,
-    override val h: Double = 0.0,
+    override val h: Double,
 ) : Lch {
     /**
      * Convert this color to the Cartesian (Lab) representation of Oklab.
