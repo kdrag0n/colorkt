@@ -12,6 +12,8 @@ import kotlin.math.pow
  * Note that this implementation maps sRGB white to an absolute luminance of 100 cd/m².
  * CIE 1931 XYZ is used as the intermediate color space.
  *
+ * Based on a JavaScript implementation by Jacob Rus: https://observablehq.com/@jrus/jzazbz
+ *
  * @see <a href="https://doi.org/10.1364/OE.25.015131">Perceptually uniform color space for image signals including high dynamic range and wide gamut</a>
  */
 data class Jzazbz(
