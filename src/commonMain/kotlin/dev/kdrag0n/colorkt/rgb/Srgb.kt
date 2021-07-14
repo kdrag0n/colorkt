@@ -1,7 +1,7 @@
 package dev.kdrag0n.colorkt.rgb
 
+import dev.kdrag0n.colorkt.util.ConversionProvider
 import kotlin.math.roundToInt
-import dev.kdrag0n.colorkt.rgb.LinearSrgb.Companion.toLinearSrgb as realToLinearSrgb
 
 /**
  * A color in the standard sRGB color space.
@@ -38,8 +38,6 @@ data class Srgb(
         b = color and 0xff,
     )
 
-    override fun toLinearSrgb() = realToLinearSrgb()
-
     /**
      * Convert, or quantize, this color to 8 bits per channel and pack it into a 32-bit integer.
      * This is equivalent to the common hex color codes (e.g. #FF00FF).
@@ -50,7 +48,9 @@ data class Srgb(
         return (quantize8(r) shl 16) or (quantize8(g) shl 8) or quantize8(b)
     }
 
-    companion object {
+    companion object : ConversionProvider {
+        override fun register() { }
+
         // Clamp out-of-bounds values
         private fun quantize8(n: Double) = (n * 255.0).roundToInt().coerceIn(0..255)
     }

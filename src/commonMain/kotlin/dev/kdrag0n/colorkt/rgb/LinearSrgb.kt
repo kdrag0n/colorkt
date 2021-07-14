@@ -1,5 +1,7 @@
 package dev.kdrag0n.colorkt.rgb
 
+import dev.kdrag0n.colorkt.util.ConversionGraph
+import dev.kdrag0n.colorkt.util.ConversionProvider
 import kotlin.math.pow
 
 /**
@@ -15,8 +17,6 @@ data class LinearSrgb(
     override val g: Double,
     override val b: Double,
 ) : Rgb {
-    override fun toLinearSrgb() = this
-
     /**
      * Convert this color to standard sRGB.
      * This delinearizes the sRGB components.
@@ -32,7 +32,12 @@ data class LinearSrgb(
         )
     }
 
-    companion object {
+    companion object : ConversionProvider {
+        override fun register() {
+            ConversionGraph.add<Srgb, LinearSrgb> { it.toLinearSrgb() }
+            ConversionGraph.add<LinearSrgb, Srgb> { it.toSrgb() }
+        }
+
         // Opto-electrical transfer function
         // Forward transform to sRGB
         private fun oetf(x: Double): Double {

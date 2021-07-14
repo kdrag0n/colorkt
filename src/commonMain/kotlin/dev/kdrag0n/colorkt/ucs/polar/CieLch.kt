@@ -3,6 +3,8 @@ package dev.kdrag0n.colorkt.ucs.polar
 import dev.kdrag0n.colorkt.ucs.polar.Lch.Companion.toLab
 import dev.kdrag0n.colorkt.ucs.polar.Lch.Companion.toLch
 import dev.kdrag0n.colorkt.ucs.lab.CieLab
+import dev.kdrag0n.colorkt.util.ConversionGraph
+import dev.kdrag0n.colorkt.util.ConversionProvider
 
 /**
  * Polar (LCh) representation of [dev.kdrag0n.colorkt.ucs.lab.CieLab].
@@ -14,8 +16,6 @@ data class CieLch(
     override val C: Double,
     override val h: Double = 0.0,
 ) : Lch {
-    override fun toLinearSrgb() = toCieLab().toLinearSrgb()
-
     /**
      * Convert this color to the Cartesian (Lab) representation of CIE L*a*b*.
      *
@@ -27,7 +27,12 @@ data class CieLch(
         return CieLab(l, a, b)
     }
 
-    companion object {
+    companion object : ConversionProvider {
+        override fun register() {
+            ConversionGraph.add<CieLab, CieLch> { it.toCieLch() }
+            ConversionGraph.add<CieLch, CieLab> { it.toCieLab() }
+        }
+
         /**
          * Convert this color to the polar (LCh) representation of CIE L*a*b*.
          *

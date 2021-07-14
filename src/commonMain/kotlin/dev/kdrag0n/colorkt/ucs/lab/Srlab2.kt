@@ -1,6 +1,8 @@
 package dev.kdrag0n.colorkt.ucs.lab
 
 import dev.kdrag0n.colorkt.rgb.LinearSrgb
+import dev.kdrag0n.colorkt.util.ConversionGraph
+import dev.kdrag0n.colorkt.util.ConversionProvider
 import dev.kdrag0n.colorkt.util.cbrt
 import kotlin.math.pow
 
@@ -17,7 +19,13 @@ data class Srlab2(
     override val a: Double,
     override val b: Double,
 ) : Lab {
-    override fun toLinearSrgb(): LinearSrgb {
+    /**
+     * Convert this color to the linear sRGB color space.
+     *
+     * @see dev.kdrag0n.colorkt.rgb.LinearSrgb
+     * @return Color in linear sRGB
+     */
+    fun toLinearSrgb(): LinearSrgb {
         val x2 = 0.01 * L + 0.000904127 * a + 0.000456344 * b
         val y2 = 0.01 * L - 0.000533159 * a - 0.000269178 * b
         val z2 = 0.01 * L                   - 0.005800000 * b
@@ -33,7 +41,12 @@ data class Srlab2(
         )
     }
 
-    companion object {
+    companion object : ConversionProvider {
+        override fun register() {
+            ConversionGraph.add<LinearSrgb, Srlab2> { it.toSrlab2() }
+            ConversionGraph.add<Srlab2, LinearSrgb> { it.toLinearSrgb() }
+        }
+
         private fun root(x: Double) = if (x <= 216.0 / 24389.0) {
             x * 24389.0 / 2700.0
         } else {

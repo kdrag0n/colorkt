@@ -1,6 +1,8 @@
 package dev.kdrag0n.colorkt.ucs.lab
 
 import dev.kdrag0n.colorkt.rgb.LinearSrgb
+import dev.kdrag0n.colorkt.util.ConversionGraph
+import dev.kdrag0n.colorkt.util.ConversionProvider
 import dev.kdrag0n.colorkt.util.cbrt
 
 /**
@@ -17,7 +19,13 @@ data class Oklab(
     override val a: Double,
     override val b: Double,
 ) : Lab {
-    override fun toLinearSrgb(): LinearSrgb {
+    /**
+     * Convert this color to the linear sRGB color space.
+     *
+     * @see dev.kdrag0n.colorkt.rgb.LinearSrgb
+     * @return Color in linear sRGB
+     */
+    fun toLinearSrgb(): LinearSrgb {
         val l2 = L + 0.3963377774 * a + 0.2158037573 * b
         val m2 = L - 0.1055613458 * a - 0.0638541728 * b
         val s2 = L - 0.0894841775 * a - 1.2914855480 * b
@@ -33,7 +41,12 @@ data class Oklab(
         )
     }
 
-    companion object {
+    companion object : ConversionProvider {
+        override fun register() {
+            ConversionGraph.add<LinearSrgb, Oklab> { it.toOklab() }
+            ConversionGraph.add<Oklab, LinearSrgb> { it.toLinearSrgb() }
+        }
+
         /**
          * Convert this color to the SRLAB2 uniform color space.
          *

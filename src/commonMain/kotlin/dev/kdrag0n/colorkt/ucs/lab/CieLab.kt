@@ -1,7 +1,9 @@
 package dev.kdrag0n.colorkt.ucs.lab
 
 import dev.kdrag0n.colorkt.tristimulus.CieXyz
-import dev.kdrag0n.colorkt.illuminants.Illuminants
+import dev.kdrag0n.colorkt.Illuminants
+import dev.kdrag0n.colorkt.util.ConversionGraph
+import dev.kdrag0n.colorkt.util.ConversionProvider
 import dev.kdrag0n.colorkt.util.cbrt
 import kotlin.math.pow
 
@@ -15,13 +17,11 @@ import kotlin.math.pow
  *
  * @see <a href="https://en.wikipedia.org/wiki/CIELAB_color_space">Wikipedia</a>
  */
-class CieLab(
+data class CieLab(
     override val L: Double,
     override val a: Double,
     override val b: Double,
 ) : Lab {
-    override fun toLinearSrgb() = toCieXyz().toLinearSrgb()
-
     /**
      * Convert this color to the CIE 1931 XYZ color space.
      *
@@ -38,7 +38,12 @@ class CieLab(
         )
     }
 
-    companion object {
+    companion object : ConversionProvider {
+        override fun register() {
+            ConversionGraph.add<CieXyz, CieLab> { it.toCieLab() }
+            ConversionGraph.add<CieLab, CieXyz> { it.toCieXyz() }
+        }
+
         private fun f(x: Double) = if (x > 216.0/24389.0) {
             cbrt(x)
         } else {

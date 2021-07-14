@@ -3,6 +3,8 @@ package dev.kdrag0n.colorkt.ucs.polar
 import dev.kdrag0n.colorkt.ucs.polar.Lch.Companion.toLab
 import dev.kdrag0n.colorkt.ucs.polar.Lch.Companion.toLch
 import dev.kdrag0n.colorkt.ucs.lab.Jzazbz
+import dev.kdrag0n.colorkt.util.ConversionGraph
+import dev.kdrag0n.colorkt.util.ConversionProvider
 
 /**
  * Polar (LCh) representation of [dev.kdrag0n.colorkt.ucs.lab.Jzazbz].
@@ -14,8 +16,6 @@ data class Jzczhz(
     override val C: Double,
     override val h: Double = 0.0,
 ) : Lch {
-    override fun toLinearSrgb() = toJzazbz().toLinearSrgb()
-
     /**
      * Convert this color to the Cartesian (Lab) representation of Jzazbz.
      *
@@ -27,7 +27,12 @@ data class Jzczhz(
         return Jzazbz(l, a, b)
     }
 
-    companion object {
+    companion object : ConversionProvider {
+        override fun register() {
+            ConversionGraph.add<Jzazbz, Jzczhz> { it.toJzczhz() }
+            ConversionGraph.add<Jzczhz, Jzazbz> { it.toJzazbz() }
+        }
+
         /**
          * Convert this color to the polar (LCh) representation of Jzazbz.
          *

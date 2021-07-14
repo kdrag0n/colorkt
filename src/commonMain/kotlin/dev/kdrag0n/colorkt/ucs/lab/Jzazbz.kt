@@ -1,6 +1,8 @@
 package dev.kdrag0n.colorkt.ucs.lab
 
 import dev.kdrag0n.colorkt.tristimulus.CieXyz
+import dev.kdrag0n.colorkt.util.ConversionGraph
+import dev.kdrag0n.colorkt.util.ConversionProvider
 import kotlin.math.pow
 
 /**
@@ -17,8 +19,6 @@ data class Jzazbz(
     override val a: Double,
     override val b: Double,
 ) : Lab {
-    override fun toLinearSrgb() = toCieXyz().toLinearSrgb()
-
     /**
      * Convert this color to the CIE 1931 XYZ color space.
      *
@@ -40,7 +40,12 @@ data class Jzazbz(
         )
     }
 
-    companion object {
+    companion object : ConversionProvider {
+        override fun register() {
+            ConversionGraph.add<CieXyz, Jzazbz> { it.toJzazbz() }
+            ConversionGraph.add<Jzazbz, CieXyz> { it.toCieXyz() }
+        }
+
         // Perceptual Quantizer transfer function
         private fun pq(x: Double): Double {
             val xp = (x * 1e-4).pow(0.1593017578125)

@@ -2,6 +2,8 @@ package dev.kdrag0n.colorkt.tristimulus
 
 import dev.kdrag0n.colorkt.Color
 import dev.kdrag0n.colorkt.rgb.LinearSrgb
+import dev.kdrag0n.colorkt.util.ConversionGraph
+import dev.kdrag0n.colorkt.util.ConversionProvider
 
 /**
  * A color in the CIE 1931 XYZ tristimulus color space.
@@ -27,7 +29,13 @@ data class CieXyz(
      */
     val z: Double,
 ) : Color {
-    override fun toLinearSrgb(): LinearSrgb {
+    /**
+     * Convert this color to the linear sRGB color space.
+     *
+     * @see dev.kdrag0n.colorkt.rgb.LinearSrgb
+     * @return Color in linear sRGB
+     */
+    fun toLinearSrgb(): LinearSrgb {
         return LinearSrgb(
             r = +3.2404542 * x + -1.5371385 * y + -0.4985314 * z,
             g = -0.9692660 * x + +1.8760108 * y + +0.0415560 * z,
@@ -35,7 +43,12 @@ data class CieXyz(
         )
     }
 
-    companion object {
+    companion object : ConversionProvider {
+        override fun register() {
+            ConversionGraph.add<LinearSrgb, CieXyz> { it.toCieXyz() }
+            ConversionGraph.add<CieXyz, LinearSrgb> { it.toLinearSrgb() }
+        }
+
         /**
          * Convert a linear sRGB color (D65 white point) to the CIE 1931 XYZ color space.
          *

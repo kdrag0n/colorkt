@@ -3,6 +3,8 @@ package dev.kdrag0n.colorkt.ucs.polar
 import dev.kdrag0n.colorkt.ucs.polar.Lch.Companion.toLab
 import dev.kdrag0n.colorkt.ucs.polar.Lch.Companion.toLch
 import dev.kdrag0n.colorkt.ucs.lab.Oklab
+import dev.kdrag0n.colorkt.util.ConversionGraph
+import dev.kdrag0n.colorkt.util.ConversionProvider
 
 /**
  * Polar (LCh) representation of [dev.kdrag0n.colorkt.ucs.lab.Oklab].
@@ -14,8 +16,6 @@ data class Oklch(
     override val C: Double,
     override val h: Double = 0.0,
 ) : Lch {
-    override fun toLinearSrgb() = toOklab().toLinearSrgb()
-
     /**
      * Convert this color to the Cartesian (Lab) representation of Oklab.
      *
@@ -27,7 +27,12 @@ data class Oklch(
         return Oklab(l, a, b)
     }
 
-    companion object {
+    companion object : ConversionProvider {
+        override fun register() {
+            ConversionGraph.add<Oklab, Oklch> { it.toOklch() }
+            ConversionGraph.add<Oklch, Oklab> { it.toOklab() }
+        }
+
         /**
          * Convert this color to the polar (LCh) representation of Oklab.
          *

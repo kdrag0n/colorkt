@@ -1,20 +1,30 @@
 package dev.kdrag0n.colorkt
 
-import dev.kdrag0n.colorkt.rgb.LinearSrgb
+import dev.kdrag0n.colorkt.util.ColorType
+import dev.kdrag0n.colorkt.util.ConversionGraph
 
 /**
  * Common interface for all colors.
  *
- * This makes no assumptions about the color, but all colors must have a conversion path to linear sRGB.
- * Linear sRGB was chosen as the canonical color space because of the original UCS implementations.
- * However, this may be changed to CIE 1931 XYZ in the future.
+ * This makes no assumptions about the color itself, but colors are expected to register conversion paths in the graph.
  */
 interface Color {
-    /**
-     * Convert this color to the linear sRGB color space.
-     *
-     * @see dev.kdrag0n.colorkt.rgb.LinearSrgb
-     * @return Color in linear sRGB
-     */
-    fun toLinearSrgb(): LinearSrgb
+    companion object {
+        init {
+            // All colors should be registered in order for conversions to work properly
+            registerAllColors()
+        }
+
+        inline fun <reified T : Color> Color.to() = convertTo(this, T::class) as? T?
+            ?: error("No conversion path from ${this::class} to ${T::class}")
+
+        fun convertTo(fromColor: Color, toType: ColorType): Color? {
+            val path = ConversionGraph.findPath(fromColor::class, toType)
+                ?: return null
+
+            return path.fold(fromColor) { color, converter ->
+                converter(color)
+            }
+        }
+    }
 }

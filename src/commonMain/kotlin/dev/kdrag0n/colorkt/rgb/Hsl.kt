@@ -1,6 +1,8 @@
 package dev.kdrag0n.colorkt.rgb
 
 import dev.kdrag0n.colorkt.Color
+import dev.kdrag0n.colorkt.util.ConversionGraph
+import dev.kdrag0n.colorkt.util.ConversionProvider
 
 /**
  * Cylindrical representation of [dev.kdrag0n.colorkt.rgb.Srgb] with the following 3 components:
@@ -30,8 +32,6 @@ data class Hsl(
      */
     val l: Double,
 ) : Color {
-    override fun toLinearSrgb() = toSrgb().toLinearSrgb()
-
     /**
      * Convert this color to the standard RGB representation of sRGB.
      *
@@ -53,7 +53,12 @@ data class Hsl(
         )
     }
 
-    companion object {
+    companion object : ConversionProvider {
+        override fun register() {
+            ConversionGraph.add<Srgb, Hsl> { it.toHsl() }
+            ConversionGraph.add<Hsl, Srgb> { it.toSrgb() }
+        }
+
         private fun hueToRgb(p: Double, q: Double, t: Double): Double {
             val tp = when {
                 t < 0 -> t + 1
