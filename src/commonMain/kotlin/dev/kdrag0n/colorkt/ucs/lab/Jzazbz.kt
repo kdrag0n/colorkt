@@ -60,8 +60,8 @@ data class Jzazbz(
             return 1e4 * ((0.8359375 - xp) / (18.6875 * xp - 18.8515625)).pow(6.277394636015326)
         }
 
-        // Individual steps of conversion to share with ZCAM
-        internal fun xyzToLmsp(x: Double, y: Double, z: Double): DoubleArray {
+        // Individual conversion steps
+        private fun xyzToLmsp(x: Double, y: Double, z: Double): DoubleArray {
             val lp = pq(0.674207838*x + 0.382799340*y - 0.047570458*z)
             val mp = pq(0.149284160*x + 0.739628340*y + 0.083327300*z)
             val sp = pq(0.070941080*x + 0.174768000*y + 0.670970020*z)
@@ -69,7 +69,7 @@ data class Jzazbz(
             return doubleArrayOf(lp, mp, sp)
         }
 
-        internal fun lmspToIzazbz(lp: Double, mp: Double, sp: Double): DoubleArray {
+        private fun lmspToIzazbz(lp: Double, mp: Double, sp: Double): DoubleArray {
             val iz = 0.5 * (lp + mp)
             val az = 3.524000*lp - 4.066708*mp + 0.542708*sp
             val bz = 0.199076*lp + 1.096799*mp - 1.295875*sp
