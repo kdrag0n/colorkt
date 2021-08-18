@@ -8,4 +8,10 @@ object Illuminants {
         y = 1.0,
         z = 1.08883,
     )
+
+    val D50 = CieXyz(
+        x = 0.9642,
+        y = 1.0,
+        z = 0.8251,
+    )
 }
