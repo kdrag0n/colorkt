@@ -5,6 +5,7 @@ import dev.kdrag0n.colorkt.Illuminants
 import dev.kdrag0n.colorkt.util.ConversionGraph
 import dev.kdrag0n.colorkt.util.ConversionProvider
 import dev.kdrag0n.colorkt.util.cbrt
+import dev.kdrag0n.colorkt.util.cube
 import kotlin.math.pow
 
 /**
@@ -51,7 +52,7 @@ data class CieLab(
         }
 
         private fun fInv(x: Double) = if (x > 6.0/29.0) {
-            x.pow(3)
+            cube(x)
         } else {
             (108.0/841.0) * (x - 4.0/29.0)
         }

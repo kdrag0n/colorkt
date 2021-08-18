@@ -4,6 +4,7 @@ import dev.kdrag0n.colorkt.Color
 import dev.kdrag0n.colorkt.util.toDegrees
 import dev.kdrag0n.colorkt.util.toRadians
 import dev.kdrag0n.colorkt.ucs.lab.Lab
+import dev.kdrag0n.colorkt.util.square
 import kotlin.math.*
 
 /**
@@ -38,7 +39,7 @@ interface Lch : Color {
 
             return doubleArrayOf(
                 L,
-                sqrt(a.pow(2) + b.pow(2)),
+                sqrt(square(a) + square(b)),
                 // Normalize the angle, as many will be negative
                 if (hDeg < 0) hDeg + 360 else hDeg,
             )
