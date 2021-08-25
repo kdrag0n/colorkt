@@ -6,6 +6,8 @@ import dev.kdrag0n.colorkt.util.conversion.ConversionGraph
 import dev.kdrag0n.colorkt.util.conversion.ConversionProvider
 import dev.kdrag0n.colorkt.util.math.cbrt
 import dev.kdrag0n.colorkt.util.math.cube
+import kotlin.jvm.JvmName
+import kotlin.jvm.JvmStatic
 
 /**
  * A color in the CIE L*a*b* uniform color space, which represents colors in [dev.kdrag0n.colorkt.ucs.lab.Lab] form.
@@ -62,6 +64,8 @@ public data class CieLab(
          * @see dev.kdrag0n.colorkt.ucs.lab.CieLab
          * @return Color in CIE L*a*b* UCS
          */
+        @JvmStatic
+        @JvmName("fromXyz")
         public fun CieXyz.toCieLab(): CieLab {
             return CieLab(
                 L = 116.0 * f(y / Illuminants.D65.y) - 16.0,

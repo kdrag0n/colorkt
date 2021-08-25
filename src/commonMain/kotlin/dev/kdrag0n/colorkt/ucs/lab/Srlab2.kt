@@ -5,6 +5,8 @@ import dev.kdrag0n.colorkt.util.conversion.ConversionGraph
 import dev.kdrag0n.colorkt.util.conversion.ConversionProvider
 import dev.kdrag0n.colorkt.util.math.cbrt
 import dev.kdrag0n.colorkt.util.math.cube
+import kotlin.jvm.JvmName
+import kotlin.jvm.JvmStatic
 
 /**
  * A color in the SRLAB2 uniform color space, which represents colors in [dev.kdrag0n.colorkt.ucs.lab.Lab] form.
@@ -65,6 +67,8 @@ public data class Srlab2(
          * @see dev.kdrag0n.colorkt.ucs.lab.Srlab2
          * @return Color in SRLAB2 UCS
          */
+        @JvmStatic
+        @JvmName("fromLinearSrgb")
         public fun LinearSrgb.toSrlab2(): Srlab2 {
             val x = 0.320530 * r + 0.636920 * g + 0.042560 * b
             val y = 0.161987 * r + 0.756636 * g + 0.081376 * b

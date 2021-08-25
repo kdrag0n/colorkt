@@ -3,6 +3,8 @@ package dev.kdrag0n.colorkt.tristimulus
 import dev.kdrag0n.colorkt.Color
 import dev.kdrag0n.colorkt.util.conversion.ConversionGraph
 import dev.kdrag0n.colorkt.util.conversion.ConversionProvider
+import kotlin.jvm.JvmName
+import kotlin.jvm.JvmStatic
 
 /**
  * A color in the CIE 1931 XYZ tristimulus color space, with absolute luminance.
@@ -54,6 +56,8 @@ public data class CieXyzAbs(
          *
          * @return Color in absolute XYZ
          */
+        @JvmStatic
+        @JvmName("fromRel")
         public fun CieXyz.toAbs(luminance: Double): CieXyzAbs = CieXyzAbs(
             x = x * luminance,
             y = y * luminance,

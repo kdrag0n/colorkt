@@ -3,6 +3,7 @@ package dev.kdrag0n.colorkt
 import dev.kdrag0n.colorkt.util.conversion.ColorType
 import dev.kdrag0n.colorkt.util.conversion.ConversionGraph
 import dev.kdrag0n.colorkt.util.conversion.UnsupportedConversionException
+import kotlin.jvm.JvmStatic
 
 /**
  * Common interface for all colors.
@@ -22,7 +23,7 @@ public interface Color {
          * @throws UnsupportedConversionException if no automatic conversion path exists
          * @return color as [T]
          */
-        public inline fun <reified T : Color> Color.to(): T = convertTo(this, T::class) as? T?
+        public inline fun <reified T : Color> Color.to(): T = convert(this, T::class) as? T?
             ?: throw UnsupportedConversionException("No conversion path from ${this::class} to ${T::class}")
 
         /**
@@ -30,7 +31,8 @@ public interface Color {
          * @throws UnsupportedConversionException if no automatic conversion path exists
          * @return color as [toType]
          */
-        public fun convertTo(fromColor: Color, toType: ColorType): Color? {
+        @JvmStatic
+        public fun convert(fromColor: Color, toType: ColorType): Color? {
             val path = ConversionGraph.findPath(fromColor::class, toType)
                 ?: return null
 

@@ -1,6 +1,7 @@
 package dev.kdrag0n.colorkt.util.conversion
 
 import dev.kdrag0n.colorkt.Color
+import kotlin.jvm.JvmStatic
 import kotlin.reflect.KClass
 
 internal typealias ColorType = KClass<out Color>
@@ -17,6 +18,7 @@ public object ConversionGraph {
      * Add a conversion from color type F to T, specified as generic types.
      * This is a convenient wrapper for [add].
      */
+    @JvmStatic
     public inline fun <reified F : Color, reified T : Color> add(
         crossinline converter: (F) -> T,
     ): Unit = add(F::class, T::class) { converter(it as F) }
@@ -25,6 +27,7 @@ public object ConversionGraph {
      * Add a one-way conversion from color type [from] to [to].
      * You should also add a matching reverse conversion, i.e. from [to] to [from].
      */
+    @JvmStatic
     public fun add(
         from: ColorType,
         to: ColorType,

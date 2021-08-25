@@ -5,6 +5,8 @@ import dev.kdrag0n.colorkt.ucs.polar.Lch.Companion.toLch
 import dev.kdrag0n.colorkt.ucs.lab.Oklab
 import dev.kdrag0n.colorkt.util.conversion.ConversionGraph
 import dev.kdrag0n.colorkt.util.conversion.ConversionProvider
+import kotlin.jvm.JvmName
+import kotlin.jvm.JvmStatic
 
 /**
  * Polar (LCh) representation of [dev.kdrag0n.colorkt.ucs.lab.Oklab].
@@ -39,6 +41,8 @@ public data class Oklch(
          * @see dev.kdrag0n.colorkt.ucs.polar.Lch
          * @return Color represented as OkLCh
          */
+        @JvmStatic
+        @JvmName("fromOklab")
         public fun Oklab.toOklch(): Oklch {
             val (l, c, h) = toLch()
             return Oklch(l, c, h)

@@ -4,6 +4,8 @@ import dev.kdrag0n.colorkt.rgb.LinearSrgb
 import dev.kdrag0n.colorkt.util.conversion.ConversionGraph
 import dev.kdrag0n.colorkt.util.conversion.ConversionProvider
 import dev.kdrag0n.colorkt.util.math.cbrt
+import kotlin.jvm.JvmName
+import kotlin.jvm.JvmStatic
 
 /**
  * A color in the Oklab uniform color space, which represents colors in [dev.kdrag0n.colorkt.ucs.lab.Lab] form.
@@ -53,6 +55,8 @@ public data class Oklab(
          * @see dev.kdrag0n.colorkt.ucs.lab.Oklab
          * @return Color in Oklab UCS
          */
+        @JvmStatic
+        @JvmName("fromLinearSrgb")
         public fun LinearSrgb.toOklab(): Oklab {
             val l = 0.4122214708 * r + 0.5363325363 * g + 0.0514459929 * b
             val m = 0.2119034982 * r + 0.6806995451 * g + 0.1073969566 * b

@@ -5,6 +5,8 @@ import dev.kdrag0n.colorkt.ucs.polar.Lch.Companion.toLch
 import dev.kdrag0n.colorkt.ucs.lab.Srlab2
 import dev.kdrag0n.colorkt.util.conversion.ConversionGraph
 import dev.kdrag0n.colorkt.util.conversion.ConversionProvider
+import kotlin.jvm.JvmName
+import kotlin.jvm.JvmStatic
 
 /**
  * Polar (LCh) representation of [dev.kdrag0n.colorkt.ucs.lab.Srlab2].
@@ -39,6 +41,8 @@ public data class Srlch2(
          * @see dev.kdrag0n.colorkt.ucs.polar.Lch
          * @return Color represented as SRLCh2
          */
+        @JvmStatic
+        @JvmName("fromSrlab2")
         public fun Srlab2.toSrlch2(): Srlch2 {
             val (l, c, h) = toLch()
             return Srlch2(l, c, h)

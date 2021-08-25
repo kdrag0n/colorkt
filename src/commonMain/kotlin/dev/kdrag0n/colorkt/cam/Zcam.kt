@@ -7,6 +7,8 @@ import dev.kdrag0n.colorkt.util.math.cbrt
 import dev.kdrag0n.colorkt.util.math.square
 import dev.kdrag0n.colorkt.util.math.toDegrees
 import dev.kdrag0n.colorkt.util.math.toRadians
+import kotlin.jvm.JvmName
+import kotlin.jvm.JvmStatic
 import kotlin.math.*
 
 /**
@@ -304,6 +306,8 @@ public data class Zcam(
          *
          * @return [Zcam] attributes
          */
+        @JvmStatic
+        @JvmName("fromXyzAbs")
         public fun CieXyzAbs.toZcam(cond: ViewingConditions): Zcam {
             /* Step 2 */
             // Achromatic response

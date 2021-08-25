@@ -48,7 +48,7 @@ public data class Srgb(
         return (quantize8(r) shl 16) or (quantize8(g) shl 8) or quantize8(b)
     }
 
-    public companion object : ConversionProvider {
+    internal companion object : ConversionProvider {
         override fun register() { }
 
         // Clamp out-of-bounds values

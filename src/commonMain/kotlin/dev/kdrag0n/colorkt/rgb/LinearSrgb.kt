@@ -2,6 +2,8 @@ package dev.kdrag0n.colorkt.rgb
 
 import dev.kdrag0n.colorkt.util.conversion.ConversionGraph
 import dev.kdrag0n.colorkt.util.conversion.ConversionProvider
+import kotlin.jvm.JvmName
+import kotlin.jvm.JvmStatic
 import kotlin.math.pow
 
 /**
@@ -65,6 +67,8 @@ public data class LinearSrgb(
          * @see dev.kdrag0n.colorkt.rgb.LinearSrgb
          * @return Color in linear sRGB
          */
+        @JvmStatic
+        @JvmName("fromSrgb")
         public fun Srgb.toLinearSrgb(): LinearSrgb {
             return LinearSrgb(
                 r = eotf(r),
