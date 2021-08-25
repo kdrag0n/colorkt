@@ -31,7 +31,7 @@ public data class CieXyzAbs(
      *
      * @return Color in relative XYZ
      */
-    public fun toCieXyz(luminance: Double): CieXyz = CieXyz(
+    public fun toRel(luminance: Double): CieXyz = CieXyz(
         x = x / luminance,
         y = y / luminance,
         z = z / luminance,
@@ -45,8 +45,8 @@ public data class CieXyzAbs(
         public const val DEFAULT_SDR_WHITE_LUMINANCE: Double = 200.0 // cd/m^2
 
         override fun register() {
-            ConversionGraph.add<CieXyz, CieXyzAbs> { it.toCieXyzAbs(DEFAULT_SDR_WHITE_LUMINANCE) }
-            ConversionGraph.add<CieXyzAbs, CieXyz> { it.toCieXyz(DEFAULT_SDR_WHITE_LUMINANCE) }
+            ConversionGraph.add<CieXyz, CieXyzAbs> { it.toAbs(DEFAULT_SDR_WHITE_LUMINANCE) }
+            ConversionGraph.add<CieXyzAbs, CieXyz> { it.toRel(DEFAULT_SDR_WHITE_LUMINANCE) }
         }
 
         /**
@@ -54,7 +54,7 @@ public data class CieXyzAbs(
          *
          * @return Color in absolute XYZ
          */
-        public fun CieXyz.toCieXyzAbs(luminance: Double): CieXyzAbs = CieXyzAbs(
+        public fun CieXyz.toAbs(luminance: Double): CieXyzAbs = CieXyzAbs(
             x = x * luminance,
             y = y * luminance,
             z = z * luminance,
