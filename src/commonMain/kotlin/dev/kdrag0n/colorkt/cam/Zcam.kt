@@ -79,7 +79,7 @@ public data class Zcam(
      * @see dev.kdrag0n.colorkt.tristimulus.CieXyzAbs
      * @return Color in absolute XYZ
      */
-    public fun toCieXyz100(
+    public fun toXyzAbs(
         luminanceSource: LuminanceSource,
         chromaSource: ChromaSource,
     ): CieXyzAbs {

@@ -43,7 +43,7 @@ class CamTests {
         }*/
 
         // inverse
-        val inverted = zcam.toCieXyz100(Zcam.LuminanceSource.LIGHTNESS, Zcam.ChromaSource.COLORFULNESS)
+        val inverted = zcam.toXyzAbs(Zcam.LuminanceSource.LIGHTNESS, Zcam.ChromaSource.COLORFULNESS)
         println("inverted = $inverted")
         assertApprox(inverted.x, sample.x)
         assertApprox(inverted.y, sample.y)

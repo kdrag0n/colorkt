@@ -45,7 +45,7 @@ public data class CieXyz(
 
     public companion object : ConversionProvider {
         override fun register() {
-            ConversionGraph.add<LinearSrgb, CieXyz> { it.toCieXyz() }
+            ConversionGraph.add<LinearSrgb, CieXyz> { it.toXyz() }
             ConversionGraph.add<CieXyz, LinearSrgb> { it.toLinearSrgb() }
         }
 
@@ -54,7 +54,7 @@ public data class CieXyz(
          *
          * @return Color in XYZ
          */
-        public fun LinearSrgb.toCieXyz(): CieXyz {
+        public fun LinearSrgb.toXyz(): CieXyz {
             return CieXyz(
                 x = 0.4124564 * r + 0.3575761 * g + 0.1804375 * b,
                 y = 0.2126729 * r + 0.7151522 * g + 0.0721750 * b,

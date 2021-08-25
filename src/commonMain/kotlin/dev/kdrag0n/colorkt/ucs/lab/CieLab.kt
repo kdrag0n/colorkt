@@ -28,7 +28,7 @@ public data class CieLab(
      * @see dev.kdrag0n.colorkt.tristimulus.CieXyz
      * @return Color in XYZ
      */
-    public fun toCieXyz(): CieXyz {
+    public fun toXyz(): CieXyz {
         val lp = (L + 16.0) / 116.0
 
         return CieXyz(
@@ -41,7 +41,7 @@ public data class CieLab(
     public companion object : ConversionProvider {
         override fun register() {
             ConversionGraph.add<CieXyz, CieLab> { it.toCieLab() }
-            ConversionGraph.add<CieLab, CieXyz> { it.toCieXyz() }
+            ConversionGraph.add<CieLab, CieXyz> { it.toXyz() }
         }
 
         private fun f(x: Double) = if (x > 216.0/24389.0) {
