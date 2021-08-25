@@ -4,7 +4,7 @@ import dev.kdrag0n.colorkt.Color
 import dev.kdrag0n.colorkt.Illuminants
 import dev.kdrag0n.colorkt.adaptation.VonKries
 import dev.kdrag0n.colorkt.tristimulus.CieXyz
-import dev.kdrag0n.colorkt.tristimulus.CieXyz100
+import dev.kdrag0n.colorkt.tristimulus.CieXyzAbs
 import dev.kdrag0n.colorkt.util.cbrt
 import dev.kdrag0n.colorkt.util.square
 import dev.kdrag0n.colorkt.util.toDegrees
@@ -49,7 +49,7 @@ data class Zcam(
     fun toCieXyz100(
         luminanceSource: LuminanceSource,
         chromaSource: ChromaSource,
-    ): CieXyz100 {
+    ): CieXyzAbs {
         val cond = viewingConditions
         val Qz_w = cond.Qz_w
 
@@ -107,7 +107,7 @@ data class Zcam(
         val y = (yp + (G - 1)*x) / G
         println("INV: x=$x y=$y")
 
-        return CieXyz100(x, y, z)
+        return CieXyzAbs(x, y, z)
     }
 
     enum class LuminanceSource {
@@ -133,7 +133,7 @@ data class Zcam(
         //val whiteLuminance: Double,
         //val backgroundLuminance: Double,
 
-        val referenceWhite: CieXyz100,
+        val referenceWhite: CieXyzAbs,
     ) {
         /* Step 1 */
         //private val L_a = whiteLuminance *1 //TODO
@@ -195,7 +195,7 @@ data class Zcam(
         }
 
         // Intermediate conversion, also used in ViewingConditions
-        private fun CieXyz100.xyzToIzazbz(): DoubleArray {
+        private fun CieXyzAbs.xyzToIzazbz(): DoubleArray {
             val xp = B*x - (B-1)*z
             val yp = G*y - (G-1)*x
 
@@ -216,12 +216,12 @@ data class Zcam(
         private fun izToQz(Iz: Double, cond: ViewingConditions) =
             cond.Iz_coeff * Iz.pow((1.6 * cond.F_s) / cond.Qz_denom)
 
-        fun CieXyz100.toZcam(cond: ViewingConditions): Zcam {
+        fun CieXyzAbs.toZcam(cond: ViewingConditions): Zcam {
             /* Step 0 */
             // TODO: approx check
             val xyzD65 = if (cond.referenceWhite.toCieXyz() != Illuminants.D65 && false) {
                 val values = VonKries.adapt(CieXyz(x, y, z), cond.referenceWhite.toCieXyz(), Illuminants.D65, VonKries.CAT02)
-                CieXyz100(values.x, values.y, values.z)
+                CieXyzAbs(values.x, values.y, values.z)
             } else {
                 this
             }

@@ -1,6 +1,6 @@
 import dev.kdrag0n.colorkt.cam.Zcam
 import dev.kdrag0n.colorkt.cam.Zcam.Companion.toZcam
-import dev.kdrag0n.colorkt.tristimulus.CieXyz100
+import dev.kdrag0n.colorkt.tristimulus.CieXyzAbs
 import kotlin.test.Test
 
 class CamTests {
@@ -11,11 +11,11 @@ class CamTests {
             L_a = 264.0,
             Y_b = 100.0,
             //referenceWhite = CieXyz100(256.0, 264.0, 202.0),
-            referenceWhite = CieXyz100(250.92408, 264.0, 287.45112), // d65
+            referenceWhite = CieXyzAbs(250.92408, 264.0, 287.45112), // d65
         )
 
         //val sample = CieXyz100(185.0, 206.0, 163.0)
-        val sample = CieXyz100(182.232347, 206.57991269, 231.87358528) // d65
+        val sample = CieXyzAbs(182.232347, 206.57991269, 231.87358528) // d65
         val zcam = sample.toZcam(cond)
         println(cond)
         println(zcam)
