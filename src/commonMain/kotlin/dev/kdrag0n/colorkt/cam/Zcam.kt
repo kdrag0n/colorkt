@@ -51,16 +51,14 @@ data class Zcam(
         chromaSource: ChromaSource,
     ): CieXyz100 {
         val cond = viewingConditions
-        val Iz_w = cond.Iz_w
         val Qz_w = cond.Qz_w
 
         /* Step 1 */
         // Achromatic response
-        val Iz_denom = 2700.0 * cond.F_s.pow(2.2) * cond.F_b.pow(0.5) * cond.F_l.pow(0.2)
         val Iz = when (luminanceSource) {
-            LuminanceSource.BRIGHTNESS -> Qz / Iz_denom
-            LuminanceSource.LIGHTNESS -> (Jz * Qz_w) / (Iz_denom * 100.0)
-        }.pow(cond.F_b.pow(0.12) / (1.6 * cond.F_s))
+            LuminanceSource.BRIGHTNESS -> Qz / cond.Iz_coeff
+            LuminanceSource.LIGHTNESS -> (Jz * Qz_w) / (cond.Iz_coeff * 100.0)
+        }.pow(cond.Qz_denom / (1.6 * cond.F_s))
 
         println("INV: Iz = $Iz")
         /* Step 2 */
@@ -68,7 +66,7 @@ data class Zcam(
         val Cz = when (chromaSource) {
             ChromaSource.CHROMA -> Cz
             ChromaSource.COLORFULNESS -> Double.NaN // not used
-            ChromaSource.SATURATION -> (Qz * square(Sz)) / (100.0 * Qz_w * cond.F_l.pow(1.2))
+            ChromaSource.SATURATION -> (Qz * square(Sz)) / (100.0 * Qz_w * cond.Qz_denom)
             ChromaSource.VIVIDNESS -> sqrt((square(Vz) - square(Jz - 58)) / 3.4)
             ChromaSource.BLACKNESS -> sqrt((square((100 - Kz) / 0.8) - square(Jz)) / 8)
             ChromaSource.WHITENESS -> sqrt(square(100.0 - Wz) - square(100.0 - Jz))
@@ -84,9 +82,9 @@ data class Zcam(
             else -> (Cz * Qz_w) / 100
         }
         val ez = hpToEz(hz)
-        val Cz_p = ((Mz * Iz_w.pow(0.78) * cond.F_b.pow(0.1)) /
+        val Cz_p = ((Mz * cond.Mz_denom) /
                 // Paper specifies pow(1.3514) but this extra precision is necessary for more accurate inversion
-                (100.0 * ez.pow(0.068) * cond.F_l.pow(0.2))).pow(1.0 / 0.37 / 2)
+                (100.0 * ez.pow(0.068) * cond.ez_coeff)).pow(1.0 / 0.37 / 2)
         val az = Cz_p * cos(hz.toRadians())
         val bz = Cz_p * sin(hz.toRadians())
         println("INV: Mz = $Mz  ez=$ez  Cz_p=$Cz_p  az=$az  bz=$bz")
@@ -145,6 +143,14 @@ data class Zcam(
         val F_l = 0.171 * cbrt(L_a) * (1.0 - exp(-48.0/9.0 * L_a)) // F_L
 
         internal val Iz_w = referenceWhite.xyzToIzazbz()[0]
+
+        internal val Iz_coeff = 2700.0 * F_s.pow(2.2) * F_b.pow(0.5) * F_l.pow(0.2)
+        internal val Mz_denom = Iz_w.pow(0.78) * F_b.pow(0.1)
+        internal val ez_coeff = F_l.pow(0.2)
+        internal val Qz_denom = F_b.pow(0.12)
+        internal val Sz_coeff = F_l.pow(0.6)
+
+        // Depends on precomputed coefficients above
         internal val Qz_w = izToQz(Iz_w, this)
 
         companion object {
@@ -208,8 +214,7 @@ data class Zcam(
         // Shared between forward and inverse models
         private fun hpToEz(hp: Double) = 1.015 + cos((89.038 + hp).toRadians())
         private fun izToQz(Iz: Double, cond: ViewingConditions) =
-            2700.0 * Iz.pow((1.6 * cond.F_s) / cond.F_b.pow(0.12)) *
-                    (cond.F_s.pow(2.2) * cond.F_b.pow(0.5) * cond.F_l.pow(0.2))
+            cond.Iz_coeff * Iz.pow((1.6 * cond.F_s) / cond.Qz_denom)
 
         fun CieXyz100.toZcam(cond: ViewingConditions): Zcam {
             /* Step 0 */
@@ -225,7 +230,6 @@ data class Zcam(
             /* Step 2 */
             // Achromatic response
             val (Iz, az, bz) = xyzD65.xyzToIzazbz()
-            val Iz_w = cond.Iz_w
 
             /* Step 3 */
             // Hue angle
@@ -247,15 +251,14 @@ data class Zcam(
 
             // Colorfulness
             val Mz = 100.0 * (square(az) + square(bz)).pow(0.37) *
-                    ((ez.pow(0.068) * cond.F_l.pow(0.2)) /
-                            (cond.F_b.pow(0.1) * Iz_w.pow(0.78)))
+                    ((ez.pow(0.068) * cond.ez_coeff) / cond.Mz_denom)
 
             // Chroma
             val Cz = 100.0 * (Mz / Qz_w)
 
             /* Step 6 */
             // Saturation
-            val Sz = 100.0 * cond.F_l.pow(0.6) * sqrt(Mz / Qz)
+            val Sz = 100.0 * cond.Sz_coeff * sqrt(Mz / Qz)
 
             // Vividness, blackness, whiteness
             val Vz = sqrt(square(Jz - 58) + 3.4 * square(Cz))
