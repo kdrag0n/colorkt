@@ -1,7 +1,7 @@
 package dev.kdrag0n.colorkt.rgb
 
-import dev.kdrag0n.colorkt.util.ConversionGraph
-import dev.kdrag0n.colorkt.util.ConversionProvider
+import dev.kdrag0n.colorkt.util.conversion.ConversionGraph
+import dev.kdrag0n.colorkt.util.conversion.ConversionProvider
 import kotlin.math.pow
 
 /**
@@ -12,7 +12,7 @@ import kotlin.math.pow
  *
  * @see <a href="https://en.wikipedia.org/wiki/SRGB">Wikipedia</a>
  */
-data class LinearSrgb(
+public data class LinearSrgb(
     override val r: Double,
     override val g: Double,
     override val b: Double,
@@ -24,7 +24,7 @@ data class LinearSrgb(
      * @see dev.kdrag0n.colorkt.rgb.Srgb
      * @return Color in standard sRGB
      */
-    fun toSrgb(): Srgb {
+    public fun toSrgb(): Srgb {
         return Srgb(
             r = oetf(r),
             g = oetf(g),
@@ -32,7 +32,7 @@ data class LinearSrgb(
         )
     }
 
-    companion object : ConversionProvider {
+    public companion object : ConversionProvider {
         override fun register() {
             ConversionGraph.add<Srgb, LinearSrgb> { it.toLinearSrgb() }
             ConversionGraph.add<LinearSrgb, Srgb> { it.toSrgb() }
@@ -65,7 +65,7 @@ data class LinearSrgb(
          * @see dev.kdrag0n.colorkt.rgb.LinearSrgb
          * @return Color in linear sRGB
          */
-        fun Srgb.toLinearSrgb(): LinearSrgb {
+        public fun Srgb.toLinearSrgb(): LinearSrgb {
             return LinearSrgb(
                 r = eotf(r),
                 g = eotf(g),

@@ -1,10 +1,10 @@
 package dev.kdrag0n.colorkt.ucs.polar
 
 import dev.kdrag0n.colorkt.Color
-import dev.kdrag0n.colorkt.util.toDegrees
-import dev.kdrag0n.colorkt.util.toRadians
+import dev.kdrag0n.colorkt.util.math.toDegrees
+import dev.kdrag0n.colorkt.util.math.toRadians
 import dev.kdrag0n.colorkt.ucs.lab.Lab
-import dev.kdrag0n.colorkt.util.square
+import dev.kdrag0n.colorkt.util.math.square
 import kotlin.math.*
 
 /**
@@ -17,23 +17,23 @@ import kotlin.math.*
  *
  * @see dev.kdrag0n.colorkt.ucs.lab.Lab
  */
-interface Lch : Color {
+public interface Lch : Color {
     /**
      * Perceived lightness component.
      */
-    val L: Double
+    public val L: Double
 
     /**
      * Chroma component (amount of color).
      */
-    val C: Double
+    public val C: Double
 
     /**
      * Hue angle component in degrees (which color, e.g. green/blue).
      */
-    val h: Double
+    public val h: Double
 
-    companion object {
+    public companion object {
         internal fun Lab.toLch(): DoubleArray {
             val hDeg = atan2(b, a).toDegrees()
 

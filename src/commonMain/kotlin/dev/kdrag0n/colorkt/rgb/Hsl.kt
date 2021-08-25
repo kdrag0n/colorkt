@@ -1,8 +1,8 @@
 package dev.kdrag0n.colorkt.rgb
 
 import dev.kdrag0n.colorkt.Color
-import dev.kdrag0n.colorkt.util.ConversionGraph
-import dev.kdrag0n.colorkt.util.ConversionProvider
+import dev.kdrag0n.colorkt.util.conversion.ConversionGraph
+import dev.kdrag0n.colorkt.util.conversion.ConversionProvider
 
 /**
  * Cylindrical representation of [dev.kdrag0n.colorkt.rgb.Srgb] with the following 3 components:
@@ -16,7 +16,7 @@ import dev.kdrag0n.colorkt.util.ConversionProvider
  *
  * @see <a href="https://en.wikipedia.org/wiki/HSL_and_HSV">Wikipedia</a>
  */
-data class Hsl(
+public data class Hsl(
     /**
      * Hue component between 0 and 1.
      */
@@ -38,7 +38,7 @@ data class Hsl(
      * @see dev.kdrag0n.colorkt.rgb.Srgb
      * @return Color in standard sRGB
      */
-    fun toSrgb(): Srgb {
+    public fun toSrgb(): Srgb {
         if (s == 0.0) {
             return Srgb(l, l, l)
         }
@@ -53,7 +53,7 @@ data class Hsl(
         )
     }
 
-    companion object : ConversionProvider {
+    public companion object : ConversionProvider {
         override fun register() {
             ConversionGraph.add<Srgb, Hsl> { it.toHsl() }
             ConversionGraph.add<Hsl, Srgb> { it.toSrgb() }
@@ -75,12 +75,11 @@ data class Hsl(
         }
 
         /**
-         * Convert this color to the cylindrical (HSL) representation of sRGB.
+         * Convert this color to the cylindrical ([Hsl]) representation of sRGB.
          *
-         * @see dev.kdrag0n.colorkt.rgb.Hsl
          * @return Color in HSL representation
          */
-        fun Srgb.toHsl(): Hsl {
+        public fun Srgb.toHsl(): Hsl {
             val max = maxOf(r, g, b)
             val min = minOf(r, g, b)
             val l = (max + min) / 2.0

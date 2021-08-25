@@ -3,15 +3,15 @@ package dev.kdrag0n.colorkt.ucs.polar
 import dev.kdrag0n.colorkt.ucs.polar.Lch.Companion.toLab
 import dev.kdrag0n.colorkt.ucs.polar.Lch.Companion.toLch
 import dev.kdrag0n.colorkt.ucs.lab.Jzazbz
-import dev.kdrag0n.colorkt.util.ConversionGraph
-import dev.kdrag0n.colorkt.util.ConversionProvider
+import dev.kdrag0n.colorkt.util.conversion.ConversionGraph
+import dev.kdrag0n.colorkt.util.conversion.ConversionProvider
 
 /**
  * Polar (LCh) representation of [dev.kdrag0n.colorkt.ucs.lab.Jzazbz].
  *
  * @see dev.kdrag0n.colorkt.ucs.polar.Lch
  */
-data class Jzczhz(
+public data class Jzczhz(
     override val L: Double,
     override val C: Double,
     override val h: Double = 0.0,
@@ -20,14 +20,14 @@ data class Jzczhz(
      * Convert this color to the Cartesian (Lab) representation of Jzazbz.
      *
      * @see dev.kdrag0n.colorkt.ucs.lab.Lab
-     * @return Color in Jzazbz representation
+     * @return Color represented as Jzazbz
      */
-    fun toJzazbz(): Jzazbz {
+    public fun toJzazbz(): Jzazbz {
         val (l, a, b) = toLab()
         return Jzazbz(l, a, b)
     }
 
-    companion object : ConversionProvider {
+    public companion object : ConversionProvider {
         override fun register() {
             ConversionGraph.add<Jzazbz, Jzczhz> { it.toJzczhz() }
             ConversionGraph.add<Jzczhz, Jzazbz> { it.toJzazbz() }
@@ -37,9 +37,9 @@ data class Jzczhz(
          * Convert this color to the polar (LCh) representation of Jzazbz.
          *
          * @see dev.kdrag0n.colorkt.ucs.polar.Lch
-         * @return Color in JzCzhz representation
+         * @return Color represented as JzCzhz
          */
-        fun Jzazbz.toJzczhz(): Jzczhz {
+        public fun Jzazbz.toJzczhz(): Jzczhz {
             val (l, c, h) = toLch()
             return Jzczhz(l, c, h)
         }

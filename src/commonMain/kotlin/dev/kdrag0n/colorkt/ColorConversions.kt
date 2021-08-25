@@ -4,6 +4,7 @@ import dev.kdrag0n.colorkt.rgb.Hsl
 import dev.kdrag0n.colorkt.rgb.LinearSrgb
 import dev.kdrag0n.colorkt.rgb.Srgb
 import dev.kdrag0n.colorkt.tristimulus.CieXyz
+import dev.kdrag0n.colorkt.tristimulus.CieXyzAbs
 import dev.kdrag0n.colorkt.ucs.lab.CieLab
 import dev.kdrag0n.colorkt.ucs.lab.Jzazbz
 import dev.kdrag0n.colorkt.ucs.lab.Oklab
@@ -21,6 +22,7 @@ internal fun registerAllColors() {
 
     // Tristimulus
     CieXyz.register()
+    CieXyzAbs.register()
 
     // UCS Lab
     CieLab.register()

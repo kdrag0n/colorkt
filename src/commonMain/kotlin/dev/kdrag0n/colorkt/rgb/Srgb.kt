@@ -1,6 +1,6 @@
 package dev.kdrag0n.colorkt.rgb
 
-import dev.kdrag0n.colorkt.util.ConversionProvider
+import dev.kdrag0n.colorkt.util.conversion.ConversionProvider
 import kotlin.math.roundToInt
 
 /**
@@ -9,7 +9,7 @@ import kotlin.math.roundToInt
  *
  * @see <a href="https://en.wikipedia.org/wiki/SRGB">Wikipedia</a>
  */
-data class Srgb(
+public data class Srgb(
     override val r: Double,
     override val g: Double,
     override val b: Double,
@@ -19,7 +19,7 @@ data class Srgb(
     /**
      * Constructor for 8-bit integer sRGB components.
      */
-    constructor(
+    public constructor(
         r: Int,
         g: Int,
         b: Int,
@@ -32,7 +32,7 @@ data class Srgb(
     /**
      * Constructor for 8-bit packed integer sRGB colors, such as hex color codes.
      */
-    constructor(color: Int) : this(
+    public constructor(color: Int) : this(
         r = color shr 16,
         g = (color shr 8) and 0xff,
         b = color and 0xff,
@@ -44,11 +44,11 @@ data class Srgb(
      *
      * @return sRGB color packed into 32-bit integer
      */
-    fun quantize8(): Int {
+    public fun quantize8(): Int {
         return (quantize8(r) shl 16) or (quantize8(g) shl 8) or quantize8(b)
     }
 
-    companion object : ConversionProvider {
+    public companion object : ConversionProvider {
         override fun register() { }
 
         // Clamp out-of-bounds values

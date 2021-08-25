@@ -1,8 +1,8 @@
 package dev.kdrag0n.colorkt.ucs.lab
 
 import dev.kdrag0n.colorkt.tristimulus.CieXyz
-import dev.kdrag0n.colorkt.util.ConversionGraph
-import dev.kdrag0n.colorkt.util.ConversionProvider
+import dev.kdrag0n.colorkt.util.conversion.ConversionGraph
+import dev.kdrag0n.colorkt.util.conversion.ConversionProvider
 import kotlin.math.pow
 
 /**
@@ -16,7 +16,7 @@ import kotlin.math.pow
  *
  * @see <a href="https://doi.org/10.1364/OE.25.015131">Perceptually uniform color space for image signals including high dynamic range and wide gamut</a>
  */
-data class Jzazbz(
+public data class Jzazbz(
     override val L: Double,
     override val a: Double,
     override val b: Double,
@@ -25,9 +25,9 @@ data class Jzazbz(
      * Convert this color to the CIE 1931 XYZ color space.
      *
      * @see dev.kdrag0n.colorkt.tristimulus.CieXyz
-     * @return Color in CIE 1931 XYZ
+     * @return Color in XYZ
      */
-    fun toCieXyz(): CieXyz {
+    public fun toCieXyz(): CieXyz {
         val jz = L + 1.6295499532821566e-11
         val iz = jz / (0.44 + 0.56*jz)
 
@@ -42,7 +42,7 @@ data class Jzazbz(
         )
     }
 
-    companion object : ConversionProvider {
+    public companion object : ConversionProvider {
         override fun register() {
             ConversionGraph.add<CieXyz, Jzazbz> { it.toJzazbz() }
             ConversionGraph.add<Jzazbz, CieXyz> { it.toCieXyz() }
@@ -83,7 +83,7 @@ data class Jzazbz(
          * @see dev.kdrag0n.colorkt.ucs.lab.Jzazbz
          * @return Color in Jzazbz UCS
          */
-        fun CieXyz.toJzazbz(): Jzazbz {
+        public fun CieXyz.toJzazbz(): Jzazbz {
             val (lp, mp, sp) = xyzToLmsp(x, y, z)
             val (iz, az, bz) = lmspToIzazbz(lp, mp, sp)
             val jz = (0.44 * iz) / (1 - 0.56*iz) - 1.6295499532821566e-11

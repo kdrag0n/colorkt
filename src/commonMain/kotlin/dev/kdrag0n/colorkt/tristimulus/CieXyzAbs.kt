@@ -1,29 +1,60 @@
 package dev.kdrag0n.colorkt.tristimulus
 
 import dev.kdrag0n.colorkt.Color
-import dev.kdrag0n.colorkt.util.ConversionGraph
-import dev.kdrag0n.colorkt.util.ConversionProvider
+import dev.kdrag0n.colorkt.util.conversion.ConversionGraph
+import dev.kdrag0n.colorkt.util.conversion.ConversionProvider
 
-data class CieXyzAbs(
+/**
+ * A color in the CIE 1931 XYZ tristimulus color space, with absolute luminance.
+ * This is often used as an intermediate color space for uniform color spaces and color appearance models.
+ *
+ * @see dev.kdrag0n.colorkt.tristimulus.CieXyz
+ */
+public data class CieXyzAbs(
+    /**
+     * X component: mix of the non-negative CIE RGB curves.
+     */
     val x: Double,
+
+    /**
+     * Y component: absolute luminance.
+     */
     val y: Double,
+
+    /**
+     * Z component: approximately equal to blue from CIE RGB.
+     */
     val z: Double,
 ) : Color {
-    fun toCieXyz() = CieXyz(
-        x = x / y,
-        y = y / y,
-        z = z / y,
+    /**
+     * Convert an absolute XYZ color to relative XYZ, using the specified reference white luminance.
+     *
+     * @return Color in relative XYZ
+     */
+    public fun toCieXyz(luminance: Double): CieXyz = CieXyz(
+        x = x / luminance,
+        y = y / luminance,
+        z = z / luminance,
     )
 
-    companion object : ConversionProvider {
-        const val DEFAULT_SRGB_WHITE_LUMINANCE = 200.0 // cd/m^2
+    public companion object : ConversionProvider {
+        /**
+         * Default absolute luminance used to convert SDR colors to absolute XYZ.
+         * This effectively models the color being displayed on a display with a brightness of 200 nits (cd/m^2).
+         */
+        public const val DEFAULT_SDR_WHITE_LUMINANCE: Double = 200.0 // cd/m^2
 
         override fun register() {
-            ConversionGraph.add<CieXyz, CieXyzAbs> { it.toCieXyzAbs(DEFAULT_SRGB_WHITE_LUMINANCE) }
-            ConversionGraph.add<CieXyzAbs, CieXyz> { it.toCieXyz() }
+            ConversionGraph.add<CieXyz, CieXyzAbs> { it.toCieXyzAbs(DEFAULT_SDR_WHITE_LUMINANCE) }
+            ConversionGraph.add<CieXyzAbs, CieXyz> { it.toCieXyz(DEFAULT_SDR_WHITE_LUMINANCE) }
         }
 
-        fun CieXyz.toCieXyzAbs(luminance: Double) = CieXyzAbs(
+        /**
+         * Convert a relative XYZ color to absolute XYZ, using the specified reference white luminance.
+         *
+         * @return Color in absolute XYZ
+         */
+        public fun CieXyz.toCieXyzAbs(luminance: Double): CieXyzAbs = CieXyzAbs(
             x = x * luminance,
             y = y * luminance,
             z = z * luminance,

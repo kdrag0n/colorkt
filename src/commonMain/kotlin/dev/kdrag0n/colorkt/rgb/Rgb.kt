@@ -10,19 +10,19 @@ import dev.kdrag0n.colorkt.Color
  *
  * Implementations of this are usually device color spaces, used for final output colors.
  */
-interface Rgb : Color {
+public interface Rgb : Color {
     /**
      * Red color component.
      */
-    val r: Double
+    public val r: Double
 
     /**
      * Green color component.
      */
-    val g: Double
+    public val g: Double
 
     /**
      * Blue color component.
      */
-    val b: Double
+    public val b: Double
 }

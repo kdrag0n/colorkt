@@ -2,48 +2,75 @@ package dev.kdrag0n.colorkt.cam
 
 import dev.kdrag0n.colorkt.Color
 import dev.kdrag0n.colorkt.tristimulus.CieXyzAbs
-import dev.kdrag0n.colorkt.util.cbrt
-import dev.kdrag0n.colorkt.util.square
-import dev.kdrag0n.colorkt.util.toDegrees
-import dev.kdrag0n.colorkt.util.toRadians
+import dev.kdrag0n.colorkt.util.math.cbrt
+import dev.kdrag0n.colorkt.util.math.square
+import dev.kdrag0n.colorkt.util.math.toDegrees
+import dev.kdrag0n.colorkt.util.math.toRadians
 import kotlin.math.*
 
+/**
+ * A color modeled by the ZCAM color appearance model, which provides a variety of perceptual color attributes.
+ * This color appearance model is designed with HDR in mind, so it only accepts *absolute* CIE XYZ values scaled by the
+ * absolute luminance of the modeled display, unlike SDR color spaces that accept relative luminance.
+ *
+ * @see <a href="https://www.osapublishing.org/oe/viewmedia.cfm?uri=oe-29-4-6036&html=true">ZCAM, a colour appearance model based on a high dynamic range uniform colour space</a>
+ */
 // Math code looks better with underscores, and we want to match the paper
 @Suppress("LocalVariableName", "PrivatePropertyName", "PropertyName")
-data class Zcam(
+public data class Zcam(
     // 1D
+    /** Absolute brightness. **/
     val brightness: Double = Double.NaN,
+    /** Brightness relative to the reference white, from 0 to 100. **/
     val lightness: Double = Double.NaN,
+    /** Absolute colorfulness. **/
     val colorfulness: Double = Double.NaN,
+    /** Colorfulness relative to the reference white. **/
     val chroma: Double = Double.NaN,
+    /** Hue from 0 to 360 degrees. **/
     val hueAngle: Double,
     /* hue composition is not supported */
 
     // 2D
+    /** Chroma relative to lightness. **/
     val saturation: Double = Double.NaN,
+    /** Distance from neutral black. **/
     val vividness: Double = Double.NaN,
+    /** Amount of black. **/
     val blackness: Double = Double.NaN,
+    /** Amount of white. **/
     val whiteness: Double = Double.NaN,
 
+    /** Viewing conditions used to model this color. **/
     val viewingConditions: ViewingConditions,
-
-    // DEBUG
-    val Iz: Double,
-    val az: Double,
-    val bz: Double,
 ) : Color {
     // Aliases to match the paper
+    /** Alias for [brightness]. **/
     val Qz: Double get() = brightness
+    /** Alias for [lightness]. **/
     val Jz: Double get() = lightness
+    /** Alias for [colorfulness]. **/
     val Mz: Double get() = colorfulness
+    /** Alias for [chroma]. **/
     val Cz: Double get() = chroma
+    /** Alias for [hueAngle]. **/
     val hz: Double get() = hueAngle
+    /** Alias for [saturation]. **/
     val Sz: Double get() = saturation
+    /** Alias for [vividness]. **/
     val Vz: Double get() = vividness
+    /** Alias for [blackness]. **/
     val Kz: Double get() = blackness
+    /** Alias for [whiteness]. **/
     val Wz: Double get() = whiteness
 
-    fun toCieXyz100(
+    /**
+     * Convert this color to the CIE 1931 XYZ color space, with absolute luminance.
+     *
+     * @see dev.kdrag0n.colorkt.tristimulus.CieXyzAbs
+     * @return Color in absolute XYZ
+     */
+    public fun toCieXyz100(
         luminanceSource: LuminanceSource,
         chromaSource: ChromaSource,
     ): CieXyzAbs {
@@ -100,65 +127,123 @@ data class Zcam(
         return CieXyzAbs(x, y, z)
     }
 
-    enum class LuminanceSource {
+    /**
+     * ZCAM attributes that can be used to calculate luminance in the inverse model.
+     */
+    public enum class LuminanceSource {
+        /**
+         * Use the brightness attribute to calculate luminance in the inverse model.
+         * Lightness will be ignored.
+         */
         BRIGHTNESS,
+        /**
+         * Use the lightness attribute to calculate luminance in the inverse model.
+         * Brightness will be ignored.
+         */
         LIGHTNESS,
     }
 
-    enum class ChromaSource {
+    /**
+     * ZCAM attributes that can be used to calculate chroma (colorfulness) in the inverse model.
+     */
+    public enum class ChromaSource {
+        /**
+         * Use the chroma attribute to calculate luminance in the inverse model.
+         * Colorfulness, saturation, vividness, blackness, and whiteness will be ignored.
+         */
         CHROMA,
+        /**
+         * Use the colorfulness attribute to calculate luminance in the inverse model.
+         * Chroma, saturation, vividness, blackness, and whiteness will be ignored.
+         */
         COLORFULNESS,
+        /**
+         * Use the saturation attribute to calculate luminance in the inverse model.
+         * Chroma, colorfulness, vividness, blackness, and whiteness will be ignored.
+         */
         SATURATION,
+        /**
+         * Use the vividness attribute to calculate luminance in the inverse model.
+         * Chroma, colorfulness, saturation, blackness, and whiteness will be ignored.
+         */
         VIVIDNESS,
+        /**
+         * Use the blackness attribute to calculate luminance in the inverse model.
+         * Chroma, colorfulness, saturation, vividness, and whiteness will be ignored.
+         */
         BLACKNESS,
+        /**
+         * Use the whiteness attribute to calculate luminance in the inverse model.
+         * Chroma, colorfulness, saturation, vividness, and blackness will be ignored.
+         */
         WHITENESS,
     }
 
-    data class ViewingConditions(
-        val F_s: Double, // F_s
+    /**
+     * The conditions under which a color modeled by ZCAM will be viewed. This is defined by the luminance of the
+     * adapting field, luminance of the background, and surround factor.
+     *
+     * For performance, viewing conditions should be created once and reused for all ZCAM conversions unless they have
+     * changed. Creating an instance of ViewingConditions performs calculations that are reused throughout the ZCAM
+     * model.
+     */
+    public data class ViewingConditions(
+        /**
+         * Surround factor, which models the surround field (distant background).
+         */
+        val F_s: Double,
 
+        /**
+         * Absolute luminance of the adapting field. This can be calculated as L_w * [Y_b] / 100, where L_w is the
+         * luminance of [referenceWhite], but it is a user-controlled parameter for flexibility.
+         */
         val L_a: Double,
+        /**
+         * Absolute luminance of the background.
+         */
         val Y_b: Double,
-        // Absolute
-        //val whiteLuminance: Double,
-        //val backgroundLuminance: Double,
 
+        /**
+         * Reference white point in absolute XYZ.
+         */
         val referenceWhite: CieXyzAbs,
     ) {
-        /* Step 1 */
-        //private val L_a = whiteLuminance *1 //TODO
-
-        //val backgroundFactor = sqrt(backgroundLuminance / whiteLuminance) // F_b
-        val F_b = sqrt(Y_b / referenceWhite.y)
-        val F_l = 0.171 * cbrt(L_a) * (1.0 - exp(-48.0/9.0 * L_a)) // F_L
-
-        internal val Iz_w = xyzToIzazbz(referenceWhite)[0]
+        internal val F_b = sqrt(Y_b / referenceWhite.y)
+        internal val F_l = 0.171 * cbrt(L_a) * (1.0 - exp(-48.0/9.0 * L_a))
 
         internal val Iz_coeff = 2700.0 * F_s.pow(2.2) * F_b.pow(0.5) * F_l.pow(0.2)
-        internal val Mz_denom = Iz_w.pow(0.78) * F_b.pow(0.1)
         internal val ez_coeff = F_l.pow(0.2)
         internal val Qz_denom = F_b.pow(0.12)
         internal val Sz_coeff = F_l.pow(0.6)
+        internal val Mz_denom: Double
 
-        // Depends on precomputed coefficients above
-        internal val Qz_w = izToQz(Iz_w, this)
+        internal val Qz_w: Double
 
-        companion object {
-            const val SURROUND_DARK = 0.525
-            const val SURROUND_DIM = 0.59
-            const val SURROUND_AVERAGE = 0.69
+        init {
+            val Iz_w = xyzToIzazbz(referenceWhite)[0]
+            Mz_denom = Iz_w.pow(0.78) * F_b.pow(0.1)
 
-            /*
-            val DEFAULT = ViewingConditions(
-                surroundFactor = SURROUND_AVERAGE,
-                whiteLuminance = 40.0,
-                backgroundLuminance = 20.0,
-                referenceWhite = Illuminants.D65.toCieXyz100(),
-            )*/
+            // Depends on precomputed coefficients above
+            Qz_w = izToQz(Iz_w, this)
+        }
+
+        public companion object {
+            /**
+             * Surround factor for dark viewing conditions.
+             */
+            public const val SURROUND_DARK: Double = 0.525
+            /**
+             * Surround factor for dim viewing conditions.
+             */
+            public const val SURROUND_DIM: Double = 0.59
+            /**
+             * Surround factor for average viewing conditions.
+             */
+            public const val SURROUND_AVERAGE: Double = 0.69
         }
     }
 
-    companion object {
+    public companion object {
         // Constants
         private const val B = 1.15
         private const val G = 0.66
@@ -204,7 +289,13 @@ data class Zcam(
         private fun izToQz(Iz: Double, cond: ViewingConditions) =
             cond.Iz_coeff * Iz.pow((1.6 * cond.F_s) / cond.Qz_denom)
 
-        fun CieXyzAbs.toZcam(cond: ViewingConditions): Zcam {
+        /**
+         * Get the perceptual appearance attributes of this color using the [Zcam] color appearance model.
+         * Input colors must be relative to a reference white of D65, absolute luminance notwithstanding.
+         *
+         * @return [Zcam] attributes
+         */
+        public fun CieXyzAbs.toZcam(cond: ViewingConditions): Zcam {
             /* Step 2 */
             // Achromatic response
             val (Iz, az, bz) = xyzToIzazbz(this)
@@ -255,11 +346,6 @@ data class Zcam(
                 whiteness = Wz,
 
                 viewingConditions = cond,
-
-                // DEBUG
-                Iz = Iz,
-                az = az,
-                bz = bz,
             )
         }
     }

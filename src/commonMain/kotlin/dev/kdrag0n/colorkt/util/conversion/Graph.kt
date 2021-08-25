@@ -1,20 +1,31 @@
-package dev.kdrag0n.colorkt.util
+package dev.kdrag0n.colorkt.util.conversion
 
 import dev.kdrag0n.colorkt.Color
 import kotlin.reflect.KClass
 
 internal typealias ColorType = KClass<out Color>
 
-// This is intentionally public so that users can add custom color spaces.
-object ConversionGraph {
+/**
+ * Global color conversion graph, used for automatic conversions between different color spaces.
+ */
+// This is public so that users can add custom color spaces.
+public object ConversionGraph {
     // Adjacency list: [vertex] = edges
     private val graph = mutableMapOf<ColorType, MutableList<ConversionEdge>>()
 
-    inline fun <reified F : Color, reified T : Color> add(
+    /**
+     * Add a conversion from color type F to T, specified as generic types.
+     * This is a convenient wrapper for [add].
+     */
+    public inline fun <reified F : Color, reified T : Color> add(
         crossinline converter: (F) -> T,
-    ) = add(F::class, T::class) { converter(it as F) }
+    ): Unit = add(F::class, T::class) { converter(it as F) }
 
-    fun add(
+    /**
+     * Add a one-way conversion from color type [from] to [to].
+     * You should also add a matching reverse conversion, i.e. from [to] to [from].
+     */
+    public fun add(
         from: ColorType,
         to: ColorType,
         converter: (Color) -> Color,
@@ -33,7 +44,7 @@ object ConversionGraph {
         }
     }
 
-    fun findPath(from: ColorType, to: ColorType): List<(Color) -> Color>? {
+    internal fun findPath(from: ColorType, to: ColorType): List<(Color) -> Color>? {
         val visited = HashSet<ConversionEdge>()
         val pathQueue = ArrayDeque(listOf(
             // Initial path: from node

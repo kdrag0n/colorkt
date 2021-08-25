@@ -1,9 +1,9 @@
 package dev.kdrag0n.colorkt.ucs.lab
 
 import dev.kdrag0n.colorkt.rgb.LinearSrgb
-import dev.kdrag0n.colorkt.util.ConversionGraph
-import dev.kdrag0n.colorkt.util.ConversionProvider
-import dev.kdrag0n.colorkt.util.cbrt
+import dev.kdrag0n.colorkt.util.conversion.ConversionGraph
+import dev.kdrag0n.colorkt.util.conversion.ConversionProvider
+import dev.kdrag0n.colorkt.util.math.cbrt
 
 /**
  * A color in the Oklab uniform color space, which represents colors in [dev.kdrag0n.colorkt.ucs.lab.Lab] form.
@@ -14,7 +14,7 @@ import dev.kdrag0n.colorkt.util.cbrt
  *
  * @see <a href="https://bottosson.github.io/posts/oklab/">A perceptual color space for image processing</a>
  */
-data class Oklab(
+public data class Oklab(
     override val L: Double,
     override val a: Double,
     override val b: Double,
@@ -25,7 +25,7 @@ data class Oklab(
      * @see dev.kdrag0n.colorkt.rgb.LinearSrgb
      * @return Color in linear sRGB
      */
-    fun toLinearSrgb(): LinearSrgb {
+    public fun toLinearSrgb(): LinearSrgb {
         val l2 = L + 0.3963377774 * a + 0.2158037573 * b
         val m2 = L - 0.1055613458 * a - 0.0638541728 * b
         val s2 = L - 0.0894841775 * a - 1.2914855480 * b
@@ -41,7 +41,7 @@ data class Oklab(
         )
     }
 
-    companion object : ConversionProvider {
+    public companion object : ConversionProvider {
         override fun register() {
             ConversionGraph.add<LinearSrgb, Oklab> { it.toOklab() }
             ConversionGraph.add<Oklab, LinearSrgb> { it.toLinearSrgb() }
@@ -53,7 +53,7 @@ data class Oklab(
          * @see dev.kdrag0n.colorkt.ucs.lab.Oklab
          * @return Color in Oklab UCS
          */
-        fun LinearSrgb.toOklab(): Oklab {
+        public fun LinearSrgb.toOklab(): Oklab {
             val l = 0.4122214708 * r + 0.5363325363 * g + 0.0514459929 * b
             val m = 0.2119034982 * r + 0.6806995451 * g + 0.1073969566 * b
             val s = 0.0883024619 * r + 0.2817188376 * g + 0.6299787005 * b

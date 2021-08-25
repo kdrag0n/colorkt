@@ -1,4 +1,4 @@
-import dev.kdrag0n.colorkt.Illuminants
+import dev.kdrag0n.colorkt.data.Illuminants
 import dev.kdrag0n.colorkt.adaptation.VonKries
 import dev.kdrag0n.colorkt.tristimulus.CieXyz
 import kotlin.test.Test

@@ -13,19 +13,19 @@ import dev.kdrag0n.colorkt.Color
  * It may be helpful to convert these colors to polar [dev.kdrag0n.colorkt.ucs.polar.Lch] representations
  * for easier manipulation.
  */
-interface Lab : Color {
+public interface Lab : Color {
     /**
      * Perceived lightness component.
      */
-    val L: Double
+    public val L: Double
 
     /**
      * Green/red color component.
      */
-    val a: Double
+    public val a: Double
 
     /**
      * Blue/yellow color component.
      */
-    val b: Double
+    public val b: Double
 }
