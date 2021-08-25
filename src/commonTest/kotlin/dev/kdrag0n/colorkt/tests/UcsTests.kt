@@ -1,3 +1,5 @@
+package dev.kdrag0n.colorkt.tests
+
 import dev.kdrag0n.colorkt.Color.Companion.to
 import dev.kdrag0n.colorkt.tristimulus.CieXyz
 import dev.kdrag0n.colorkt.ucs.lab.Oklab

@@ -2,6 +2,7 @@ package dev.kdrag0n.colorkt.cam
 
 import dev.kdrag0n.colorkt.Color
 import dev.kdrag0n.colorkt.tristimulus.CieXyzAbs
+import dev.kdrag0n.colorkt.ucs.polar.Lch
 import dev.kdrag0n.colorkt.util.math.cbrt
 import dev.kdrag0n.colorkt.util.math.square
 import dev.kdrag0n.colorkt.util.math.toDegrees
@@ -43,7 +44,7 @@ public data class Zcam(
 
     /** Viewing conditions used to model this color. **/
     val viewingConditions: ViewingConditions,
-) : Color {
+) : Color, Lch {
     // Aliases to match the paper
     /** Alias for [brightness]. **/
     val Qz: Double get() = brightness
@@ -63,6 +64,14 @@ public data class Zcam(
     val Kz: Double get() = blackness
     /** Alias for [whiteness]. **/
     val Wz: Double get() = whiteness
+
+    // Aliases for Lch interface
+    /** Alias for [lightness]. **/
+    override val L: Double get() = lightness
+    /** Alias for [chroma]. **/
+    override val C: Double get() = chroma
+    /** Alias for [hueAngle]. **/
+    override val h: Double get() = hueAngle
 
     /**
      * Convert this color to the CIE 1931 XYZ color space, with absolute luminance.

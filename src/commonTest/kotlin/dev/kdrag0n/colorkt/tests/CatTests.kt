@@ -1,3 +1,5 @@
+package dev.kdrag0n.colorkt.tests
+
 import dev.kdrag0n.colorkt.data.Illuminants
 import dev.kdrag0n.colorkt.adaptation.VonKries
 import dev.kdrag0n.colorkt.tristimulus.CieXyz

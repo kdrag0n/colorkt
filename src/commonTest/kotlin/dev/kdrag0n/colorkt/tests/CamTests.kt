@@ -1,3 +1,5 @@
+package dev.kdrag0n.colorkt.tests
+
 import dev.kdrag0n.colorkt.cam.Zcam
 import dev.kdrag0n.colorkt.cam.Zcam.Companion.toZcam
 import dev.kdrag0n.colorkt.tristimulus.CieXyzAbs
@@ -26,18 +28,18 @@ class CamTests {
 
         /*
         zcam.apply {
-            assertApprox(Iz, 0.3947)
-            assertApprox(az, -0.0165)
-            assertApprox(bz, -0.0048)
-            assertApprox(hz, 196.3524)
-            assertApprox(Qz, 321.3464)
-            assertApprox(Jz, 92.2520)
-            assertApprox(Mz, 10.5252)
-            assertApprox(Cz, 3.0216)
-            assertApprox(Sz, 19.1314)
-            assertApprox(Vz, 34.7022)
-            assertApprox(Kz, 25.2994)
-            assertApprox(Wz, 91.6837)
+            dev.kdrag0n.colorkt.tests.assertApprox(Iz, 0.3947)
+            dev.kdrag0n.colorkt.tests.assertApprox(az, -0.0165)
+            dev.kdrag0n.colorkt.tests.assertApprox(bz, -0.0048)
+            dev.kdrag0n.colorkt.tests.assertApprox(hz, 196.3524)
+            dev.kdrag0n.colorkt.tests.assertApprox(Qz, 321.3464)
+            dev.kdrag0n.colorkt.tests.assertApprox(Jz, 92.2520)
+            dev.kdrag0n.colorkt.tests.assertApprox(Mz, 10.5252)
+            dev.kdrag0n.colorkt.tests.assertApprox(Cz, 3.0216)
+            dev.kdrag0n.colorkt.tests.assertApprox(Sz, 19.1314)
+            dev.kdrag0n.colorkt.tests.assertApprox(Vz, 34.7022)
+            dev.kdrag0n.colorkt.tests.assertApprox(Kz, 25.2994)
+            dev.kdrag0n.colorkt.tests.assertApprox(Wz, 91.6837)
         }*/
 
         // inverse

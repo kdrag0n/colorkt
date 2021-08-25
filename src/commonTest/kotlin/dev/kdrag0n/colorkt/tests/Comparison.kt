@@ -1,3 +1,5 @@
+package dev.kdrag0n.colorkt.tests
+
 import kotlin.math.abs
 import kotlin.test.assertTrue
 
