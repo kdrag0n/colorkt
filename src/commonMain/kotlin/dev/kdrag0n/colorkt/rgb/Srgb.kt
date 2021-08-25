@@ -33,7 +33,7 @@ public data class Srgb(
      * Constructor for 8-bit packed integer sRGB colors, such as hex color codes.
      */
     public constructor(color: Int) : this(
-        r = color shr 16,
+        r = (color shr 16) and 0xff,
         g = (color shr 8) and 0xff,
         b = color and 0xff,
     )
