@@ -1,7 +1,6 @@
 import dev.kdrag0n.colorkt.Color.Companion.to
 import dev.kdrag0n.colorkt.tristimulus.CieXyz
 import dev.kdrag0n.colorkt.ucs.lab.Oklab
-import dev.kdrag0n.colorkt.ucs.polar.Jzczhz
 import dev.kdrag0n.colorkt.ucs.polar.Oklch
 import kotlin.test.Test
 
