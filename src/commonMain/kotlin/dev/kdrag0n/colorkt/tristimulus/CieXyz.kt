@@ -4,7 +4,6 @@ import dev.kdrag0n.colorkt.Color
 import dev.kdrag0n.colorkt.rgb.LinearSrgb
 import dev.kdrag0n.colorkt.util.conversion.ConversionGraph
 import dev.kdrag0n.colorkt.util.conversion.ConversionProvider
-import dev.kdrag0n.colorkt.util.math.Vector3
 
 /**
  * A color in the CIE 1931 XYZ tristimulus color space.
@@ -44,14 +43,6 @@ public data class CieXyz(
         )
     }
 
-    /**
-     * Convert this color to a 3-component vector.
-     *
-     * @see dev.kdrag0n.colorkt.util.Vector3
-     * @return XYZ components as a vector
-     */
-    public fun toVector3(): Vector3 = Vector3(x, y, z)
-
     public companion object : ConversionProvider {
         override fun register() {
             ConversionGraph.add<LinearSrgb, CieXyz> { it.toCieXyz() }
@@ -69,16 +60,6 @@ public data class CieXyz(
                 y = 0.2126729 * r + 0.7151522 * g + 0.0721750 * b,
                 z = 0.0193339 * r + 0.1191920 * g + 0.9503041 * b,
             )
-        }
-
-        /**
-         * Convert a 3-component vector to a CieXyz object, assuming the values in the vector are X, Y, and Z.
-         *
-         * @return Vector components as XYZ
-         */
-        public fun Vector3.toCieXyz(): CieXyz {
-            val (x, y, z) = this
-            return CieXyz(x, y, z)
         }
     }
 }
