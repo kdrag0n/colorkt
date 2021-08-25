@@ -3,8 +3,8 @@ package dev.kdrag0n.colorkt.tests
 import dev.kdrag0n.colorkt.Color.Companion.to
 import dev.kdrag0n.colorkt.tristimulus.CieXyz
 import dev.kdrag0n.colorkt.ucs.lab.Oklab
+import dev.kdrag0n.colorkt.ucs.polar.CieLch
 import dev.kdrag0n.colorkt.ucs.polar.Oklch
-import dev.kdrag0n.colorkt.ucs.polar.Srlch2
 import kotlin.test.Test
 
 class UcsTests {
@@ -46,7 +46,7 @@ class UcsTests {
 
     @Test
     fun testLongConversion() {
-        val jzczhz = Srlch2(50.0, 20.0, 1.0)
+        val jzczhz = CieLch(50.0, 20.0, 1.0)
         val oklch = jzczhz.to<Oklch>()
         assertApprox(oklch.L, 0.5756714432319223)
         assertApprox(oklch.C, 0.05942444160436367)
