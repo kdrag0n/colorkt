@@ -1,9 +1,6 @@
 package dev.kdrag0n.colorkt.cam
 
 import dev.kdrag0n.colorkt.Color
-import dev.kdrag0n.colorkt.Illuminants
-import dev.kdrag0n.colorkt.adaptation.VonKries
-import dev.kdrag0n.colorkt.tristimulus.CieXyz
 import dev.kdrag0n.colorkt.tristimulus.CieXyzAbs
 import dev.kdrag0n.colorkt.util.cbrt
 import dev.kdrag0n.colorkt.util.square
@@ -60,7 +57,6 @@ data class Zcam(
             LuminanceSource.LIGHTNESS -> (Jz * Qz_w) / (cond.Iz_coeff * 100.0)
         }.pow(cond.Qz_denom / (1.6 * cond.F_s))
 
-        println("INV: Iz = $Iz")
         /* Step 2 */
         // Chroma
         val Cz = when (chromaSource) {
@@ -71,7 +67,6 @@ data class Zcam(
             ChromaSource.BLACKNESS -> sqrt((square((100 - Kz) / 0.8) - square(Jz)) / 8)
             ChromaSource.WHITENESS -> sqrt(square(100.0 - Wz) - square(100.0 - Jz))
         }
-        println("INV: Cz = $Cz")
 
         /* Step 3 is missing because hue composition is not supported */
 
@@ -87,7 +82,6 @@ data class Zcam(
                 (100.0 * ez.pow(0.068) * cond.ez_coeff)).pow(1.0 / 0.37 / 2)
         val az = Cz_p * cos(hz.toRadians())
         val bz = Cz_p * sin(hz.toRadians())
-        println("INV: Mz = $Mz  ez=$ez  Cz_p=$Cz_p  az=$az  bz=$bz")
 
         /* Step 5 */
         val I = Iz + EPSILON
@@ -95,17 +89,13 @@ data class Zcam(
         val r = pqInv(I + 0.2772100865*az +  0.1160946323*bz)
         val g = pqInv(I)
         val b = pqInv(I + 0.0425858012*az + -0.7538445799*bz)
-        println("INV: rp=${I + 0.2772100865*az +  0.1160946323*bz} gp=$I bp=${I + 0.0425858012*az + -0.7538445799*bz}")
-        println("INV: I=$I r=$r g=$g b=$b")
 
         val xp =  1.9242264358*r + -1.0047923126*g +  0.0376514040*b
         val yp =  0.3503167621*r +  0.7264811939*g + -0.0653844229*b
         val z  = -0.0909828110*r + -0.3127282905*g +  1.5227665613*b
-        println("INV: xp=$xp yp=$yp z=$z")
 
         val x = (xp + (B - 1)*z) / B
         val y = (yp + (G - 1)*x) / G
-        println("INV: x=$x y=$y")
 
         return CieXyzAbs(x, y, z)
     }
@@ -142,7 +132,7 @@ data class Zcam(
         val F_b = sqrt(Y_b / referenceWhite.y)
         val F_l = 0.171 * cbrt(L_a) * (1.0 - exp(-48.0/9.0 * L_a)) // F_L
 
-        internal val Iz_w = referenceWhite.xyzToIzazbz()[0]
+        internal val Iz_w = xyzToIzazbz(referenceWhite)[0]
 
         internal val Iz_coeff = 2700.0 * F_s.pow(2.2) * F_b.pow(0.5) * F_l.pow(0.2)
         internal val Mz_denom = Iz_w.pow(0.78) * F_b.pow(0.1)
@@ -190,19 +180,17 @@ data class Zcam(
             val num = C1 - x.pow(1.0/RHO)
             val denom = C3*x.pow(1.0/RHO) - C2
 
-            println("INV: pqInv x=$x num=$num denom=$denom")
             return 10000.0 * (num / denom).pow(1.0/ETA)
         }
 
         // Intermediate conversion, also used in ViewingConditions
-        private fun CieXyzAbs.xyzToIzazbz(): DoubleArray {
-            val xp = B*x - (B-1)*z
-            val yp = G*y - (G-1)*x
+        private fun xyzToIzazbz(xyz: CieXyzAbs): DoubleArray {
+            val xp = B*xyz.x - (B-1)*xyz.z
+            val yp = G*xyz.y - (G-1)*xyz.x
 
-            val rp = pq( 0.41478972*xp + 0.579999*yp + 0.0146480*z)
-            val gp = pq(-0.20151000*xp + 1.120649*yp + 0.0531008*z)
-            val bp = pq(-0.01660080*xp + 0.264800*yp + 0.6684799*z)
-            println("lmsp = $rp  $gp  $bp")
+            val rp = pq( 0.41478972*xp + 0.579999*yp + 0.0146480*xyz.z)
+            val gp = pq(-0.20151000*xp + 1.120649*yp + 0.0531008*xyz.z)
+            val bp = pq(-0.01660080*xp + 0.264800*yp + 0.6684799*xyz.z)
 
             val az = 3.524000*rp + -4.066708*gp +  0.542708*bp
             val bz = 0.199076*rp +  1.096799*gp + -1.295875*bp
@@ -217,19 +205,9 @@ data class Zcam(
             cond.Iz_coeff * Iz.pow((1.6 * cond.F_s) / cond.Qz_denom)
 
         fun CieXyzAbs.toZcam(cond: ViewingConditions): Zcam {
-            /* Step 0 */
-            // TODO: approx check
-            val xyzD65 = if (cond.referenceWhite.toCieXyz() != Illuminants.D65 && false) {
-                val values = VonKries.adapt(CieXyz(x, y, z), cond.referenceWhite.toCieXyz(), Illuminants.D65, VonKries.CAT02)
-                CieXyzAbs(values.x, values.y, values.z)
-            } else {
-                this
-            }
-            println("adapted xyz = $xyzD65")
-
             /* Step 2 */
             // Achromatic response
-            val (Iz, az, bz) = xyzD65.xyzToIzazbz()
+            val (Iz, az, bz) = xyzToIzazbz(this)
 
             /* Step 3 */
             // Hue angle
@@ -239,7 +217,6 @@ data class Zcam(
             /* Step 4 */
             // Eccentricity factor
             val ez = hpToEz(hp)
-            println("ez = $ez")
 
             /* Step 5 */
             // Brightness
