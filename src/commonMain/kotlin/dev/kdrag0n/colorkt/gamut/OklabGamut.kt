@@ -345,7 +345,7 @@ public object OklabGamut {
          */
         alpha: Double = 0.05,
     ): LinearSrgb = clip(
-        rgb = this as? LinearSrgb ?: convert(),
+        rgb = convert(),
         method = method,
         alpha = alpha,
         oklab = this as? Oklab,
