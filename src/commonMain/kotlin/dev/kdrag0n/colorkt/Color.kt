@@ -14,7 +14,7 @@ import kotlin.jvm.JvmStatic
 public interface Color {
     public companion object {
         init {
-            // All colors should be registered in order for conversions to work properly
+            // All first-party color spaces should be registered in order for conversions to work properly
             registerAllColors()
         }
 
