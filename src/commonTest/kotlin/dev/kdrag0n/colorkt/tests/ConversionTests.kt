@@ -23,10 +23,4 @@ class ConversionTests {
         val color = Oklab(0.5, 0.3, 0.5)
         assertEquals(color, color.to())
     }
-
-    @Test
-    fun testShortConversion() {
-        val color = Oklab(0.5, 0.3, 0.5)
-        val
-    }
 }
