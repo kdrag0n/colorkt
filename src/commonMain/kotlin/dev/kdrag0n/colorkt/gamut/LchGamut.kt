@@ -36,8 +36,8 @@ public object LchGamut {
 
     private fun clip(
         // Target point
-        lightness: Double,
-        chroma: Double,
+        l1: Double,
+        c1: Double,
         hue: Double,
         // Projection point within gamut
         l0: Double,
@@ -46,13 +46,13 @@ public object LchGamut {
         maxLightness: Double,
         factory: LchFactory,
     ): LinearSrgb {
-        val initialResult = factory.getColor(lightness, chroma, hue)
+        val initialResult = factory.getColor(l1, c1, hue)
 
         return when {
             initialResult.isInGamut() -> initialResult
             // Avoid searching black and white for performance
-            lightness <= epsilon -> LinearSrgb(0.0, 0.0, 0.0)
-            lightness >= maxLightness - epsilon -> LinearSrgb(1.0, 1.0, 1.0)
+            l1 <= epsilon -> LinearSrgb(0.0, 0.0, 0.0)
+            l1 >= maxLightness - epsilon -> LinearSrgb(1.0, 1.0, 1.0)
 
             // Clip with gamut intersection
             else -> {
@@ -60,13 +60,11 @@ public object LchGamut {
                 val c0 = 0.0
 
                 // Create a line - x=C, y=L - intersecting a hue plane
-                val l1 = lightness
-                val c1 = chroma
                 val slope = (l1 - l0) / (c1 - c0)
                 val intercept = l0 - slope * c0
 
                 var lo = 0.0
-                var hi = chroma
+                var hi = c1
 
                 var newLinearSrgb = initialResult
                 while (abs(hi - lo) > epsilon) {
@@ -130,8 +128,8 @@ public object LchGamut {
         }
 
         return clip(
-            lightness = lightness,
-            chroma = chroma,
+            l1 = lightness,
+            c1 = chroma,
             hue = hue,
             l0 = l0,
             epsilon = EPSILON_100,
