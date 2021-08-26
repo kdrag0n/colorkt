@@ -1,8 +1,10 @@
 package dev.kdrag0n.colorkt.ucs.polar
 
-import dev.kdrag0n.colorkt.ucs.polar.Lch.Companion.toLab
-import dev.kdrag0n.colorkt.ucs.polar.Lch.Companion.toLch
 import dev.kdrag0n.colorkt.ucs.lab.Srlab2
+import dev.kdrag0n.colorkt.ucs.polar.Lch.Companion.calcLabA
+import dev.kdrag0n.colorkt.ucs.polar.Lch.Companion.calcLabB
+import dev.kdrag0n.colorkt.ucs.polar.Lch.Companion.calcLchC
+import dev.kdrag0n.colorkt.ucs.polar.Lch.Companion.calcLchH
 import dev.kdrag0n.colorkt.util.conversion.ConversionGraph
 import dev.kdrag0n.colorkt.util.conversion.ConversionProvider
 import kotlin.jvm.JvmName
@@ -24,10 +26,11 @@ public data class Srlch2(
      * @see dev.kdrag0n.colorkt.ucs.lab.Lab
      * @return Color represented as SRLAB2
      */
-    public fun toSrlab2(): Srlab2 {
-        val (l, a, b) = toLab()
-        return Srlab2(l, a, b)
-    }
+    public fun toSrlab2(): Srlab2 = Srlab2(
+        L = L,
+        a = calcLabA(),
+        b = calcLabB(),
+    )
 
     public companion object : ConversionProvider {
         override fun register() {
@@ -43,9 +46,10 @@ public data class Srlch2(
          */
         @JvmStatic
         @JvmName("fromSrlab2")
-        public fun Srlab2.toSrlch2(): Srlch2 {
-            val (l, c, h) = toLch()
-            return Srlch2(l, c, h)
-        }
+        public fun Srlab2.toSrlch2(): Srlch2 = Srlch2(
+            L = L,
+            C = calcLchC(),
+            h = calcLchH(),
+        )
     }
 }

@@ -8,7 +8,7 @@ import kotlin.jvm.JvmName
 import kotlin.jvm.JvmStatic
 
 /**
- * A color in the CIE 1931 XYZ tristimulus color space.
+ * A color in the CIE XYZ tristimulus color space.
  * This is often used as an intermediate color space for uniform color spaces and color appearance models.
  *
  * Note that this is *not* a uniform color space; see [dev.kdrag0n.colorkt.ucs.lab.Lab] for that.
@@ -52,7 +52,7 @@ public data class CieXyz(
         }
 
         /**
-         * Convert a linear sRGB color (D65 white point) to the CIE 1931 XYZ color space.
+         * Convert a linear sRGB color (D65 white point) to the CIE XYZ color space.
          *
          * @return Color in XYZ
          */

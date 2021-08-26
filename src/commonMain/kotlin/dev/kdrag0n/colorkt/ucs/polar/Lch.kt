@@ -34,25 +34,13 @@ public interface Lch : Color {
     public val h: Double
 
     public companion object {
-        internal fun Lab.toLch(): DoubleArray {
+        internal fun Lab.calcLchC() = sqrt(a*a + b*b)
+        internal fun Lab.calcLchH(): Double {
             val hDeg = atan2(b, a).toDegrees()
-
-            return doubleArrayOf(
-                L,
-                sqrt(square(a) + square(b)),
-                // Normalize the angle, as many will be negative
-                if (hDeg < 0) hDeg + 360 else hDeg,
-            )
+            return if (hDeg < 0) hDeg + 360 else hDeg
         }
 
-        internal fun Lch.toLab(): DoubleArray {
-            val hRad = h.toRadians()
-
-            return doubleArrayOf(
-                L,
-                C * cos(hRad),
-                C * sin(hRad),
-            )
-        }
+        internal fun Lch.calcLabA() = C * cos(h.toRadians())
+        internal fun Lch.calcLabB() = C * sin(h.toRadians())
     }
 }

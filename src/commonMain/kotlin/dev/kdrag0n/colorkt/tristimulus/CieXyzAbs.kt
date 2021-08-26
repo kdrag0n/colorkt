@@ -7,7 +7,7 @@ import kotlin.jvm.JvmName
 import kotlin.jvm.JvmStatic
 
 /**
- * A color in the CIE 1931 XYZ tristimulus color space, with absolute luminance.
+ * A color in the CIE XYZ tristimulus color space, with absolute luminance.
  * This is often used as an intermediate color space for uniform color spaces and color appearance models.
  *
  * @see dev.kdrag0n.colorkt.tristimulus.CieXyz

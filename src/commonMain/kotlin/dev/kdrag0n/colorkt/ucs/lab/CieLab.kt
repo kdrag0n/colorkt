@@ -25,18 +25,18 @@ public data class CieLab(
     override val b: Double,
 ) : Lab {
     /**
-     * Convert this color to the CIE 1931 XYZ color space.
+     * Convert this color to the CIE XYZ color space.
      *
      * @see dev.kdrag0n.colorkt.tristimulus.CieXyz
      * @return Color in XYZ
      */
-    public fun toXyz(): CieXyz {
+    public fun toXyz(refWhite: CieXyz = Illuminants.D65): CieXyz {
         val lp = (L + 16.0) / 116.0
 
         return CieXyz(
-            x = Illuminants.D65.x * fInv(lp + (a / 500.0)),
-            y = Illuminants.D65.y * fInv(lp),
-            z = Illuminants.D65.z * fInv(lp - (b / 200.0)),
+            x = refWhite.x * fInv(lp + (a / 500.0)),
+            y = refWhite.y * fInv(lp),
+            z = refWhite.z * fInv(lp - (b / 200.0)),
         )
     }
 
@@ -66,11 +66,11 @@ public data class CieLab(
          */
         @JvmStatic
         @JvmName("fromXyz")
-        public fun CieXyz.toCieLab(): CieLab {
+        public fun CieXyz.toCieLab(refWhite: CieXyz = Illuminants.D65): CieLab {
             return CieLab(
-                L = 116.0 * f(y / Illuminants.D65.y) - 16.0,
-                a = 500.0 * (f(x / Illuminants.D65.x) - f(y / Illuminants.D65.y)),
-                b = 200.0 * (f(y / Illuminants.D65.y) - f(z / Illuminants.D65.z)),
+                L = 116.0 * f(y / refWhite.y) - 16.0,
+                a = 500.0 * (f(x / refWhite.x) - f(y / refWhite.y)),
+                b = 200.0 * (f(y / refWhite.y) - f(z / refWhite.z)),
             )
         }
     }

@@ -11,11 +11,5 @@ internal inline fun square(x: Double) = x * x
 
 internal expect fun cbrt(x: Double): Double
 
-internal fun cbrtPowImpl(x: Double) = when {
-    x > 0 -> x.pow(1.0 / 3.0)
-    x < 0 -> -(-x).pow(1.0 / 3.0)
-    else -> 0.0
-}
-
 internal fun Double.toRadians() = this * PI / 180.0
 internal fun Double.toDegrees() = this * 180.0 / PI

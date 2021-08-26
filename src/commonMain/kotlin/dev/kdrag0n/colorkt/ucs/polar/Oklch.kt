@@ -1,8 +1,10 @@
 package dev.kdrag0n.colorkt.ucs.polar
 
-import dev.kdrag0n.colorkt.ucs.polar.Lch.Companion.toLab
-import dev.kdrag0n.colorkt.ucs.polar.Lch.Companion.toLch
 import dev.kdrag0n.colorkt.ucs.lab.Oklab
+import dev.kdrag0n.colorkt.ucs.polar.Lch.Companion.calcLabA
+import dev.kdrag0n.colorkt.ucs.polar.Lch.Companion.calcLabB
+import dev.kdrag0n.colorkt.ucs.polar.Lch.Companion.calcLchC
+import dev.kdrag0n.colorkt.ucs.polar.Lch.Companion.calcLchH
 import dev.kdrag0n.colorkt.util.conversion.ConversionGraph
 import dev.kdrag0n.colorkt.util.conversion.ConversionProvider
 import kotlin.jvm.JvmName
@@ -24,10 +26,11 @@ public data class Oklch(
      * @see dev.kdrag0n.colorkt.ucs.lab.Lab
      * @return Color represented as Oklab
      */
-    public fun toOklab(): Oklab {
-        val (l, a, b) = toLab()
-        return Oklab(l, a, b)
-    }
+    public fun toOklab(): Oklab = Oklab(
+        L = L,
+        a = calcLabA(),
+        b = calcLabB(),
+    )
 
     public companion object : ConversionProvider {
         override fun register() {
@@ -43,9 +46,10 @@ public data class Oklch(
          */
         @JvmStatic
         @JvmName("fromOklab")
-        public fun Oklab.toOklch(): Oklch {
-            val (l, c, h) = toLch()
-            return Oklch(l, c, h)
-        }
+        public fun Oklab.toOklch(): Oklch = Oklch(
+            L = L,
+            C = calcLchC(),
+            h = calcLchH(),
+        )
     }
 }

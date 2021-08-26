@@ -76,7 +76,7 @@ public data class Zcam(
     override val h: Double get() = hueAngle
 
     /**
-     * Convert this color to the CIE 1931 XYZ color space, with absolute luminance.
+     * Convert this color to the CIE XYZ color space, with absolute luminance.
      *
      * @see dev.kdrag0n.colorkt.tristimulus.CieXyzAbs
      * @return Color in absolute XYZ
