@@ -27,7 +27,7 @@ public interface Color {
          * @return color as [T]
          */
         public inline fun <reified T : Color> Color.convert(): T = this as? T
-            ?: convert(this, T::class) as? T?
+            ?: convert(this, T::class) as T?
             ?: throw UnsupportedConversionException("No conversion path from ${this::class} to ${T::class}")
 
         /**
