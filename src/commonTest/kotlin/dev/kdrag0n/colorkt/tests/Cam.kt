@@ -5,7 +5,7 @@ import dev.kdrag0n.colorkt.cam.Zcam.Companion.toZcam
 import dev.kdrag0n.colorkt.tristimulus.CieXyzAbs
 import kotlin.test.Test
 
-class CamTests {
+class Cam {
     @Test
     fun testZcamExample1() {
         val cond = Zcam.ViewingConditions(

@@ -10,7 +10,7 @@ import dev.kdrag0n.colorkt.ucs.polar.Oklch.Companion.toOklch
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class ConversionTests {
+class Conversion {
     @Test
     fun testLongConversion() {
         val jzczhz = CieLch(50.0, 20.0, 1.0)

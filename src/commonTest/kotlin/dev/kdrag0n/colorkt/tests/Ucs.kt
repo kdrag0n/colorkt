@@ -5,7 +5,7 @@ import dev.kdrag0n.colorkt.tristimulus.CieXyz
 import dev.kdrag0n.colorkt.ucs.lab.Oklab
 import kotlin.test.Test
 
-class UcsTests {
+class Ucs {
     @Test
     fun testOklabXyz1() {
         val xyz = CieXyz(0.950, 1.000, 1.089)

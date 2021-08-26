@@ -15,7 +15,7 @@ import dev.kdrag0n.colorkt.ucs.lab.CieLab
 import dev.kdrag0n.colorkt.ucs.polar.Oklch
 import kotlin.test.Test
 
-class GamutTests {
+class Gamut {
     @Test
     fun testOklabClip() {
         // R, G, B
