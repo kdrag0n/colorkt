@@ -60,6 +60,10 @@ public object LchGamut {
                 val c0 = 0.0
 
                 // Create a line - x=C, y=L - intersecting a hue plane
+                // In theory, we could have a divide-by-zero error here if c1=0. However, that's not a problem because
+                // all colors with chroma = 0 should be in gamut, so this loop never runs. Even if this loop somehow
+                // ends up running for such a color, it would just result in a slow search that doesn't converge because
+                // the NaN causes isInGamut() to return false.
                 val slope = (l1 - l0) / (c1 - c0)
                 val intercept = l0 - slope * c0
 
