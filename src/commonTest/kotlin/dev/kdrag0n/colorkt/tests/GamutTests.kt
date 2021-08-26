@@ -8,7 +8,7 @@ import dev.kdrag0n.colorkt.gamut.LchGamut.clipToLinearSrgb
 import dev.kdrag0n.colorkt.gamut.OklabGamut.clipToLinearSrgb
 import dev.kdrag0n.colorkt.rgb.LinearSrgb.Companion.toLinearSrgb
 import dev.kdrag0n.colorkt.rgb.Srgb
-import dev.kdrag0n.colorkt.tristimulus.CieXyz
+import dev.kdrag0n.colorkt.tristimulus.CieXyzAbs
 import dev.kdrag0n.colorkt.tristimulus.CieXyzAbs.Companion.DEFAULT_SDR_WHITE_LUMINANCE
 import dev.kdrag0n.colorkt.tristimulus.CieXyzAbs.Companion.toAbs
 import dev.kdrag0n.colorkt.ucs.lab.CieLab
@@ -47,7 +47,7 @@ class GamutTests {
         for (channel in 2 downTo 0) {
             val src = Srgb(0xff shl (channel * 8))
             val srcLinear = src.toLinearSrgb()
-            val zcam = src.convert<CieXyz>().toAbs(DEFAULT_SDR_WHITE_LUMINANCE).toZcam(cond, include2D = false)
+            val zcam = src.convert<CieXyzAbs>().toZcam(cond, include2D = false)
 
             // Boost the chroma
             val clipped = zcam.copy(chroma = zcam.chroma * 5).clipToLinearSrgb()
