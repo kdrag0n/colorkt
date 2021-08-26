@@ -16,26 +16,32 @@ public data class Srgb(
     // Convenient constructors for quantized values
 
     /**
-     * Constructor for 8-bit integer sRGB components.
+     * Create a color from 8-bit integer sRGB components.
      */
     public constructor(
         r: Int,
         g: Int,
         b: Int,
     ) : this(
-        r.toDouble() / 255.0,
-        g.toDouble() / 255.0,
-        b.toDouble() / 255.0,
+        r = r.toDouble() / 255.0,
+        g = g.toDouble() / 255.0,
+        b = b.toDouble() / 255.0,
     )
 
     /**
-     * Constructor for 8-bit packed integer sRGB colors, such as hex color codes.
+     * Create a color from a packed (A)RGB8 integer.
      */
     public constructor(color: Int) : this(
         r = (color shr 16) and 0xff,
         g = (color shr 8) and 0xff,
         b = color and 0xff,
     )
+
+    /**
+     * Create a color from a hex color code (e.g. #FA00FA).
+     * Hex codes with and without leading hash (#) symbols are supported.
+     */
+    public constructor(color: String) : this(color.removePrefix("#").toInt(16))
 
     /**
      * Convert this color to an 8-bit packed RGB integer (32 bits total)
