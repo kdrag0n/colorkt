@@ -38,13 +38,23 @@ public data class Srgb(
     )
 
     /**
-     * Convert, or quantize, this color to 8 bits per channel and pack it into a 32-bit integer.
-     * This is equivalent to the common hex color codes (e.g. #FF00FF).
+     * Convert this color to an 8-bit packed RGB integer (32 bits total)
      *
-     * @return sRGB color packed into 32-bit integer
+     * This is equivalent to the integer value of hex color codes (e.g. #FA00FA).
+     *
+     * @return color as 32-bit integer in RGB8 format
      */
     public fun toRgb8(): Int {
         return (quantize8(r) shl 16) or (quantize8(g) shl 8) or quantize8(b)
+    }
+
+    /**
+     * Convert this color to an 8-bit hex color code (e.g. #FA00FA).
+     *
+     * @return color as RGB8 hex code
+     */
+    public fun toHex(): String {
+        return "#" + toRgb8().toString(16).padStart(6, padChar = '0')
     }
 
     /**
