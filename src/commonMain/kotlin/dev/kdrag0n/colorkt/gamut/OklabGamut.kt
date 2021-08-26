@@ -1,7 +1,7 @@
 package dev.kdrag0n.colorkt.gamut
 
 import dev.kdrag0n.colorkt.Color
-import dev.kdrag0n.colorkt.Color.Companion.to
+import dev.kdrag0n.colorkt.Color.Companion.convert
 import dev.kdrag0n.colorkt.rgb.LinearSrgb
 import dev.kdrag0n.colorkt.ucs.lab.Oklab
 import dev.kdrag0n.colorkt.ucs.lab.Oklab.Companion.toOklab
@@ -345,7 +345,7 @@ public object OklabGamut {
          */
         alpha: Double = 0.05,
     ): LinearSrgb = clip(
-        rgb = this as? LinearSrgb ?: to(),
+        rgb = this as? LinearSrgb ?: convert(),
         method = method,
         alpha = alpha,
         oklab = this as? Oklab,

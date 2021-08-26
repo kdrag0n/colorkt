@@ -23,7 +23,7 @@ public interface Color {
          * @throws UnsupportedConversionException if no automatic conversion path exists
          * @return color as [T]
          */
-        public inline fun <reified T : Color> Color.to(): T = convert(this, T::class) as? T?
+        public inline fun <reified T : Color> Color.convert(): T = convert(this, T::class) as? T?
             ?: throw UnsupportedConversionException("No conversion path from ${this::class} to ${T::class}")
 
         /**
