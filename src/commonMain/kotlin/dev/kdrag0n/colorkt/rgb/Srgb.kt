@@ -43,7 +43,7 @@ public data class Srgb(
      *
      * @return sRGB color packed into 32-bit integer
      */
-    public fun quantize8(): Int {
+    public fun toRgb8(): Int {
         return (quantize8(r) shl 16) or (quantize8(g) shl 8) or quantize8(b)
     }
 
