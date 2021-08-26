@@ -1,0 +1,12 @@
+java_library {
+    name: "colorkt",
+    srcs: [
+        "src/commonMain/**/*.kt",
+        // Build JVM parts for Android
+        "src/jvmMain/**/*.kt",
+    ],
+    kotlincflags: [
+        // Enable expect and actual keywords for building JVM parts
+        "-Xmulti-platform",
+    ],
+}
