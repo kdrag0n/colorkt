@@ -32,15 +32,13 @@ public interface Lch : Color {
      * Hue angle component in degrees (which color, e.g. green/blue).
      */
     public val h: Double
-
-    public companion object {
-        internal fun Lab.calcLchC() = sqrt(a*a + b*b)
-        internal fun Lab.calcLchH(): Double {
-            val hDeg = atan2(b, a).toDegrees()
-            return if (hDeg < 0) hDeg + 360 else hDeg
-        }
-
-        internal fun Lch.calcLabA() = C * cos(h.toRadians())
-        internal fun Lch.calcLabB() = C * sin(h.toRadians())
-    }
 }
+
+internal fun Lab.calcLchC() = sqrt(a*a + b*b)
+internal fun Lab.calcLchH(): Double {
+    val hDeg = atan2(b, a).toDegrees()
+    return if (hDeg < 0) hDeg + 360 else hDeg
+}
+
+internal fun Lch.calcLabA() = C * cos(h.toRadians())
+internal fun Lch.calcLabB() = C * sin(h.toRadians())

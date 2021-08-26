@@ -1,10 +1,6 @@
 package dev.kdrag0n.colorkt.ucs.polar
 
 import dev.kdrag0n.colorkt.ucs.lab.CieLab
-import dev.kdrag0n.colorkt.ucs.polar.Lch.Companion.calcLabA
-import dev.kdrag0n.colorkt.ucs.polar.Lch.Companion.calcLabB
-import dev.kdrag0n.colorkt.ucs.polar.Lch.Companion.calcLchC
-import dev.kdrag0n.colorkt.ucs.polar.Lch.Companion.calcLchH
 import dev.kdrag0n.colorkt.util.conversion.ConversionGraph
 import kotlin.jvm.JvmName
 import kotlin.jvm.JvmStatic
