@@ -15,6 +15,13 @@ import kotlin.math.*
 /**
  * sRGB gamut clipping using Oklab.
  *
+ * Out-of-gamut colors are mapped using gamut intersection in a 2D plane, and hue is always preserved. Lightness and
+ * chroma are changed depending on the clip method; see [ClipMethod] for details.
+ *
+ * [LchGamut] has the same goal, but this is a numerical solution created specifically for Oklab. As a result, this runs
+ * faster and has more clip methods (based on the lightness of the maximum chroma in the hue plane), but is otherwise
+ * the same.
+ *
  * Ported from the original C++ implementation:
  *
  * Copyright (c) 2021 Björn Ottosson
@@ -196,6 +203,12 @@ public object OklabGamut {
         }
     }
 
+    internal fun calcAdaptiveMidL(L: Double, C: Double, alpha: Double): Double {
+        val Ld = L - 0.5
+        val e1 = 0.5 + abs(Ld) + alpha * C
+        return 0.5*(1.0 + sign(Ld)*(e1 - sqrt(e1*e1 - 2.0 *abs(Ld))))
+    }
+
     private fun clip(
         rgb: LinearSrgb,
         method: ClipMethod,
@@ -225,11 +238,7 @@ public object OklabGamut {
             ClipMethod.PROJECT_TO_LCUSP -> cusp.L
 
             // Adaptive L0 towards L0=0.5
-            ClipMethod.ADAPTIVE_TOWARDS_MID -> {
-                val Ld = L - 0.5
-                val e1 = 0.5 + abs(Ld) + alpha * C
-                0.5*(1.0 + sign(Ld)*(e1 - sqrt(e1*e1 - 2.0 *abs(Ld))))
-            }
+            ClipMethod.ADAPTIVE_TOWARDS_MID -> calcAdaptiveMidL(L, C, alpha)
             // Adaptive L0 towards L0=L_cusp
             ClipMethod.ADAPTIVE_TOWARDS_LCUSP -> {
                 val Ld = L - cusp.L
@@ -326,8 +335,13 @@ public object OklabGamut {
     }
 
     /**
-     * Clip this color to the sRGB gamut using gamut intersection in Oklab space, and return it as linear sRGB.
+     * Convert this Oklab color to linear sRGB, and clip it to sRGB gamut boundaries if it's not already within gamut.
+     *
+     * Out-of-gamut colors are mapped using gamut intersection in a 2D plane, and hue is always preserved. Lightness and
+     * chroma are changed depending on the clip method; see [ClipMethod] for details.
+     *
      * @see <a href="https://bottosson.github.io/posts/gamutclipping/">sRGB gamut clipping</a>
+     * @return clipped color in linear sRGB
      */
     @JvmStatic
     @JvmOverloads
