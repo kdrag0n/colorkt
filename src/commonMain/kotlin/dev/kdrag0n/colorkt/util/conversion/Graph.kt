@@ -5,7 +5,16 @@ import kotlin.jvm.JvmStatic
 import kotlin.reflect.KClass
 
 internal typealias ColorType = KClass<out Color>
-internal typealias ColorConverter = (Color) -> Color
+
+/**
+ * One-way converter from color type F to T.
+ */
+public fun interface ColorConverter<F : Color, T : Color> {
+    /**
+     * Convert [color] from type F to T.
+     */
+    public fun convert(color: F): T
+}
 
 /**
  * Global color conversion graph, used for automatic conversions between different color spaces.
@@ -32,7 +41,7 @@ public object ConversionGraph {
     public fun add(
         from: ColorType,
         to: ColorType,
-        converter: ColorConverter,
+        converter: ColorConverter<Color, Color>,
     ) {
         val node = ConversionEdge(from, to, converter)
 
@@ -48,7 +57,7 @@ public object ConversionGraph {
         }
     }
 
-    internal fun findPath(from: ColorType, to: ColorType): List<ColorConverter>? {
+    internal fun findPath(from: ColorType, to: ColorType): List<ColorConverter<Color, Color>>? {
         val visited = HashSet<ConversionEdge>()
         val pathQueue = ArrayDeque(listOf(
             // Initial path: from node
@@ -77,6 +86,6 @@ public object ConversionGraph {
     private data class ConversionEdge(
         val from: ColorType,
         val to: ColorType,
-        val converter: ColorConverter,
+        val converter: ColorConverter<Color, Color>,
     )
 }

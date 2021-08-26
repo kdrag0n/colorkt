@@ -38,7 +38,7 @@ public interface Color {
                 ?: return null
 
             return path.fold(fromColor) { color, converter ->
-                converter(color)
+                converter.convert(color)
             }
         }
     }
