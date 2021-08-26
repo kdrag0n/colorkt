@@ -33,6 +33,13 @@ public data class LinearSrgb(
         )
     }
 
+    /**
+     * Check whether this color is within the sRGB gamut.
+     * @return true if color is in gamut, false otherwise
+     */
+    public fun isInGamut(): Boolean = !r.isNaN() && !g.isNaN() && !b.isNaN() &&
+            r in 0.0..1.0 && g in 0.0..1.0 && b in 0.0..1.0
+
     public companion object {
         internal fun register() {
             ConversionGraph.add<Srgb, LinearSrgb> { it.toLinearSrgb() }

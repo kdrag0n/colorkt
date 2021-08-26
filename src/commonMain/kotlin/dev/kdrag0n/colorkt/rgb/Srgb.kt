@@ -47,6 +47,13 @@ public data class Srgb(
         return (quantize8(r) shl 16) or (quantize8(g) shl 8) or quantize8(b)
     }
 
+    /**
+     * Check whether this color is within the sRGB gamut.
+     * @return true if color is in gamut, false otherwise
+     */
+    public fun isInGamut(): Boolean = !r.isNaN() && !g.isNaN() && !b.isNaN() &&
+            r in 0.0..1.0 && g in 0.0..1.0 && b in 0.0..1.0
+
     internal companion object {
         internal fun register() { }
 
