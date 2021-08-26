@@ -9,9 +9,9 @@ class CamTests {
     @Test
     fun testZcamExample1() {
         val cond = Zcam.ViewingConditions(
-            F_s = Zcam.ViewingConditions.SURROUND_AVERAGE,
-            L_a = 264.0,
-            Y_b = 100.0,
+            surroundFactor = Zcam.ViewingConditions.SURROUND_AVERAGE,
+            adaptingLuminance = 264.0,
+            backgroundLuminance = 100.0,
             //referenceWhite = CieXyz100(256.0, 264.0, 202.0),
             referenceWhite = CieXyzAbs(250.92408, 264.0, 287.45112), // d65
         )

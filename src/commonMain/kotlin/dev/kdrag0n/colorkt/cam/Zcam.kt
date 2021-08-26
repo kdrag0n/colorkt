@@ -31,7 +31,7 @@ public data class Zcam(
     /** Colorfulness relative to the reference white. **/
     val chroma: Double = Double.NaN,
     /** Hue from 0 to 360 degrees. **/
-    val hueAngle: Double,
+    val hue: Double,
     /* hue composition is not supported */
 
     // 2D
@@ -56,8 +56,8 @@ public data class Zcam(
     val Mz: Double get() = colorfulness
     /** Alias for [chroma]. **/
     val Cz: Double get() = chroma
-    /** Alias for [hueAngle]. **/
-    val hz: Double get() = hueAngle
+    /** Alias for [hue]. **/
+    val hz: Double get() = hue
     /** Alias for [saturation]. **/
     val Sz: Double get() = saturation
     /** Alias for [vividness]. **/
@@ -72,8 +72,8 @@ public data class Zcam(
     override val L: Double get() = lightness
     /** Alias for [chroma]. **/
     override val C: Double get() = chroma
-    /** Alias for [hueAngle]. **/
-    override val h: Double get() = hueAngle
+    /** Alias for [hue]. **/
+    override val h: Double get() = hue
 
     /**
      * Convert this color to the CIE XYZ color space, with absolute luminance.
@@ -93,7 +93,7 @@ public data class Zcam(
         val Iz = when (luminanceSource) {
             LuminanceSource.BRIGHTNESS -> Qz / cond.Iz_coeff
             LuminanceSource.LIGHTNESS -> (Jz * Qz_w) / (cond.Iz_coeff * 100.0)
-        }.pow(cond.Qz_denom / (1.6 * cond.F_s))
+        }.pow(cond.Qz_denom / (1.6 * cond.surroundFactor))
 
         /* Step 2 */
         // Chroma
@@ -202,27 +202,27 @@ public data class Zcam(
         /**
          * Surround factor, which models the surround field (distant background).
          */
-        val F_s: Double,
+        val surroundFactor: Double,
 
         /**
-         * Absolute luminance of the adapting field. This can be calculated as L_w * [Y_b] / 100, where L_w is the
+         * Absolute luminance of the adapting field. This can be calculated as L_w * [backgroundLuminance] / 100, where L_w is the
          * luminance of [referenceWhite], but it is a user-controlled parameter for flexibility.
          */
-        val L_a: Double,
+        val adaptingLuminance: Double,
         /**
          * Absolute luminance of the background.
          */
-        val Y_b: Double,
+        val backgroundLuminance: Double,
 
         /**
          * Reference white point in absolute XYZ.
          */
         val referenceWhite: CieXyzAbs,
     ) {
-        internal val F_b = sqrt(Y_b / referenceWhite.y)
-        internal val F_l = 0.171 * cbrt(L_a) * (1.0 - exp(-48.0/9.0 * L_a))
+        internal val F_b = sqrt(backgroundLuminance / referenceWhite.y)
+        internal val F_l = 0.171 * cbrt(adaptingLuminance) * (1.0 - exp(-48.0/9.0 * adaptingLuminance))
 
-        internal val Iz_coeff = 2700.0 * F_s.pow(2.2) * F_b.pow(0.5) * F_l.pow(0.2)
+        internal val Iz_coeff = 2700.0 * surroundFactor.pow(2.2) * F_b.pow(0.5) * F_l.pow(0.2)
         internal val ez_coeff = F_l.pow(0.2)
         internal val Qz_denom = F_b.pow(0.12)
         internal val Sz_coeff = F_l.pow(0.6)
@@ -298,7 +298,7 @@ public data class Zcam(
         // Shared between forward and inverse models
         private fun hpToEz(hp: Double) = 1.015 + cos((89.038 + hp).toRadians())
         private fun izToQz(Iz: Double, cond: ViewingConditions) =
-            cond.Iz_coeff * Iz.pow((1.6 * cond.F_s) / cond.Qz_denom)
+            cond.Iz_coeff * Iz.pow((1.6 * cond.surroundFactor) / cond.Qz_denom)
 
         /**
          * Get the perceptual appearance attributes of this color using the [Zcam] color appearance model.
@@ -351,7 +351,7 @@ public data class Zcam(
                 lightness = Jz,
                 colorfulness = Mz,
                 chroma = Cz,
-                hueAngle = hp,
+                hue = hp,
 
                 saturation = Sz,
                 vividness = Vz,
