@@ -18,7 +18,7 @@ import kotlin.jvm.JvmStatic
 public data class CieLch(
     override val L: Double,
     override val C: Double,
-    override val h: Double = 0.0,
+    override val h: Double,
 ) : Lch {
     /**
      * Convert this color to the Cartesian (Lab) representation of CIELAB.

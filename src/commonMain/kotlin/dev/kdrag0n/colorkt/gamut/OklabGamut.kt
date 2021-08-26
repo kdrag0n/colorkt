@@ -8,6 +8,7 @@ import dev.kdrag0n.colorkt.ucs.lab.Oklab.Companion.toOklab
 import dev.kdrag0n.colorkt.util.math.cbrt
 import dev.kdrag0n.colorkt.util.math.cube
 import dev.kdrag0n.colorkt.util.math.square
+import kotlin.jvm.JvmOverloads
 import kotlin.jvm.JvmStatic
 import kotlin.math.*
 
@@ -329,6 +330,7 @@ public object OklabGamut {
      * @see <a href="https://bottosson.github.io/posts/gamutclipping/">sRGB gamut clipping</a>
      */
     @JvmStatic
+    @JvmOverloads
     public fun Color.clipToLinearSrgb(
         /**
          * Gamut clipping method to use. Different methods preserve different attributes and make different trade-offs.
