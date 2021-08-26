@@ -1,6 +1,7 @@
 package dev.kdrag0n.colorkt.tests
 
 import dev.kdrag0n.colorkt.Color.Companion.convert
+import dev.kdrag0n.colorkt.rgb.Srgb
 import dev.kdrag0n.colorkt.ucs.lab.Oklab
 import dev.kdrag0n.colorkt.ucs.lab.Oklab.Companion.toOklab
 import dev.kdrag0n.colorkt.ucs.polar.CieLch
@@ -22,5 +23,14 @@ class ConversionTests {
     fun testNopConversion() {
         val color = Oklab(0.5, 0.3, 0.5)
         assertEquals(color, color.convert())
+    }
+
+    @Test
+    fun testSrgbHex() {
+        listOf("#ff0000", "#00ff00", "#0000ff").forEach { sample ->
+            val parsed = Srgb(sample)
+            val encoded = parsed.toHex()
+            assertEquals(sample, encoded)
+        }
     }
 }
