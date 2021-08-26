@@ -6,6 +6,7 @@ import dev.kdrag0n.colorkt.util.conversion.ConversionGraph
 import dev.kdrag0n.colorkt.util.math.cbrt
 import dev.kdrag0n.colorkt.util.math.cube
 import kotlin.jvm.JvmName
+import kotlin.jvm.JvmOverloads
 import kotlin.jvm.JvmStatic
 
 /**
@@ -29,6 +30,7 @@ public data class CieLab(
      * @see dev.kdrag0n.colorkt.tristimulus.CieXyz
      * @return Color in XYZ
      */
+    @JvmOverloads
     public fun toXyz(refWhite: CieXyz = Illuminants.D65): CieXyz {
         val lp = (L + 16.0) / 116.0
 
@@ -64,6 +66,7 @@ public data class CieLab(
          * @return Color in CIE L*a*b* UCS
          */
         @JvmStatic
+        @JvmOverloads
         @JvmName("fromXyz")
         public fun CieXyz.toCieLab(refWhite: CieXyz = Illuminants.D65): CieLab {
             return CieLab(
