@@ -19,10 +19,7 @@ class CamTests {
         //val sample = CieXyz100(185.0, 206.0, 163.0)
         val sample = CieXyzAbs(182.232347, 206.57991269, 231.87358528) // d65
         val zcam = sample.toZcam(cond)
-        println(cond)
-        println(zcam)
 
-        println("F_s = ${cond.F_s}, F_l = ${cond.F_l}, F_b = ${cond.F_b}")
         assertApprox(cond.F_l, 1.0970)
         assertApprox(cond.F_b, 0.6155)
 
@@ -44,7 +41,6 @@ class CamTests {
 
         // inverse
         val inverted = zcam.toXyzAbs(Zcam.LuminanceSource.LIGHTNESS, Zcam.ChromaSource.COLORFULNESS)
-        println("inverted = $inverted")
         assertApprox(inverted.x, sample.x)
         assertApprox(inverted.y, sample.y)
         assertApprox(inverted.z, sample.z)
