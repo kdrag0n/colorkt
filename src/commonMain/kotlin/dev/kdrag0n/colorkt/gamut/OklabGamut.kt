@@ -1,7 +1,5 @@
 package dev.kdrag0n.colorkt.gamut
 
-import dev.kdrag0n.colorkt.Color
-import dev.kdrag0n.colorkt.Color.Companion.convert
 import dev.kdrag0n.colorkt.rgb.LinearSrgb
 import dev.kdrag0n.colorkt.ucs.lab.Oklab
 import dev.kdrag0n.colorkt.ucs.lab.Oklab.Companion.toOklab
@@ -345,7 +343,7 @@ public object OklabGamut {
      */
     @JvmStatic
     @JvmOverloads
-    public fun Color.clipToLinearSrgb(
+    public fun Oklab.clipToLinearSrgb(
         /**
          * Gamut clipping method to use. Different methods preserve different attributes and make different trade-offs.
          * @see [ClipMethod]
@@ -359,9 +357,9 @@ public object OklabGamut {
          */
         alpha: Double = 0.05,
     ): LinearSrgb = clip(
-        rgb = convert(),
+        rgb = toLinearSrgb(),
         method = method,
         alpha = alpha,
-        oklab = this as? Oklab,
+        oklab = this,
     )
 }
