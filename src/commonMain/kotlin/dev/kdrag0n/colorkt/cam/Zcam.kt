@@ -8,6 +8,7 @@ import dev.kdrag0n.colorkt.util.math.square
 import dev.kdrag0n.colorkt.util.math.toDegrees
 import dev.kdrag0n.colorkt.util.math.toRadians
 import kotlin.jvm.JvmName
+import kotlin.jvm.JvmOverloads
 import kotlin.jvm.JvmStatic
 import kotlin.math.*
 
@@ -307,8 +308,22 @@ public data class Zcam(
          * @return [Zcam] attributes
          */
         @JvmStatic
+        @JvmOverloads
         @JvmName("fromXyzAbs")
-        public fun CieXyzAbs.toZcam(cond: ViewingConditions): Zcam {
+        public fun CieXyzAbs.toZcam(
+            /**
+             * Conditions under which the color will be viewed.
+             */
+            cond: ViewingConditions,
+            /**
+             * Whether to calculate 2D color attributes (attributes that depend on the result of multiple 1D attributes).
+             * This includes saturation (Sz), vividness (Vz), blackness (Kz), and whiteness (Wz).
+             *
+             * These attributes are unnecessary in most cases, so you can set this to false and speed up the
+             * calculations.
+             */
+            include2D: Boolean = true,
+        ): Zcam {
             /* Step 2 */
             // Achromatic response
             val (Iz, az, bz) = xyzToIzazbz(this)
@@ -339,12 +354,12 @@ public data class Zcam(
 
             /* Step 6 */
             // Saturation
-            val Sz = 100.0 * cond.Sz_coeff * sqrt(Mz / Qz)
+            val Sz = if (include2D) 100.0 * cond.Sz_coeff * sqrt(Mz / Qz) else Double.NaN
 
             // Vividness, blackness, whiteness
-            val Vz = sqrt(square(Jz - 58) + 3.4 * square(Cz))
-            val Kz = 100.0 - 0.8 * sqrt(square(Jz) + 8.0 * square(Cz))
-            val Wz = 100.0 - sqrt(square(100.0 - Jz) + square(Cz))
+            val Vz = if (include2D) sqrt(square(Jz - 58) + 3.4 * square(Cz)) else Double.NaN
+            val Kz = if (include2D) 100.0 - 0.8 * sqrt(square(Jz) + 8.0 * square(Cz)) else Double.NaN
+            val Wz = if (include2D) 100.0 - sqrt(square(100.0 - Jz) + square(Cz)) else Double.NaN
 
             return Zcam(
                 brightness = Qz,
