@@ -13,7 +13,7 @@ import kotlin.math.*
 
 /**
  * A color modeled by the ZCAM color appearance model, which provides a variety of perceptual color attributes.
- * This color appearance model is designed with HDR in mind, so it only accepts *absolute* CIE XYZ values scaled by the
+ * This color appearance model is designed with HDR in mind so it only accepts *absolute* CIE XYZ values scaled by the
  * absolute luminance of the modeled display, unlike SDR color spaces that accept relative luminance.
  *
  * @see <a href="https://www.osapublishing.org/oe/viewmedia.cfm?uri=oe-29-4-6036&html=true">ZCAM, a colour appearance model based on a high dynamic range uniform colour space</a>
