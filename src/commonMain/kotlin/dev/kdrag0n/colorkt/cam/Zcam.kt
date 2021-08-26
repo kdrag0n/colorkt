@@ -36,13 +36,13 @@ public data class Zcam(
     /* hue composition is not supported */
 
     // 2D
-    /** Chroma relative to lightness. **/
+    /** Chroma relative to lightness. 2D attribute. **/
     val saturation: Double = Double.NaN,
-    /** Distance from neutral black. **/
+    /** Distance from neutral black. 2D attribute. **/
     val vividness: Double = Double.NaN,
-    /** Amount of black. **/
+    /** Amount of black. 2D attribute. **/
     val blackness: Double = Double.NaN,
-    /** Amount of white. **/
+    /** Amount of white. 2D attribute. **/
     val whiteness: Double = Double.NaN,
 
     /** Viewing conditions used to model this color. **/
