@@ -18,8 +18,8 @@ import kotlin.test.Test
 class Gamut {
     @Test
     fun testOklabClip() {
-        // R, G, B
-        for (channel in 2 downTo 0) {
+        // R, G, B, black
+        for (channel in 2 downTo -1) {
             val src = Srgb(0xff shl (channel * 8))
             val srcLinear = src.toLinearSrgb()
             val lch = src.convert<Oklch>()
@@ -43,8 +43,8 @@ class Gamut {
             referenceWhite = Illuminants.D65.toAbs(DEFAULT_SDR_WHITE_LUMINANCE),
         )
 
-        // R, G, B
-        for (channel in 2 downTo 0) {
+        // R, G, B, black
+        for (channel in 2 downTo -1) {
             val src = Srgb(0xff shl (channel * 8))
             val srcLinear = src.toLinearSrgb()
             val zcam = src.convert<CieXyzAbs>().toZcam(cond, include2D = false)
