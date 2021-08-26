@@ -79,8 +79,3 @@ public object ConversionGraph {
         val converter: (Color) -> Color,
     )
 }
-
-// Auto-registering providers are internal because it makes no sense for external code to use this.
-internal interface ConversionProvider {
-    fun register()
-}

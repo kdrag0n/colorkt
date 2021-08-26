@@ -3,7 +3,6 @@ package dev.kdrag0n.colorkt.ucs.lab
 import dev.kdrag0n.colorkt.tristimulus.CieXyz
 import dev.kdrag0n.colorkt.data.Illuminants
 import dev.kdrag0n.colorkt.util.conversion.ConversionGraph
-import dev.kdrag0n.colorkt.util.conversion.ConversionProvider
 import dev.kdrag0n.colorkt.util.math.cbrt
 import dev.kdrag0n.colorkt.util.math.cube
 import kotlin.jvm.JvmName
@@ -40,8 +39,8 @@ public data class CieLab(
         )
     }
 
-    public companion object : ConversionProvider {
-        override fun register() {
+    public companion object {
+        internal fun register() {
             ConversionGraph.add<CieXyz, CieLab> { it.toCieLab() }
             ConversionGraph.add<CieLab, CieXyz> { it.toXyz() }
         }

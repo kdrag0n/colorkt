@@ -6,7 +6,6 @@ import dev.kdrag0n.colorkt.ucs.polar.Lch.Companion.calcLabB
 import dev.kdrag0n.colorkt.ucs.polar.Lch.Companion.calcLchC
 import dev.kdrag0n.colorkt.ucs.polar.Lch.Companion.calcLchH
 import dev.kdrag0n.colorkt.util.conversion.ConversionGraph
-import dev.kdrag0n.colorkt.util.conversion.ConversionProvider
 import kotlin.jvm.JvmName
 import kotlin.jvm.JvmStatic
 
@@ -32,8 +31,8 @@ public data class Srlch2(
         b = calcLabB(),
     )
 
-    public companion object : ConversionProvider {
-        override fun register() {
+    public companion object {
+        internal fun register() {
             ConversionGraph.add<Srlab2, Srlch2> { it.toSrlch2() }
             ConversionGraph.add<Srlch2, Srlab2> { it.toSrlab2() }
         }

@@ -1,7 +1,6 @@
 package dev.kdrag0n.colorkt.rgb
 
 import dev.kdrag0n.colorkt.util.conversion.ConversionGraph
-import dev.kdrag0n.colorkt.util.conversion.ConversionProvider
 import kotlin.jvm.JvmName
 import kotlin.jvm.JvmStatic
 import kotlin.math.pow
@@ -34,8 +33,8 @@ public data class LinearSrgb(
         )
     }
 
-    public companion object : ConversionProvider {
-        override fun register() {
+    public companion object {
+        internal fun register() {
             ConversionGraph.add<Srgb, LinearSrgb> { it.toLinearSrgb() }
             ConversionGraph.add<LinearSrgb, Srgb> { it.toSrgb() }
         }

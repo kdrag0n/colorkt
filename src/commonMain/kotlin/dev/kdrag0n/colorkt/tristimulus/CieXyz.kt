@@ -3,7 +3,6 @@ package dev.kdrag0n.colorkt.tristimulus
 import dev.kdrag0n.colorkt.Color
 import dev.kdrag0n.colorkt.rgb.LinearSrgb
 import dev.kdrag0n.colorkt.util.conversion.ConversionGraph
-import dev.kdrag0n.colorkt.util.conversion.ConversionProvider
 import kotlin.jvm.JvmName
 import kotlin.jvm.JvmStatic
 
@@ -45,8 +44,8 @@ public data class CieXyz(
         )
     }
 
-    public companion object : ConversionProvider {
-        override fun register() {
+    public companion object {
+        internal fun register() {
             ConversionGraph.add<LinearSrgb, CieXyz> { it.toXyz() }
             ConversionGraph.add<CieXyz, LinearSrgb> { it.toLinearSrgb() }
         }

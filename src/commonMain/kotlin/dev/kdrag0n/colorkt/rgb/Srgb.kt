@@ -1,6 +1,5 @@
 package dev.kdrag0n.colorkt.rgb
 
-import dev.kdrag0n.colorkt.util.conversion.ConversionProvider
 import kotlin.math.roundToInt
 
 /**
@@ -48,8 +47,8 @@ public data class Srgb(
         return (quantize8(r) shl 16) or (quantize8(g) shl 8) or quantize8(b)
     }
 
-    internal companion object : ConversionProvider {
-        override fun register() { }
+    internal companion object {
+        internal fun register() { }
 
         // Clamp out-of-bounds values
         private fun quantize8(n: Double) = (n * 255.0).roundToInt() and 0xff

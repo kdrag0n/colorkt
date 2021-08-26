@@ -2,7 +2,6 @@ package dev.kdrag0n.colorkt.tristimulus
 
 import dev.kdrag0n.colorkt.Color
 import dev.kdrag0n.colorkt.util.conversion.ConversionGraph
-import dev.kdrag0n.colorkt.util.conversion.ConversionProvider
 import kotlin.jvm.JvmName
 import kotlin.jvm.JvmStatic
 
@@ -39,14 +38,14 @@ public data class CieXyzAbs(
         z = z / luminance,
     )
 
-    public companion object : ConversionProvider {
+    public companion object {
         /**
          * Default absolute luminance used to convert SDR colors to absolute XYZ.
          * This effectively models the color being displayed on a display with a brightness of 200 nits (cd/m^2).
          */
         public const val DEFAULT_SDR_WHITE_LUMINANCE: Double = 200.0 // cd/m^2
 
-        override fun register() {
+        internal fun register() {
             ConversionGraph.add<CieXyz, CieXyzAbs> { it.toAbs(DEFAULT_SDR_WHITE_LUMINANCE) }
             ConversionGraph.add<CieXyzAbs, CieXyz> { it.toRel(DEFAULT_SDR_WHITE_LUMINANCE) }
         }
