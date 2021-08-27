@@ -1,10 +1,9 @@
-package dev.kdrag0n.colorkt.ucs.polar
+package dev.kdrag0n.colorkt.ucs.lch
 
 import dev.kdrag0n.colorkt.Color
 import dev.kdrag0n.colorkt.util.math.toDegrees
 import dev.kdrag0n.colorkt.util.math.toRadians
 import dev.kdrag0n.colorkt.ucs.lab.Lab
-import dev.kdrag0n.colorkt.util.math.square
 import kotlin.math.*
 
 /**

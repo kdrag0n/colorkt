@@ -1,4 +1,4 @@
-package dev.kdrag0n.colorkt.ucs.polar
+package dev.kdrag0n.colorkt.ucs.lch
 
 import dev.kdrag0n.colorkt.ucs.lab.CieLab
 import dev.kdrag0n.colorkt.util.conversion.ConversionGraph
@@ -8,7 +8,7 @@ import kotlin.jvm.JvmStatic
 /**
  * Polar (LCh) representation of [dev.kdrag0n.colorkt.ucs.lab.CieLab].
  *
- * @see dev.kdrag0n.colorkt.ucs.polar.Lch
+ * @see dev.kdrag0n.colorkt.ucs.lch.Lch
  */
 public data class CieLch(
     override val L: Double,
@@ -36,7 +36,7 @@ public data class CieLch(
         /**
          * Convert this color to the polar (LCh) representation of CIELAB.
          *
-         * @see dev.kdrag0n.colorkt.ucs.polar.Lch
+         * @see dev.kdrag0n.colorkt.ucs.lch.Lch
          * @return Color represented as CIELCh
          */
         @JvmStatic

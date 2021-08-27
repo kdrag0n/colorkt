@@ -4,9 +4,9 @@ import dev.kdrag0n.colorkt.Color.Companion.convert
 import dev.kdrag0n.colorkt.rgb.Srgb
 import dev.kdrag0n.colorkt.ucs.lab.Oklab
 import dev.kdrag0n.colorkt.ucs.lab.Oklab.Companion.toOklab
-import dev.kdrag0n.colorkt.ucs.polar.CieLch
-import dev.kdrag0n.colorkt.ucs.polar.Oklch
-import dev.kdrag0n.colorkt.ucs.polar.Oklch.Companion.toOklch
+import dev.kdrag0n.colorkt.ucs.lch.CieLch
+import dev.kdrag0n.colorkt.ucs.lch.Oklch
+import dev.kdrag0n.colorkt.ucs.lch.Oklch.Companion.toOklch
 import kotlin.test.Test
 import kotlin.test.assertEquals
 

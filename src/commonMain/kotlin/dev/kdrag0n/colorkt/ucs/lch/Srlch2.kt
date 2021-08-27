@@ -1,4 +1,4 @@
-package dev.kdrag0n.colorkt.ucs.polar
+package dev.kdrag0n.colorkt.ucs.lch
 
 import dev.kdrag0n.colorkt.ucs.lab.Srlab2
 import dev.kdrag0n.colorkt.util.conversion.ConversionGraph
@@ -8,7 +8,7 @@ import kotlin.jvm.JvmStatic
 /**
  * Polar (LCh) representation of [dev.kdrag0n.colorkt.ucs.lab.Srlab2].
  *
- * @see dev.kdrag0n.colorkt.ucs.polar.Lch
+ * @see dev.kdrag0n.colorkt.ucs.lch.Lch
  */
 public data class Srlch2(
     override val L: Double,
@@ -36,7 +36,7 @@ public data class Srlch2(
         /**
          * Convert this color to the polar (LCh) representation of SRLAB2.
          *
-         * @see dev.kdrag0n.colorkt.ucs.polar.Lch
+         * @see dev.kdrag0n.colorkt.ucs.lch.Lch
          * @return Color represented as SRLCh2
          */
         @JvmStatic

@@ -10,7 +10,7 @@ import dev.kdrag0n.colorkt.Color
  *
  * Implementations of this are usually uniform color spaces.
  *
- * It may be helpful to convert these colors to polar [dev.kdrag0n.colorkt.ucs.polar.Lch] representations
+ * It may be helpful to convert these colors to polar [dev.kdrag0n.colorkt.ucs.lch.Lch] representations
  * for easier manipulation.
  */
 public interface Lab : Color {

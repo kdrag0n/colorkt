@@ -12,7 +12,7 @@ import dev.kdrag0n.colorkt.tristimulus.CieXyzAbs
 import dev.kdrag0n.colorkt.tristimulus.CieXyzAbs.Companion.DEFAULT_SDR_WHITE_LUMINANCE
 import dev.kdrag0n.colorkt.tristimulus.CieXyzAbs.Companion.toAbs
 import dev.kdrag0n.colorkt.ucs.lab.CieLab
-import dev.kdrag0n.colorkt.ucs.polar.Oklch
+import dev.kdrag0n.colorkt.ucs.lch.Oklch
 import kotlin.test.Test
 import kotlin.test.assertFalse
 

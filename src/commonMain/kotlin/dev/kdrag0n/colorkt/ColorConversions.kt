@@ -7,9 +7,9 @@ import dev.kdrag0n.colorkt.tristimulus.CieXyzAbs
 import dev.kdrag0n.colorkt.ucs.lab.CieLab
 import dev.kdrag0n.colorkt.ucs.lab.Oklab
 import dev.kdrag0n.colorkt.ucs.lab.Srlab2
-import dev.kdrag0n.colorkt.ucs.polar.CieLch
-import dev.kdrag0n.colorkt.ucs.polar.Oklch
-import dev.kdrag0n.colorkt.ucs.polar.Srlch2
+import dev.kdrag0n.colorkt.ucs.lch.CieLch
+import dev.kdrag0n.colorkt.ucs.lch.Oklch
+import dev.kdrag0n.colorkt.ucs.lch.Srlch2
 
 internal fun registerAllColors() {
     // RGB
