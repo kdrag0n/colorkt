@@ -4,6 +4,7 @@ import dev.kdrag0n.colorkt.Color
 import dev.kdrag0n.colorkt.util.conversion.ConversionGraph
 import kotlin.jvm.JvmName
 import kotlin.jvm.JvmStatic
+import kotlin.jvm.JvmSynthetic
 
 /**
  * A color in the CIE XYZ tristimulus color space, with absolute luminance.
@@ -45,6 +46,7 @@ public data class CieXyzAbs(
          */
         public const val DEFAULT_SDR_WHITE_LUMINANCE: Double = 200.0 // cd/m^2
 
+        @JvmSynthetic
         internal fun register() {
             ConversionGraph.add<CieXyz, CieXyzAbs> { it.toAbs(DEFAULT_SDR_WHITE_LUMINANCE) }
             ConversionGraph.add<CieXyzAbs, CieXyz> { it.toRel(DEFAULT_SDR_WHITE_LUMINANCE) }

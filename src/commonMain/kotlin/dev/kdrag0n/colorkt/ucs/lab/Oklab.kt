@@ -7,6 +7,7 @@ import dev.kdrag0n.colorkt.util.math.cbrt
 import dev.kdrag0n.colorkt.util.math.cube
 import kotlin.jvm.JvmName
 import kotlin.jvm.JvmStatic
+import kotlin.jvm.JvmSynthetic
 
 /**
  * A color in the Oklab uniform color space, which represents colors in [dev.kdrag0n.colorkt.ucs.lab.Lab] form.
@@ -58,6 +59,7 @@ public data class Oklab(
     }
 
     public companion object {
+        @JvmSynthetic
         internal fun register() {
             ConversionGraph.add<LinearSrgb, Oklab> { it.toOklab() }
             ConversionGraph.add<Oklab, LinearSrgb> { it.toLinearSrgb() }

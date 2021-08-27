@@ -1,5 +1,6 @@
 package dev.kdrag0n.colorkt.rgb
 
+import kotlin.jvm.JvmSynthetic
 import kotlin.math.roundToInt
 
 /**
@@ -70,9 +71,7 @@ public data class Srgb(
     public fun isInGamut(): Boolean = !r.isNaN() && !g.isNaN() && !b.isNaN() &&
             r in 0.0..1.0 && g in 0.0..1.0 && b in 0.0..1.0
 
-    internal companion object {
-        internal fun register() { }
-
+    private companion object {
         // Clamp out-of-bounds values
         private fun quantize8(n: Double) = (n * 255.0).roundToInt() and 0xff
     }

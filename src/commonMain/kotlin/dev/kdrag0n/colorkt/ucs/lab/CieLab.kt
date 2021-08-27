@@ -8,6 +8,7 @@ import dev.kdrag0n.colorkt.util.math.cube
 import kotlin.jvm.JvmName
 import kotlin.jvm.JvmOverloads
 import kotlin.jvm.JvmStatic
+import kotlin.jvm.JvmSynthetic
 
 /**
  * A color in the CIE L*a*b* uniform color space, which represents colors in [dev.kdrag0n.colorkt.ucs.lab.Lab] form.
@@ -42,6 +43,7 @@ public data class CieLab(
     }
 
     public companion object {
+        @JvmSynthetic
         internal fun register() {
             ConversionGraph.add<CieXyz, CieLab> { it.toCieLab() }
             ConversionGraph.add<CieLab, CieXyz> { it.toXyz() }

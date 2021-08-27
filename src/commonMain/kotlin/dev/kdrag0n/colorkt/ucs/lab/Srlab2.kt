@@ -6,6 +6,7 @@ import dev.kdrag0n.colorkt.util.math.cbrt
 import dev.kdrag0n.colorkt.util.math.cube
 import kotlin.jvm.JvmName
 import kotlin.jvm.JvmStatic
+import kotlin.jvm.JvmSynthetic
 
 /**
  * A color in the SRLAB2 uniform color space, which represents colors in [dev.kdrag0n.colorkt.ucs.lab.Lab] form.
@@ -39,6 +40,7 @@ public data class Srlab2(
     }
 
     public companion object {
+        @JvmSynthetic
         internal fun register() {
             ConversionGraph.add<LinearSrgb, Srlab2> { it.toSrlab2() }
             ConversionGraph.add<Srlab2, LinearSrgb> { it.toLinearSrgb() }

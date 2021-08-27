@@ -10,6 +10,7 @@ import dev.kdrag0n.colorkt.util.math.toRadians
 import kotlin.jvm.JvmName
 import kotlin.jvm.JvmOverloads
 import kotlin.jvm.JvmStatic
+import kotlin.jvm.JvmSynthetic
 import kotlin.math.*
 
 /**
@@ -220,15 +221,23 @@ public data class Zcam(
          */
         val referenceWhite: CieXyzAbs,
     ) {
+        @JvmSynthetic
         internal val F_b = sqrt(backgroundLuminance / referenceWhite.y)
+        @JvmSynthetic
         internal val F_l = 0.171 * cbrt(adaptingLuminance) * (1.0 - exp(-48.0/9.0 * adaptingLuminance))
 
+        @JvmSynthetic
         internal val Iz_coeff = 2700.0 * surroundFactor.pow(2.2) * F_b.pow(0.5) * F_l.pow(0.2)
+        @JvmSynthetic
         internal val ez_coeff = F_l.pow(0.2)
+        @JvmSynthetic
         internal val Qz_denom = F_b.pow(0.12)
+        @JvmSynthetic
         internal val Sz_coeff = F_l.pow(0.6)
+        @JvmSynthetic
         internal val Mz_denom: Double
 
+        @JvmSynthetic
         internal val Qz_w: Double
 
         init {

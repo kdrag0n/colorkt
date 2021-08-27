@@ -4,6 +4,7 @@ import dev.kdrag0n.colorkt.ucs.lab.Srlab2
 import dev.kdrag0n.colorkt.util.conversion.ConversionGraph
 import kotlin.jvm.JvmName
 import kotlin.jvm.JvmStatic
+import kotlin.jvm.JvmSynthetic
 
 /**
  * Polar (LCh) representation of [dev.kdrag0n.colorkt.ucs.lab.Srlab2].
@@ -28,6 +29,7 @@ public data class Srlch2(
     )
 
     public companion object {
+        @JvmSynthetic
         internal fun register() {
             ConversionGraph.add<Srlab2, Srlch2> { it.toSrlch2() }
             ConversionGraph.add<Srlch2, Srlab2> { it.toSrlab2() }

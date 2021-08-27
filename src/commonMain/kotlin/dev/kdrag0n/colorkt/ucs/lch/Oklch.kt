@@ -4,6 +4,7 @@ import dev.kdrag0n.colorkt.ucs.lab.Oklab
 import dev.kdrag0n.colorkt.util.conversion.ConversionGraph
 import kotlin.jvm.JvmName
 import kotlin.jvm.JvmStatic
+import kotlin.jvm.JvmSynthetic
 
 /**
  * Polar (LCh) representation of [dev.kdrag0n.colorkt.ucs.lab.Oklab].
@@ -28,6 +29,7 @@ public data class Oklch(
     )
 
     public companion object {
+        @JvmSynthetic
         internal fun register() {
             ConversionGraph.add<Oklab, Oklch> { it.toOklch() }
             ConversionGraph.add<Oklch, Oklab> { it.toOklab() }

@@ -4,6 +4,7 @@ import dev.kdrag0n.colorkt.ucs.lab.CieLab
 import dev.kdrag0n.colorkt.util.conversion.ConversionGraph
 import kotlin.jvm.JvmName
 import kotlin.jvm.JvmStatic
+import kotlin.jvm.JvmSynthetic
 
 /**
  * Polar (LCh) representation of [dev.kdrag0n.colorkt.ucs.lab.CieLab].
@@ -28,6 +29,7 @@ public data class CieLch(
     )
 
     public companion object {
+        @JvmSynthetic
         internal fun register() {
             ConversionGraph.add<CieLab, CieLch> { it.toCieLch() }
             ConversionGraph.add<CieLch, CieLab> { it.toCieLab() }

@@ -5,6 +5,7 @@ import dev.kdrag0n.colorkt.rgb.LinearSrgb
 import dev.kdrag0n.colorkt.util.conversion.ConversionGraph
 import kotlin.jvm.JvmName
 import kotlin.jvm.JvmStatic
+import kotlin.jvm.JvmSynthetic
 
 /**
  * A color in the CIE XYZ tristimulus color space.
@@ -45,6 +46,7 @@ public data class CieXyz(
     }
 
     public companion object {
+        @JvmSynthetic
         internal fun register() {
             ConversionGraph.add<LinearSrgb, CieXyz> { it.toXyz() }
             ConversionGraph.add<CieXyz, LinearSrgb> { it.toLinearSrgb() }

@@ -2,6 +2,7 @@ package dev.kdrag0n.colorkt.util.conversion
 
 import dev.kdrag0n.colorkt.Color
 import kotlin.jvm.JvmStatic
+import kotlin.jvm.JvmSynthetic
 import kotlin.reflect.KClass
 
 internal typealias ColorType = KClass<out Color>
@@ -57,6 +58,7 @@ public object ConversionGraph {
         }
     }
 
+    @JvmSynthetic
     internal fun findPath(from: ColorType, to: ColorType): List<ColorConverter<Color, Color>>? {
         val visited = HashSet<ConversionEdge>()
         val pathQueue = ArrayDeque(listOf(

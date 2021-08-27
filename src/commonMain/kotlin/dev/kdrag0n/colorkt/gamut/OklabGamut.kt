@@ -8,6 +8,7 @@ import dev.kdrag0n.colorkt.util.math.cube
 import dev.kdrag0n.colorkt.util.math.square
 import kotlin.jvm.JvmOverloads
 import kotlin.jvm.JvmStatic
+import kotlin.jvm.JvmSynthetic
 import kotlin.math.*
 
 /**
@@ -201,6 +202,7 @@ public object OklabGamut {
         }
     }
 
+    @JvmSynthetic
     internal fun calcAdaptiveMidL(L: Double, C: Double, alpha: Double): Double {
         val Ld = L - 0.5
         val e1 = 0.5 + abs(Ld) + alpha * C
