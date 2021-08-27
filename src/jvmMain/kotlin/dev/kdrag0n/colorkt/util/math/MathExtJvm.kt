@@ -1,3 +1,5 @@
+@file:JvmSynthetic
+
 package dev.kdrag0n.colorkt.util.math
 
 @JvmSynthetic
