@@ -18,6 +18,12 @@ import kotlin.math.*
  * This color appearance model is designed with HDR in mind so it only accepts *absolute* CIE XYZ values scaled by the
  * absolute luminance of the modeled display, unlike SDR color spaces that accept relative luminance.
  *
+ * Most attributes are optional in the constructor because don't need to be present together. All ZCAM colors must have:
+ *     - brightness OR lightness
+ *     - colorfulness OR chroma OR saturation OR vividness OR blackness OR whiteness
+ *     - hue
+ *     - viewing conditions
+ *
  * @see <a href="https://www.osapublishing.org/oe/viewmedia.cfm?uri=oe-29-4-6036&html=true">ZCAM, a colour appearance model based on a high dynamic range uniform colour space</a>
  */
 // Math code looks better with underscores, and we want to match the paper
