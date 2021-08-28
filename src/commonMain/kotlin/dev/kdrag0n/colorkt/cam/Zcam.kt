@@ -121,10 +121,11 @@ public data class Zcam(
         }
         val ez = hpToEz(hz)
         val Cz_p = ((Mz * cond.Mz_denom) /
-                // Paper specifies pow(1.3514) but this extra precision is necessary for more accurate inversion
+                // Paper specifies pow(1.3514) but this extra precision is necessary for accurate inversion
                 (100.0 * ez.pow(0.068) * cond.ez_coeff)).pow(1.0 / 0.37 / 2)
-        val az = Cz_p * cos(hz.toRadians())
-        val bz = Cz_p * sin(hz.toRadians())
+        val hzRad = hz.toRadians()
+        val az = Cz_p * cos(hzRad)
+        val bz = Cz_p * sin(hzRad)
 
         /* Step 5 */
         val I = Iz + EPSILON
