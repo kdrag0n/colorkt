@@ -59,13 +59,6 @@ public data class Srgb(
      */
     public fun toHex(): String = "#" + toRgb8().toString(16).padStart(6, padChar = '0')
 
-    /**
-     * Check whether this color is within the sRGB gamut.
-     * @return true if color is in gamut, false otherwise
-     */
-    public fun isInGamut(): Boolean = !r.isNaN() && !g.isNaN() && !b.isNaN() &&
-            r in 0.0..1.0 && g in 0.0..1.0 && b in 0.0..1.0
-
     private companion object {
         // Clamp out-of-bounds values
         private fun quantize8(n: Double) = (n * 255.0).roundToInt() and 0xff
