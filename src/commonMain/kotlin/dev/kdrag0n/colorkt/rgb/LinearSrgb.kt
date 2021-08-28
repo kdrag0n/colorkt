@@ -44,7 +44,7 @@ public data class LinearSrgb(
     public companion object {
         @JvmSynthetic
         internal fun register() {
-            ConversionGraph.add<Srgb, LinearSrgb> { it.toLinearSrgb() }
+            ConversionGraph.add<Srgb, LinearSrgb> { it.toLinear() }
             ConversionGraph.add<LinearSrgb, Srgb> { it.toSrgb() }
         }
 
@@ -71,7 +71,7 @@ public data class LinearSrgb(
          */
         @JvmStatic
         @JvmName("fromSrgb")
-        public fun Srgb.toLinearSrgb(): LinearSrgb {
+        public fun Srgb.toLinear(): LinearSrgb {
             return LinearSrgb(
                 r = fInv(r),
                 g = fInv(g),

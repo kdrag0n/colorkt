@@ -6,7 +6,7 @@ import dev.kdrag0n.colorkt.cam.Zcam.Companion.toZcam
 import dev.kdrag0n.colorkt.data.Illuminants
 import dev.kdrag0n.colorkt.gamut.LchGamut.clipToLinearSrgb
 import dev.kdrag0n.colorkt.gamut.OklabGamut.clipToLinearSrgb
-import dev.kdrag0n.colorkt.rgb.LinearSrgb.Companion.toLinearSrgb
+import dev.kdrag0n.colorkt.rgb.LinearSrgb.Companion.toLinear
 import dev.kdrag0n.colorkt.rgb.Srgb
 import dev.kdrag0n.colorkt.tristimulus.CieXyzAbs
 import dev.kdrag0n.colorkt.tristimulus.CieXyzAbs.Companion.DEFAULT_SDR_WHITE_LUMINANCE
@@ -29,7 +29,7 @@ class Gamut {
         // R, G, B, black
         for (channel in 2 downTo -1) {
             val src = Srgb(0xff shl (channel * 8))
-            val srcLinear = src.toLinearSrgb()
+            val srcLinear = src.toLinear()
             val lch = src.convert<Oklch>()
 
             // Boost the chroma
@@ -47,7 +47,7 @@ class Gamut {
         // R, G, B, black
         for (channel in 2 downTo -1) {
             val src = Srgb(0xff shl (channel * 8))
-            val srcLinear = src.toLinearSrgb()
+            val srcLinear = src.toLinear()
             val zcam = src.convert<CieXyzAbs>().toZcam(cond, include2D = false)
 
             // Boost the chroma
