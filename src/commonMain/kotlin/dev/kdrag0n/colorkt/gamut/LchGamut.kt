@@ -46,10 +46,10 @@ public object LchGamut {
         maxLightness: Double,
         factory: LchFactory,
     ): LinearSrgb {
-        val initialResult = factory.getColor(l1, c1, hue)
+        var result = factory.getColor(l1, c1, hue)
 
         return when {
-            initialResult.isInGamut() -> initialResult
+            result.isInGamut() -> result
             // Avoid searching black and white for performance
             l1 <= epsilon -> LinearSrgb(0.0, 0.0, 0.0)
             l1 >= maxLightness - epsilon -> LinearSrgb(1.0, 1.0, 1.0)
@@ -70,16 +70,18 @@ public object LchGamut {
                 var lo = 0.0
                 var hi = c1
 
-                var newLinearSrgb = initialResult
                 while (abs(hi - lo) > epsilon) {
                     val midC = (lo + hi) / 2
                     val midL = evalLine(slope, intercept, midC)
 
-                    newLinearSrgb = factory.getColor(midL, midC, hue)
+                    result = factory.getColor(midL, midC, hue)
 
-                    if (!newLinearSrgb.isInGamut()) {
+                    if (!result.isInGamut()) {
+                        // If this color isn't in gamut, pivot left to get an in-gamut color.
                         hi = midC
                     } else {
+                        // If this color is in gamut, test a point to the right that should be just outside the gamut.
+                        // If the test point is *not* in gamut, we know that this color is right at the edge of the gamut.
                         val midC2 = midC + epsilon
                         val midL2 = evalLine(slope, intercept, midC2)
 
@@ -92,7 +94,7 @@ public object LchGamut {
                     }
                 }
 
-                newLinearSrgb
+                result
             }
         }
     }
