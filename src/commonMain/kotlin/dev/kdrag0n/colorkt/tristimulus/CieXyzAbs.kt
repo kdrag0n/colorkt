@@ -3,6 +3,7 @@ package dev.kdrag0n.colorkt.tristimulus
 import dev.kdrag0n.colorkt.Color
 import dev.kdrag0n.colorkt.util.conversion.ConversionGraph
 import kotlin.jvm.JvmName
+import kotlin.jvm.JvmOverloads
 import kotlin.jvm.JvmStatic
 import kotlin.jvm.JvmSynthetic
 
@@ -33,7 +34,8 @@ public data class CieXyzAbs(
      *
      * @return Color in relative XYZ
      */
-    public fun toRel(luminance: Double): CieXyz = CieXyz(
+    @JvmOverloads
+    public fun toRel(luminance: Double = DEFAULT_SDR_WHITE_LUMINANCE): CieXyz = CieXyz(
         x = x / luminance,
         y = y / luminance,
         z = z / luminance,
@@ -58,8 +60,9 @@ public data class CieXyzAbs(
          * @return Color in absolute XYZ
          */
         @JvmStatic
+        @JvmOverloads
         @JvmName("fromRel")
-        public fun CieXyz.toAbs(luminance: Double): CieXyzAbs = CieXyzAbs(
+        public fun CieXyz.toAbs(luminance: Double = DEFAULT_SDR_WHITE_LUMINANCE): CieXyzAbs = CieXyzAbs(
             x = x * luminance,
             y = y * luminance,
             z = z * luminance,
