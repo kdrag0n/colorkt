@@ -20,10 +20,15 @@ import kotlin.jvm.JvmSynthetic
  *
  * @see <a href="https://en.wikipedia.org/wiki/CIELAB_color_space">Wikipedia</a>
  */
-public data class CieLab(
+public data class CieLab @JvmOverloads constructor(
     override val L: Double,
     override val a: Double,
     override val b: Double,
+
+    /**
+     * Reference white for CIELAB calculations. This affects the converted color.
+     */
+    val referenceWhite: CieXyz = Illuminants.D65,
 ) : Lab {
     /**
      * Convert this color to the CIE XYZ color space.
@@ -31,14 +36,13 @@ public data class CieLab(
      * @see dev.kdrag0n.colorkt.tristimulus.CieXyz
      * @return Color in XYZ
      */
-    @JvmOverloads
-    public fun toXyz(refWhite: CieXyz = Illuminants.D65): CieXyz {
+    public fun toXyz(): CieXyz {
         val lp = (L + 16.0) / 116.0
 
         return CieXyz(
-            x = refWhite.x * fInv(lp + (a / 500.0)),
-            y = refWhite.y * fInv(lp),
-            z = refWhite.z * fInv(lp - (b / 200.0)),
+            x = referenceWhite.x * fInv(lp + (a / 500.0)),
+            y = referenceWhite.y * fInv(lp),
+            z = referenceWhite.z * fInv(lp - (b / 200.0)),
         )
     }
 
@@ -75,6 +79,7 @@ public data class CieLab(
                 L = 116.0 * f(y / refWhite.y) - 16.0,
                 a = 500.0 * (f(x / refWhite.x) - f(y / refWhite.y)),
                 b = 200.0 * (f(y / refWhite.y) - f(z / refWhite.z)),
+                referenceWhite = refWhite,
             )
         }
     }

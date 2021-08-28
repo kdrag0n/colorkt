@@ -1,8 +1,11 @@
 package dev.kdrag0n.colorkt.ucs.lch
 
+import dev.kdrag0n.colorkt.data.Illuminants
+import dev.kdrag0n.colorkt.tristimulus.CieXyz
 import dev.kdrag0n.colorkt.ucs.lab.CieLab
 import dev.kdrag0n.colorkt.util.conversion.ConversionGraph
 import kotlin.jvm.JvmName
+import kotlin.jvm.JvmOverloads
 import kotlin.jvm.JvmStatic
 import kotlin.jvm.JvmSynthetic
 
@@ -11,10 +14,15 @@ import kotlin.jvm.JvmSynthetic
  *
  * @see dev.kdrag0n.colorkt.ucs.lch.Lch
  */
-public data class CieLch(
+public data class CieLch @JvmOverloads constructor(
     override val L: Double,
     override val C: Double,
     override val h: Double,
+
+    /**
+     * Reference white for CIELAB calculations. This affects the converted color.
+     */
+    val referenceWhite: CieXyz = Illuminants.D65,
 ) : Lch {
     /**
      * Convert this color to the Cartesian (Lab) representation of CIELAB.
@@ -26,6 +34,7 @@ public data class CieLch(
         L = L,
         a = calcLabA(),
         b = calcLabB(),
+        referenceWhite = referenceWhite,
     )
 
     public companion object {
@@ -47,6 +56,7 @@ public data class CieLch(
             L = L,
             C = calcLchC(),
             h = calcLchH(),
+            referenceWhite = referenceWhite,
         )
     }
 }
