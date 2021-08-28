@@ -1,6 +1,5 @@
 // These simple math functions should always be inlined for performance
 @file:Suppress("NOTHING_TO_INLINE")
-@file:JvmSynthetic
 
 package dev.kdrag0n.colorkt.util.math
 

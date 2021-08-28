@@ -1,5 +1,3 @@
-@file:JvmSynthetic
-
 package dev.kdrag0n.colorkt
 
 import dev.kdrag0n.colorkt.rgb.LinearSrgb

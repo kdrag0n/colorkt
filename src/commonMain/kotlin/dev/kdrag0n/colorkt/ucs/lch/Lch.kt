@@ -1,5 +1,3 @@
-@file:JvmSynthetic
-
 package dev.kdrag0n.colorkt.ucs.lch
 
 import dev.kdrag0n.colorkt.Color
