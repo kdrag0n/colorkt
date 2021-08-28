@@ -36,10 +36,11 @@ public data class LinearSrgb(
 
     /**
      * Check whether this color is within the sRGB gamut.
+     * This will return false if any component is either NaN or is not within the 0-1 range.
+     *
      * @return true if color is in gamut, false otherwise
      */
-    public fun isInGamut(): Boolean = !r.isNaN() && !g.isNaN() && !b.isNaN() &&
-            r in 0.0..1.0 && g in 0.0..1.0 && b in 0.0..1.0
+    public fun isInGamut(): Boolean = r in 0.0..1.0 && g in 0.0..1.0 && b in 0.0..1.0
 
     public companion object {
         @JvmSynthetic
