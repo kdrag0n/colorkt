@@ -1,6 +1,5 @@
 package dev.kdrag0n.colorkt.rgb
 
-import kotlin.jvm.JvmSynthetic
 import kotlin.math.roundToInt
 
 /**
@@ -51,18 +50,14 @@ public data class Srgb(
      *
      * @return color as 32-bit integer in RGB8 format
      */
-    public fun toRgb8(): Int {
-        return (quantize8(r) shl 16) or (quantize8(g) shl 8) or quantize8(b)
-    }
+    public fun toRgb8(): Int = (quantize8(r) shl 16) or (quantize8(g) shl 8) or quantize8(b)
 
     /**
      * Convert this color to an 8-bit hex color code (e.g. #FA00FA).
      *
      * @return color as RGB8 hex code
      */
-    public fun toHex(): String {
-        return "#" + toRgb8().toString(16).padStart(6, padChar = '0')
-    }
+    public fun toHex(): String = "#" + toRgb8().toString(16).padStart(6, padChar = '0')
 
     /**
      * Check whether this color is within the sRGB gamut.
