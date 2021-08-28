@@ -225,37 +225,26 @@ public data class Zcam(
          */
         val referenceWhite: CieXyzAbs,
     ) {
-        @JvmSynthetic
-        @JvmField
-        internal val F_b = sqrt(backgroundLuminance / referenceWhite.y)
-        @JvmSynthetic
-        @JvmField
-        internal val F_l = 0.171 * cbrt(adaptingLuminance) * (1.0 - exp(-48.0/9.0 * adaptingLuminance))
-
-        @JvmSynthetic
-        internal val Iz_coeff = 2700.0 * surroundFactor.pow(2.2) * F_b.pow(0.5) * F_l.pow(0.2)
-        @JvmSynthetic
-        @JvmField
-        internal val ez_coeff = F_l.pow(0.2)
-        @JvmSynthetic
-        @JvmField
-        internal val Qz_denom = F_b.pow(0.12)
-        @JvmSynthetic
-        @JvmField
-        internal val Sz_coeff = F_l.pow(0.6)
-        @JvmSynthetic
-        @JvmField
-        internal val Mz_denom: Double
-
-        @JvmSynthetic
-        @JvmField
-        internal val Qz_w: Double
+        @JvmSynthetic @JvmField internal val Iz_coeff: Double
+        @JvmSynthetic @JvmField internal val ez_coeff: Double
+        @JvmSynthetic @JvmField internal val Qz_denom: Double
+        @JvmSynthetic @JvmField internal val Sz_coeff: Double
+        @JvmSynthetic @JvmField internal val Mz_denom: Double
+        @JvmSynthetic @JvmField internal val Qz_w: Double
 
         init {
+            val F_b = sqrt(backgroundLuminance / referenceWhite.y)
+            val F_l = 0.171 * cbrt(adaptingLuminance) * (1.0 - exp(-48.0 / 9.0 * adaptingLuminance))
+
+            Iz_coeff = 2700.0 * surroundFactor.pow(2.2) * F_b.pow(0.5) * F_l.pow(0.2)
+            ez_coeff = F_l.pow(0.2)
+            Qz_denom = F_b.pow(0.12)
+            Sz_coeff = F_l.pow(0.6)
+
             val Iz_w = xyzToIzazbz(referenceWhite)[0]
             Mz_denom = Iz_w.pow(0.78) * F_b.pow(0.1)
 
-            // Depends on precomputed coefficients above
+            // Depends on coefficients computed above
             Qz_w = izToQz(Iz_w, this)
         }
 
