@@ -30,9 +30,9 @@ public data class Oklab(
      * @return Color in linear sRGB
      */
     public fun toLinearSrgb(): LinearSrgb {
-        val l = oklabToL(this)
-        val m = oklabToM(this)
-        val s = oklabToS(this)
+        val l = labToL()
+        val m = labToM()
+        val s = labToS()
 
         return LinearSrgb(
             r = +4.0767416621 * l - 3.3077115913 * m + 0.2309699292 * s,
@@ -46,10 +46,10 @@ public data class Oklab(
      * @see dev.kdrag0n.colorkt.tristimulus.CieXyz
      * @return Color in XYZ
      */
-    public fun toCieXyz(): CieXyz {
-        val l = oklabToL(this)
-        val m = oklabToM(this)
-        val s = oklabToS(this)
+    public fun toXyz(): CieXyz {
+        val l = labToL()
+        val m = labToM()
+        val s = labToS()
 
         return CieXyz(
             x = +1.2270138511 * l - 0.5577999807 * m + 0.2812561490 * s,
@@ -57,6 +57,11 @@ public data class Oklab(
             z = -0.0763812845 * l - 0.4214819784 * m + 1.5861632204 * s,
         )
     }
+
+    // Avoid arrays to minimize garbage
+    private fun labToL() = cube(L + 0.3963377774 * a + 0.2158037573 * b)
+    private fun labToM() = cube(L - 0.1055613458 * a - 0.0638541728 * b)
+    private fun labToS() = cube(L - 0.0894841775 * a - 1.2914855480 * b)
 
     public companion object {
         @JvmSynthetic
@@ -76,11 +81,6 @@ public data class Oklab(
                 b = 0.0259040371 * lp + 0.7827717662 * mp - 0.8086757660 * sp,
             )
         }
-
-        // Avoid arrays to minimize garbage
-        private fun oklabToL(lab: Oklab) = cube(lab.L + 0.3963377774 * lab.a + 0.2158037573 * lab.b)
-        private fun oklabToM(lab: Oklab) = cube(lab.L - 0.1055613458 * lab.a - 0.0638541728 * lab.b)
-        private fun oklabToS(lab: Oklab) = cube(lab.L - 0.0894841775 * lab.a - 1.2914855480 * lab.b)
 
         /**
          * Convert this color to the Oklab uniform color space.
