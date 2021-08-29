@@ -38,10 +38,11 @@ public data class CieXyz(
      * @return Color in linear sRGB
      */
     public fun toLinearSrgb(): LinearSrgb {
+        // See LinearSrgb.toXyz for info about the source of this matrix.
         return LinearSrgb(
-            r =   3.2409699419045226 * x +   -1.537383177570094 * y + -0.4986107602930034 * z,
-            g =  -0.9692436362808796 * x +   1.8759675015077202 * y + 0.04155505740717559 * z,
-            b =  0.05563007969699366 * x + -0.20397695888897652 * y +  1.0569715142428786 * z,
+            r =   3.2409699419045226 * x +  -1.537383177570094 * y + -0.49861076029300355 * z,
+            g =  -0.9692436362808796 * x +  1.8759675015077202 * y +  0.04155505740717562 * z,
+            b = 0.055630079696993635 * x + -0.2039769588889765 * y +   1.0569715142428784 * z,
         )
     }
 
@@ -60,10 +61,17 @@ public data class CieXyz(
         @JvmStatic
         @JvmName("fromLinearSrgb")
         public fun LinearSrgb.toXyz(): CieXyz {
+            // This matrix (along with the inverse above) has been optimized to minimize chroma in CIELCh
+            // when converting neutral sRGB colors to CIELAB. The maximum chroma for sRGB neutral colors 0-255 is
+            // 5.978733960281817e-14.
+            //
+            // Calculated with https://github.com/facelessuser/coloraide/blob/master/tools/calc_xyz_transform.py
+            // Using D65 xy chromaticities from the sRGB spec: x = 0.3127, y = 0.3290
+            // Always keep in sync with Illuminants.D65.
             return CieXyz(
-                x = 0.41239079926595934 * r +   0.357584339383878 * g +  0.1804807884018343 * b,
-                y = 0.21263900587151027 * r +   0.715168678767756 * g + 0.07219231536073371 * b,
-                z = 0.01933081871559182 * r + 0.11919477979462598 * g +  0.9505321522496607 * b,
+                x =  0.4123907992659593 * r +   0.357584339383878 * g +  0.18048078840183432 * b,
+                y = 0.21263900587151024 * r +   0.715168678767756 * g +  0.07219231536073373 * b,
+                z = 0.01933081871559182 * r + 0.11919477979462598 * g +   0.9505321522496608 * b,
             )
         }
     }
