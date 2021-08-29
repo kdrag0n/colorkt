@@ -14,9 +14,10 @@ public object Illuminants {
      */
     @JvmField
     public val D65: CieXyz = CieXyz(
-        x = 0.95047,
+        // xy chromaticities from the sRGB spec
+        x = 0.3127 / 0.3290,
         y = 1.0,
-        z = 1.08883,
+        z = (1.0 - 0.3127 - 0.3290) / 0.3290,
     )
 
     /**
@@ -24,8 +25,8 @@ public object Illuminants {
      */
     @JvmField
     public val D50: CieXyz = CieXyz(
-        x = 0.9642,
+        x = 0.3457 / 0.3585,
         y = 1.0,
-        z = 0.8251,
+        z = (1.0 - 0.3457 - 0.3585) / 0.3585,
     )
 }
