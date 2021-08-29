@@ -37,13 +37,13 @@ class ZcamTests {
 
         // Test against luxpy
         zcam.apply {
+            assertApprox(hz, 197.26438822)
             assertApprox(Qz, 321.37946798)
             assertApprox(Jz, 91.45992645)
             assertApprox(Mz, 10.55298634)
             assertApprox(Cz, 3.00322656)
-            assertApprox(hz, 197.26438822)
-            assertApprox(Vz, 33.91507829)
             assertApprox(Sz, 19.15565806)
+            assertApprox(Vz, 33.91507829)
             assertApprox(Kz, 26.51716672)
             assertApprox(Wz, 90.94725313)
         }
