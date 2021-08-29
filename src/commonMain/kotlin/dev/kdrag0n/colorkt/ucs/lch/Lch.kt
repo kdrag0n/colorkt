@@ -4,6 +4,7 @@ import dev.kdrag0n.colorkt.Color
 import dev.kdrag0n.colorkt.util.math.toDegrees
 import dev.kdrag0n.colorkt.util.math.toRadians
 import dev.kdrag0n.colorkt.ucs.lab.Lab
+import dev.kdrag0n.colorkt.util.math.square
 import kotlin.jvm.JvmSynthetic
 import kotlin.math.*
 
@@ -35,7 +36,7 @@ public interface Lch : Color {
 }
 
 @JvmSynthetic
-internal fun Lab.calcLchC() = sqrt(a*a + b*b)
+internal fun Lab.calcLchC() = sqrt(square(a) + square(b))
 @JvmSynthetic
 internal fun Lab.calcLchH(): Double {
     val hDeg = atan2(b, a).toDegrees()
