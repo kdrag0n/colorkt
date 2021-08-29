@@ -341,12 +341,12 @@ public data class Zcam(
 
             /* Step 3 */
             // Hue angle
-            val hz = atan2(bz, az).toDegrees()
-            val hp = if (hz < 0) hz + 360 else hz
+            val hzRaw = atan2(bz, az).toDegrees()
+            val hz = if (hzRaw < 0) hzRaw + 360 else hzRaw
 
             /* Step 4 */
             // Eccentricity factor
-            val ez = hpToEz(hp)
+            val ez = hpToEz(hz)
 
             /* Step 5 */
             // Brightness
@@ -377,7 +377,7 @@ public data class Zcam(
                 lightness = Jz,
                 colorfulness = Mz,
                 chroma = Cz,
-                hue = hp,
+                hue = hz,
 
                 saturation = Sz,
                 vividness = Vz,
