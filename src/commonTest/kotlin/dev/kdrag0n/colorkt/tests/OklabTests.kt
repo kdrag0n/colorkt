@@ -5,9 +5,9 @@ import dev.kdrag0n.colorkt.tristimulus.CieXyz
 import dev.kdrag0n.colorkt.ucs.lab.Oklab
 import kotlin.test.Test
 
-class Ucs {
+class OklabTests {
     @Test
-    fun testOklabXyz1() {
+    fun oklabXyz1() {
         val xyz = CieXyz(0.950, 1.000, 1.089)
         val lab = xyz.toLinearSrgb().convert<Oklab>()
         assertApprox(lab.L, 1.000)
@@ -16,7 +16,7 @@ class Ucs {
     }
 
     @Test
-    fun testOklabXyz2() {
+    fun oklabXyz2() {
         val xyz = CieXyz(1.000, 0.000, 0.000)
         val lab = xyz.convert<Oklab>()
         assertApprox(lab.L, 0.450)
@@ -25,7 +25,7 @@ class Ucs {
     }
 
     @Test
-    fun testOklabXyz3() {
+    fun oklabXyz3() {
         val xyz = CieXyz(0.000, 1.000, 0.000)
         val lab = xyz.convert<Oklab>()
         assertApprox(lab.L, 0.922)
@@ -34,7 +34,7 @@ class Ucs {
     }
 
     @Test
-    fun testOklabXyz4() {
+    fun oklabXyz4() {
         val xyz = CieXyz(0.000, 0.000, 1.000)
         val lab = xyz.convert<Oklab>()
         assertApprox(lab.L, 0.153)

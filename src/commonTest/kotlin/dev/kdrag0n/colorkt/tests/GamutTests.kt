@@ -16,7 +16,7 @@ import dev.kdrag0n.colorkt.ucs.lch.Oklch
 import kotlin.test.Test
 import kotlin.test.assertFalse
 
-class Gamut {
+class GamutTests {
     private val cond = Zcam.ViewingConditions(
         surroundFactor = Zcam.ViewingConditions.SURROUND_AVERAGE,
         adaptingLuminance = 0.4 * DEFAULT_SDR_WHITE_LUMINANCE,
@@ -25,7 +25,7 @@ class Gamut {
     )
 
     @Test
-    fun testOklabClip() {
+    fun oklabClipRgbk() {
         // R, G, B, black
         for (channel in 2 downTo -1) {
             val src = Srgb(0xff shl (channel * 8))
@@ -43,7 +43,7 @@ class Gamut {
     }
 
     @Test
-    fun testZcamClip() {
+    fun zcamClipRgbk() {
         // R, G, B, black
         for (channel in 2 downTo -1) {
             val src = Srgb(0xff shl (channel * 8))
@@ -61,7 +61,7 @@ class Gamut {
     }
 
     @Test
-    fun testZcamClipZeroChroma() {
+    fun zcamClipZeroChroma() {
         val zcam = Zcam(
             lightness = 50.0,
             chroma = 0.0,
