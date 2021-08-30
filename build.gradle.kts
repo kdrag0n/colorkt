@@ -65,13 +65,6 @@ val javadocJar: TaskProvider<Jar> by tasks.registering(Jar::class) {
     from(dokkaHtml.outputDirectory)
 }
 
-ext["signing.keyId"] = ""
-ext["signing.password"] = ""
-ext["signing.key"] = ""
-ext["ossrhUsername"] = ""
-ext["ossrhPassword"] = ""
-ext["sonatypeStagingProfileId"] = ""
-
 val secretPropsFile = project.rootProject.file("local.properties")
 if (secretPropsFile.exists()) {
     // Read local.properties file first if it exists
@@ -91,9 +84,9 @@ if (secretPropsFile.exists()) {
 nexusPublishing {
     repositories {
         sonatype {
-            stagingProfileId.set(rootProject.extra["sonatypeStagingProfileId"] as String)
-            username.set(rootProject.extra["ossrhUsername"] as String)
-            password.set(rootProject.extra["ossrhPassword"] as String)
+            stagingProfileId.set(rootProject.extra["sonatypeStagingProfileId"] as String?)
+            username.set(rootProject.extra["ossrhUsername"] as String?)
+            password.set(rootProject.extra["ossrhPassword"] as String?)
 
             nexusUrl.set(uri("https://s01.oss.sonatype.org/service/local/"))
             snapshotRepositoryUrl.set(uri("https://s01.oss.sonatype.org/content/repositories/snapshots/"))
@@ -137,9 +130,9 @@ publishing {
 
 signing {
     useInMemoryPgpKeys(
-        rootProject.extra["signing.keyId"] as String,
-        rootProject.extra["signing.key"] as String,
-        rootProject.extra["signing.password"] as String
+        rootProject.extra["signing.keyId"] as String?,
+        rootProject.extra["signing.key"] as String?,
+        rootProject.extra["signing.password"] as String?
     )
 
     sign(publishing.publications)
