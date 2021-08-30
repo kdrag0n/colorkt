@@ -26,7 +26,7 @@ Color.kt is a modern color science library for Kotlin Multiplatform and Java. It
 
 ## Usage
 
-![Latest version on Maven Central](https://img.shields.io/maven-central/v/dev.kdrag0n/colorkt)
+[![Latest version on Maven Central](https://img.shields.io/maven-central/v/dev.kdrag0n/colorkt)](https://search.maven.org/artifact/dev.kdrag0n/colorkt)
 
 Add this library as a dependency and replace `VERSION` with the latest version above:
 
