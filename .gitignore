@@ -109,3 +109,6 @@ gradle-app.setting
 
 # Cache of project
 .gradletasknamecache
+
+# Maven publishing
+local.properties
