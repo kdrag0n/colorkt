@@ -33,7 +33,7 @@ class GamutTests {
             val lch = src.convert<Oklch>()
 
             // Boost the chroma
-            val clipped = lch.copy(C = lch.C * 5).toOklab().clipToLinearSrgb()
+            val clipped = lch.copy(chroma = lch.chroma * 5).toOklab().clipToLinearSrgb()
 
             // Now check
             assertApprox(clipped.r, srcLinear.r)

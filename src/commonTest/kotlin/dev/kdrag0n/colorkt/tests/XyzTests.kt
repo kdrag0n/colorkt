@@ -17,9 +17,9 @@ class XyzTests {
             val lch = Srgb(v, v, v).toLinear().toXyz().toCieLab().toCieLch()
             println(lch)
 
-            avgChroma += lch.C
-            if (lch.C > maxChroma) {
-                maxChroma = lch.C
+            avgChroma += lch.chroma
+            if (lch.chroma > maxChroma) {
+                maxChroma = lch.chroma
             }
         }
         avgChroma /= 256

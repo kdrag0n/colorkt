@@ -12,9 +12,9 @@ import kotlin.jvm.JvmSynthetic
  * @see dev.kdrag0n.colorkt.ucs.lch.Lch
  */
 public data class Srlch2(
-    override val L: Double,
-    override val C: Double,
-    override val h: Double,
+    override val lightness: Double,
+    override val chroma: Double,
+    override val hue: Double,
 ) : Lch {
     /**
      * Convert this color to the Cartesian (Lab) representation of SRLAB2.
@@ -23,7 +23,7 @@ public data class Srlch2(
      * @return Color represented as SRLAB2
      */
     public fun toSrlab2(): Srlab2 = Srlab2(
-        L = L,
+        L = lightness,
         a = calcLabA(),
         b = calcLabB(),
     )
@@ -44,9 +44,9 @@ public data class Srlch2(
         @JvmStatic
         @JvmName("fromSrlab2")
         public fun Srlab2.toSrlch2(): Srlch2 = Srlch2(
-            L = L,
-            C = calcLchC(),
-            h = calcLchH(),
+            lightness = L,
+            chroma = calcLchC(),
+            hue = calcLchH(),
         )
     }
 }

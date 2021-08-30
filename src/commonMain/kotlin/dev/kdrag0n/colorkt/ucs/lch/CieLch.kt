@@ -15,9 +15,9 @@ import kotlin.jvm.JvmSynthetic
  * @see dev.kdrag0n.colorkt.ucs.lch.Lch
  */
 public data class CieLch @JvmOverloads constructor(
-    override val L: Double,
-    override val C: Double,
-    override val h: Double,
+    override val lightness: Double,
+    override val chroma: Double,
+    override val hue: Double,
 
     /**
      * Reference white for CIELAB calculations. This affects the converted color.
@@ -31,7 +31,7 @@ public data class CieLch @JvmOverloads constructor(
      * @return Color represented as CIELAB
      */
     public fun toCieLab(): CieLab = CieLab(
-        L = L,
+        L = lightness,
         a = calcLabA(),
         b = calcLabB(),
         referenceWhite = referenceWhite,
@@ -53,9 +53,9 @@ public data class CieLch @JvmOverloads constructor(
         @JvmStatic
         @JvmName("fromCieLab")
         public fun CieLab.toCieLch(): CieLch = CieLch(
-            L = L,
-            C = calcLchC(),
-            h = calcLchH(),
+            lightness = L,
+            chroma = calcLchC(),
+            hue = calcLchH(),
             referenceWhite = referenceWhite,
         )
     }

@@ -12,9 +12,9 @@ import kotlin.jvm.JvmSynthetic
  * @see dev.kdrag0n.colorkt.ucs.lch.Lch
  */
 public data class Oklch(
-    override val L: Double,
-    override val C: Double,
-    override val h: Double,
+    override val lightness: Double,
+    override val chroma: Double,
+    override val hue: Double,
 ) : Lch {
     /**
      * Convert this color to the Cartesian (Lab) representation of Oklab.
@@ -23,7 +23,7 @@ public data class Oklch(
      * @return Color represented as Oklab
      */
     public fun toOklab(): Oklab = Oklab(
-        L = L,
+        L = lightness,
         a = calcLabA(),
         b = calcLabB(),
     )
@@ -44,9 +44,9 @@ public data class Oklch(
         @JvmStatic
         @JvmName("fromOklab")
         public fun Oklab.toOklch(): Oklch = Oklch(
-            L = L,
-            C = calcLchC(),
-            h = calcLchH(),
+            lightness = L,
+            chroma = calcLchC(),
+            hue = calcLchH(),
         )
     }
 }

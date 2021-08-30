@@ -22,17 +22,17 @@ public interface Lch : Color {
     /**
      * Perceived lightness component.
      */
-    public val L: Double
+    public val lightness: Double
 
     /**
      * Chroma component (amount of color).
      */
-    public val C: Double
+    public val chroma: Double
 
     /**
      * Hue angle component in degrees (which color, e.g. green/blue).
      */
-    public val h: Double
+    public val hue: Double
 }
 
 @JvmSynthetic
@@ -44,6 +44,6 @@ internal fun Lab.calcLchH(): Double {
 }
 
 @JvmSynthetic
-internal fun Lch.calcLabA() = C * cos(h.toRadians())
+internal fun Lch.calcLabA() = chroma * cos(hue.toRadians())
 @JvmSynthetic
-internal fun Lch.calcLabB() = C * sin(h.toRadians())
+internal fun Lch.calcLabB() = chroma * sin(hue.toRadians())

@@ -30,13 +30,13 @@ public data class Zcam(
     /** Absolute brightness. **/
     val brightness: Double = Double.NaN,
     /** Brightness relative to the reference white, from 0 to 100. **/
-    val lightness: Double = Double.NaN,
+    override val lightness: Double = Double.NaN,
     /** Absolute colorfulness. **/
     val colorfulness: Double = Double.NaN,
     /** Colorfulness relative to the reference white. **/
-    val chroma: Double = Double.NaN,
+    override val chroma: Double = Double.NaN,
     /** Hue from 0 to 360 degrees. **/
-    val hue: Double,
+    override val hue: Double,
     /* hue composition is not supported */
 
     // 2D
@@ -71,14 +71,6 @@ public data class Zcam(
     val Kz: Double get() = blackness
     /** Alias for [whiteness]. **/
     val Wz: Double get() = whiteness
-
-    // Aliases for Lch interface
-    /** Alias for [lightness]. **/
-    override val L: Double get() = lightness
-    /** Alias for [chroma]. **/
-    override val C: Double get() = chroma
-    /** Alias for [hue]. **/
-    override val h: Double get() = hue
 
     /**
      * Convert this color to the CIE XYZ color space, with absolute luminance.
