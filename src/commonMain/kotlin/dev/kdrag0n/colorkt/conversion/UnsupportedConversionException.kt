@@ -1,4 +1,4 @@
-package dev.kdrag0n.colorkt.util.conversion
+package dev.kdrag0n.colorkt.conversion
 
 /**
  * Exception thrown when there is no automatic conversation path in

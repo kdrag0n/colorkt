@@ -1,8 +1,7 @@
-package dev.kdrag0n.colorkt.util.conversion
+package dev.kdrag0n.colorkt.conversion
 
 import dev.kdrag0n.colorkt.Color
 import kotlin.jvm.JvmStatic
-import kotlin.jvm.JvmSynthetic
 import kotlin.reflect.KClass
 
 internal typealias ColorType = KClass<out Color>
@@ -20,10 +19,15 @@ public fun interface ColorConverter<F : Color, T : Color> {
 /**
  * Global color conversion graph, used for automatic conversions between different color spaces.
  */
-// This is public so that users can add custom color spaces.
 public object ConversionGraph {
     // Adjacency list: [vertex] = edges
     private val graph = mutableMapOf<ColorType, MutableList<ConversionEdge>>()
+    private val pathCache = HashMap<Pair<ColorType, ColorType>, List<ColorConverter<Color, Color>>>()
+
+    init {
+        // All first-party color spaces should be registered in order for conversions to work properly
+        registerAllColors()
+    }
 
     /**
      * Add a conversion from color type F to T, specified as generic types.
@@ -58,8 +62,7 @@ public object ConversionGraph {
         }
     }
 
-    @JvmSynthetic
-    internal fun findPath(from: ColorType, to: ColorType): List<ColorConverter<Color, Color>>? {
+    private fun findPath(from: ColorType, to: ColorType): List<ColorConverter<Color, Color>>? {
         val visited = HashSet<ConversionEdge>()
         val pathQueue = ArrayDeque(listOf(
             // Initial path: from node
@@ -83,6 +86,32 @@ public object ConversionGraph {
 
         // No paths found
         return null
+    }
+
+    /**
+     * Convert this color to color space [T].
+     * @throws UnsupportedConversionException if no automatic conversion path exists
+     * @return color as [T]
+     */
+    public inline fun <reified T : Color> Color.convert(): T = this as? T
+        ?: convert(this, T::class) as T?
+        ?: throw UnsupportedConversionException("No conversion path from ${this::class} to ${T::class}")
+
+    /**
+     * Convert [fromColor] to color space [toType].
+     * @throws UnsupportedConversionException if no automatic conversion path exists
+     * @return color as [toType]
+     */
+    @JvmStatic
+    public fun convert(fromColor: Color, toType: ColorType): Color? {
+        val pathKey = fromColor::class to toType
+        val path = pathCache[pathKey]
+            ?: findPath(fromColor::class, toType)?.also { pathCache[pathKey] = it }
+            ?: return null
+
+        return path.fold(fromColor) { color, converter ->
+            converter.convert(color)
+        }
     }
 
     private data class ConversionEdge(

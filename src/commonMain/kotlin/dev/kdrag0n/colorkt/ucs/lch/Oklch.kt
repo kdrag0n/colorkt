@@ -1,7 +1,7 @@
 package dev.kdrag0n.colorkt.ucs.lch
 
 import dev.kdrag0n.colorkt.ucs.lab.Oklab
-import dev.kdrag0n.colorkt.util.conversion.ConversionGraph
+import dev.kdrag0n.colorkt.conversion.ConversionGraph
 import kotlin.jvm.JvmName
 import kotlin.jvm.JvmStatic
 import kotlin.jvm.JvmSynthetic

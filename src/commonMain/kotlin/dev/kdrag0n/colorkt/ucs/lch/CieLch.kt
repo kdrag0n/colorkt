@@ -3,7 +3,7 @@ package dev.kdrag0n.colorkt.ucs.lch
 import dev.kdrag0n.colorkt.data.Illuminants
 import dev.kdrag0n.colorkt.tristimulus.CieXyz
 import dev.kdrag0n.colorkt.ucs.lab.CieLab
-import dev.kdrag0n.colorkt.util.conversion.ConversionGraph
+import dev.kdrag0n.colorkt.conversion.ConversionGraph
 import kotlin.jvm.JvmName
 import kotlin.jvm.JvmOverloads
 import kotlin.jvm.JvmStatic

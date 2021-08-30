@@ -1,6 +1,5 @@
 package dev.kdrag0n.colorkt.tests
 
-import dev.kdrag0n.colorkt.Color.Companion.convert
 import dev.kdrag0n.colorkt.cam.Zcam
 import dev.kdrag0n.colorkt.cam.Zcam.Companion.toZcam
 import dev.kdrag0n.colorkt.data.Illuminants
@@ -13,6 +12,7 @@ import dev.kdrag0n.colorkt.tristimulus.CieXyzAbs.Companion.DEFAULT_SDR_WHITE_LUM
 import dev.kdrag0n.colorkt.tristimulus.CieXyzAbs.Companion.toAbs
 import dev.kdrag0n.colorkt.ucs.lab.CieLab
 import dev.kdrag0n.colorkt.ucs.lch.Oklch
+import dev.kdrag0n.colorkt.conversion.ConversionGraph.convert
 import kotlin.test.Test
 import kotlin.test.assertFalse
 

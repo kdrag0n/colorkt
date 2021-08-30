@@ -1,7 +1,7 @@
 package dev.kdrag0n.colorkt.ucs.lab
 
 import dev.kdrag0n.colorkt.rgb.LinearSrgb
-import dev.kdrag0n.colorkt.util.conversion.ConversionGraph
+import dev.kdrag0n.colorkt.conversion.ConversionGraph
 import dev.kdrag0n.colorkt.util.math.cbrt
 import dev.kdrag0n.colorkt.util.math.cube
 import kotlin.jvm.JvmName

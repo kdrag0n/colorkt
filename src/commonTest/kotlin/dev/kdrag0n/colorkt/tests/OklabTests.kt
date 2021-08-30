@@ -1,8 +1,8 @@
 package dev.kdrag0n.colorkt.tests
 
-import dev.kdrag0n.colorkt.Color.Companion.convert
 import dev.kdrag0n.colorkt.tristimulus.CieXyz
 import dev.kdrag0n.colorkt.ucs.lab.Oklab
+import dev.kdrag0n.colorkt.conversion.ConversionGraph.convert
 import kotlin.test.Test
 
 class OklabTests {

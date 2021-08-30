@@ -1,4 +1,4 @@
-package dev.kdrag0n.colorkt
+package dev.kdrag0n.colorkt.conversion
 
 import dev.kdrag0n.colorkt.rgb.LinearSrgb
 import dev.kdrag0n.colorkt.tristimulus.CieXyz

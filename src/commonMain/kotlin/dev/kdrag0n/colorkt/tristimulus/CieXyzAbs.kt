@@ -1,7 +1,7 @@
 package dev.kdrag0n.colorkt.tristimulus
 
 import dev.kdrag0n.colorkt.Color
-import dev.kdrag0n.colorkt.util.conversion.ConversionGraph
+import dev.kdrag0n.colorkt.conversion.ConversionGraph
 import kotlin.jvm.JvmName
 import kotlin.jvm.JvmOverloads
 import kotlin.jvm.JvmStatic
