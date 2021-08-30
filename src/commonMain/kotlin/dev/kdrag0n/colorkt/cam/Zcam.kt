@@ -203,8 +203,8 @@ public data class Zcam(
         val surroundFactor: Double,
 
         /**
-         * Absolute luminance of the adapting field. This can be calculated as L_w * [backgroundLuminance] / 100, where L_w is the
-         * luminance of [referenceWhite], but it is a user-controlled parameter for flexibility.
+         * Absolute luminance of the adapting field. This can be calculated as L_w * [backgroundLuminance] / 100 where
+         * L_w is the luminance of [referenceWhite], but it is a user-controlled parameter for flexibility.
          */
         val adaptingLuminance: Double,
         /**
@@ -319,8 +319,8 @@ public data class Zcam(
              */
             cond: ViewingConditions,
             /**
-             * Whether to calculate 2D color attributes (attributes that depend on the result of multiple 1D attributes).
-             * This includes saturation (Sz), vividness (Vz), blackness (Kz), and whiteness (Wz).
+             * Whether to calculate 2D color attributes (attributes that depend on the result of multiple 1D
+             * attributes). This includes saturation (Sz), vividness (Vz), blackness (Kz), and whiteness (Wz).
              *
              * These attributes are unnecessary in most cases, so you can set this to false and speed up the
              * calculations.

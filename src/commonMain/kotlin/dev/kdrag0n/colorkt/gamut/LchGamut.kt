@@ -28,9 +28,6 @@ public object LchGamut {
     // Epsilon for color spaces where lightness ranges from 0 to 100
     private const val EPSILON_100 = 0.0001
 
-    // Epsilon for color spaces where lightness ranges from 0 to 1
-    private const val EPSILON_1 = 0.000001
-
     private fun evalLine(slope: Double, intercept: Double, x: Double) =
         slope * x + intercept
 
@@ -81,7 +78,8 @@ public object LchGamut {
                         hi = midC
                     } else {
                         // If this color is in gamut, test a point to the right that should be just outside the gamut.
-                        // If the test point is *not* in gamut, we know that this color is right at the edge of the gamut.
+                        // If the test point is *not* in gamut, we know that this color is right at the edge of the
+                        // gamut.
                         val midC2 = midC + epsilon
                         val midL2 = evalLine(slope, intercept, midC2)
 

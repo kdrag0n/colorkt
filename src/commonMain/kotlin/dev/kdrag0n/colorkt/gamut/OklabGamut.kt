@@ -136,24 +136,24 @@ public object OklabGamut {
     private fun findGamutIntersection(
         cusp: LC,
         a: Double, b: Double,
-        L1: Double, C1: Double,
-        L0: Double,
+        l1: Double, c1: Double,
+        l0: Double,
     ): Double {
         // Find the intersection for upper and lower half separately
-        if (((L1 - L0) * cusp.C - (cusp.L - L0) * C1) <= 0) {
+        if (((l1 - l0) * cusp.C - (cusp.L - l0) * c1) <= 0) {
             // Lower half
-            return cusp.C * L0 / (C1 * cusp.L + cusp.C * (L0 - L1))
+            return cusp.C * l0 / (c1 * cusp.L + cusp.C * (l0 - l1))
         }
 
         // Upper half
 
         // First intersect with triangle
-        val t = cusp.C * (L0 - 1) / (C1 * (cusp.L - 1) + cusp.C * (L0 - L1))
+        val t = cusp.C * (l0 - 1) / (c1 * (cusp.L - 1) + cusp.C * (l0 - l1))
 
         // Then one step Halley's method
         run {
-            val dL = L1 - L0
-            val dC = C1
+            val dL = l1 - l0
+            val dC = c1
 
             val k_l = +0.3963377774 * a + 0.2158037573 * b
             val k_m = -0.1055613458 * a - 0.0638541728 * b
@@ -165,8 +165,8 @@ public object OklabGamut {
 
             // If higher accuracy is required, 2 or 3 iterations of the following block can be used:
             run {
-                val L = L0 * (1.0 - t) + t * L1
-                val C = t * C1
+                val L = l0 * (1.0 - t) + t * l1
+                val C = t * c1
 
                 val l_ = L + C * k_l
                 val m_ = L + C * k_m
@@ -228,18 +228,18 @@ public object OklabGamut {
 
         val cusp = findCusp(a_, b_)
 
-        val L0 = when (method) {
-            // L0 = target L
+        val l0 = when (method) {
+            // l0 = target L
             ClipMethod.PRESERVE_LIGHTNESS -> L.coerceIn(0.0, 1.0)
 
-            // L0 = 0.5 (mid grayscale)
+            // l0 = 0.5 (mid grayscale)
             ClipMethod.PROJECT_TO_MID -> 0.5
-            // L0 = L_cusp
+            // l0 = L_cusp
             ClipMethod.PROJECT_TO_LCUSP -> cusp.L
 
-            // Adaptive L0 towards L0=0.5
+            // Adaptive l0 towards l0=0.5
             ClipMethod.ADAPTIVE_TOWARDS_MID -> calcAdaptiveMidL(L, C, alpha)
-            // Adaptive L0 towards L0=L_cusp
+            // Adaptive l0 towards l0=L_cusp
             ClipMethod.ADAPTIVE_TOWARDS_LCUSP -> {
                 val Ld = L - cusp.L
                 val k = 2.0 * (if (Ld > 0) 1.0 - cusp.L else cusp.L)
@@ -249,8 +249,8 @@ public object OklabGamut {
             }
         }
 
-        val t = findGamutIntersection(cusp, a_, b_, L, C, L0)
-        val L_clipped = L0 * (1 - t) + t * L
+        val t = findGamutIntersection(cusp, a_, b_, L, C, l0)
+        val L_clipped = l0 * (1 - t) + t * L
         val C_clipped = t * C
 
         return Oklab(L_clipped, C_clipped * a_, C_clipped * b_).toLinearSrgb()

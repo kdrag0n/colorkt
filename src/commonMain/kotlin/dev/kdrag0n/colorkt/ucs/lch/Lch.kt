@@ -6,7 +6,10 @@ import dev.kdrag0n.colorkt.util.math.toRadians
 import dev.kdrag0n.colorkt.ucs.lab.Lab
 import dev.kdrag0n.colorkt.util.math.square
 import kotlin.jvm.JvmSynthetic
-import kotlin.math.*
+import kotlin.math.atan2
+import kotlin.math.cos
+import kotlin.math.sin
+import kotlin.math.sqrt
 
 /**
  * Common interface for the polar representation of [dev.kdrag0n.colorkt.ucs.lab.Lab] color spaces.
