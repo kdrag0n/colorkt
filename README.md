@@ -2,6 +2,8 @@
 
 Color.kt is a modern color science library for Kotlin Multiplatform and Java. It includes modern perceptually-uniform color spaces and color appearance models, such as [Oklab](https://bottosson.github.io/posts/oklab/) and [ZCAM](https://www.osapublishing.org/oe/fulltext.cfm?uri=oe-29-4-6036&id=447640).
 
+[**API documentation**](https://javadoc.io/doc/dev.kdrag0n/colorkt)
+
 ## Features
 
 - Perceptually-uniform color spaces, each with LCh (lightness, chroma, hue) representations
