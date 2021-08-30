@@ -34,6 +34,20 @@ public object Illuminants {
     )
 
     /**
+     * CIE Standard Illuminant D65. ~6500K color temperature; approximates average daylight in Europe.
+     * This uses XYZ values calculated from raw 1nm SPD data from the CIE, combined with the CIE 1931 2-degree
+     * standard observer.
+     *
+     * @see <a href="https://www.rit.edu/cos/colorscience/rc_useful_data.php">RIT - Useful Color Data</a>
+     */
+    @JvmField
+    public val D65_CIE: CieXyz = CieXyz(
+        x = 0.9504705586542832,
+        y = 1.0,
+        z = 1.088828736395884,
+    )
+
+    /**
      * CIE Standard Illuminant D50. ~5000K color temperature.
      */
     @JvmField
