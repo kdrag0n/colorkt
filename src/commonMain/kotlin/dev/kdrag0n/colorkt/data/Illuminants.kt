@@ -9,15 +9,28 @@ import kotlin.jvm.JvmField
 public object Illuminants {
     /**
      * CIE Standard Illuminant D65. ~6500K color temperature; approximates average daylight in Europe.
+     * This uses the white point chromaticities defined in the sRGB specification.
      *
-     * @see <a href="https://en.wikipedia.org/wiki/Illuminant_D65">Wikipedia</a>
+     * @see <a href="https://en.wikipedia.org/wiki/SRGB">Wikipedia: sRGB</a>
      */
     @JvmField
     public val D65: CieXyz = CieXyz(
-        // xy chromaticities from the sRGB spec
-        x = 0.3127 / 0.3290,
+        x = xyToX(0.3127, 0.3290),
         y = 1.0,
-        z = (1.0 - 0.3127 - 0.3290) / 0.3290,
+        z = xyToZ(0.3127, 0.3290),
+    )
+
+    /**
+     * CIE Standard Illuminant D65. ~6500K color temperature; approximates average daylight in Europe.
+     * This uses the XYZ values defined in the ASTM E‑308 document.
+     *
+     * @see <a href="https://en.wikipedia.org/wiki/Illuminant_D65">Wikipedia: Illuminant D65</a>
+     */
+    @JvmField
+    public val D65_ASTM: CieXyz = CieXyz(
+        x = 0.95047,
+        y = 1.0,
+        z = 1.08883,
     )
 
     /**
@@ -25,8 +38,11 @@ public object Illuminants {
      */
     @JvmField
     public val D50: CieXyz = CieXyz(
-        x = 0.3457 / 0.3585,
+        x = xyToX(0.3457, 0.3585),
         y = 1.0,
-        z = (1.0 - 0.3457 - 0.3585) / 0.3585,
+        z = xyToZ(0.3457, 0.3585),
     )
+
+    private fun xyToX(x: Double, y: Double) = x / y
+    private fun xyToZ(x: Double, y: Double) = (1.0 - x - y) / y
 }
