@@ -21,7 +21,7 @@ public fun interface ColorConverter<F : Color, T : Color> {
  */
 public object ConversionGraph {
     // Adjacency list: [vertex] = edges
-    private val graph = mutableMapOf<ColorType, MutableList<ConversionEdge>>()
+    private val graph = mutableMapOf<ColorType, MutableSet<ConversionEdge>>()
     private val pathCache = HashMap<Pair<ColorType, ColorType>, List<ColorConverter<Color, Color>>>()
 
     init {
@@ -50,16 +50,10 @@ public object ConversionGraph {
     ) {
         val node = ConversionEdge(from, to, converter)
 
-        if (from in graph) {
-            graph[from]!! += node
-        } else {
-            graph[from] = mutableListOf(node)
-        }
-        if (to in graph) {
-            graph[to]!! += node
-        } else {
-            graph[to] = mutableListOf(node)
-        }
+        graph[from]?.let { it += node }
+            ?: graph.put(from, hashSetOf(node))
+        graph[to]?.let { it += node }
+            ?: graph.put(to, hashSetOf(node))
     }
 
     private fun findPath(from: ColorType, to: ColorType): List<ColorConverter<Color, Color>>? {
