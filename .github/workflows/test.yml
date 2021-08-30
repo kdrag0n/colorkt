@@ -1,0 +1,24 @@
+name: Test library
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  publish:
+    name: Run tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Set up Java
+        uses: actions/setup-java@v2
+        with:
+          distribution: adopt
+          java-version: 11
+
+      - name: Build and test
+        run: ./gradlew jvmTest
