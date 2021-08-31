@@ -1,13 +1,16 @@
 package dev.kdrag0n.colorkt.tests
 
+import dev.kdrag0n.colorkt.Color
 import dev.kdrag0n.colorkt.ucs.lab.Oklab
 import dev.kdrag0n.colorkt.ucs.lab.Oklab.Companion.toOklab
 import dev.kdrag0n.colorkt.ucs.lch.CieLch
 import dev.kdrag0n.colorkt.ucs.lch.Oklch
 import dev.kdrag0n.colorkt.ucs.lch.Oklch.Companion.toOklch
 import dev.kdrag0n.colorkt.conversion.ConversionGraph.convert
+import dev.kdrag0n.colorkt.tristimulus.CieXyz
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFails
 
 class ConversionTests {
     @Test
@@ -23,4 +26,13 @@ class ConversionTests {
         val color = Oklab(0.5, 0.3, 0.5)
         assertEquals(color, color.convert())
     }
+
+    @Test
+    fun unsupportedConversion() {
+        assertFails {
+            UnknownColor().convert<CieXyz>()
+        }
+    }
 }
+
+private class UnknownColor : Color
