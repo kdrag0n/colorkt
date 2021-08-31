@@ -215,7 +215,7 @@ public object OklabGamut {
         alpha: Double,
         oklab: Oklab?,
     ): LinearSrgb {
-        if (rgb.r in 0.0..1.0 && rgb.g in 0.0..1.0 && rgb.b in 0.0..1.0) {
+        if (rgb.isInGamut()) {
             return rgb
         }
 
