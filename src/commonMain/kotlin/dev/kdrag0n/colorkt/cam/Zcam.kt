@@ -97,7 +97,7 @@ public data class Zcam(
         val Cz = when (chromaSource) {
             ChromaSource.CHROMA -> Cz
             ChromaSource.COLORFULNESS -> Double.NaN // not used
-            ChromaSource.SATURATION -> (Qz * square(Sz)) / (100.0 * Qz_w * cond.Qz_denom)
+            ChromaSource.SATURATION -> (Qz * square(Sz)) / (100.0 * Qz_w * cond.Sz_denom)
             ChromaSource.VIVIDNESS -> sqrt((square(Vz) - square(Jz - 58)) / 3.4)
             ChromaSource.BLACKNESS -> sqrt((square((100 - Kz) / 0.8) - square(Jz)) / 8)
             ChromaSource.WHITENESS -> sqrt(square(100.0 - Wz) - square(100.0 - Jz))
@@ -221,6 +221,7 @@ public data class Zcam(
         @JvmSynthetic @JvmField internal val ez_coeff: Double
         @JvmSynthetic @JvmField internal val Qz_denom: Double
         @JvmSynthetic @JvmField internal val Sz_coeff: Double
+        @JvmSynthetic @JvmField internal val Sz_denom: Double
         @JvmSynthetic @JvmField internal val Mz_denom: Double
         @JvmSynthetic @JvmField internal val Qz_w: Double
 
@@ -232,6 +233,7 @@ public data class Zcam(
             ez_coeff = F_l.pow(0.2)
             Qz_denom = F_b.pow(0.12)
             Sz_coeff = F_l.pow(0.6)
+            Sz_denom = F_l.pow(1.2)
 
             val Iz_w = xyzToIzazbz(referenceWhite)[0]
             Mz_denom = Iz_w.pow(0.78) * F_b.pow(0.1)
