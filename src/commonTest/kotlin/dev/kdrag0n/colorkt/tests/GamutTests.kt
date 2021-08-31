@@ -88,9 +88,20 @@ class GamutTests {
         )
 
         val clipped = zcam.clipToLinearSrgb()
-        assertFalse { clipped.r.isNaN() }
-        assertFalse { clipped.g.isNaN() }
-        assertFalse { clipped.b.isNaN() }
+        assertInGamut(clipped)
+    }
+
+    @Test
+    fun zcamClipNegativeLightness() {
+        val zcam = Zcam(
+            lightness = -10.0,
+            chroma = 0.0,
+            hue = 0.0,
+            viewingConditions = cond,
+        )
+
+        val clipped = zcam.clipToLinearSrgb()
+        assertInGamut(clipped)
     }
 
     private fun assertInGamut(rgb: LinearSrgb) {
