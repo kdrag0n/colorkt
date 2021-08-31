@@ -4,7 +4,11 @@ import java.util.Base64
 
 plugins {
     kotlin("multiplatform") version "1.5.21"
+    // Tests
+    jacoco
+    // Docs
     id("org.jetbrains.dokka") version "1.5.0"
+    // Publishing
     id("io.github.gradle-nexus.publish-plugin") version "1.1.0"
     `maven-publish`
     signing
@@ -55,6 +59,33 @@ kotlin {
         val nativeMain by getting
         val nativeTest by getting
     }
+}
+
+jacoco {
+    toolVersion = "0.8.7"
+}
+
+val jacocoTestReport by tasks.creating(JacocoReport::class) {
+    val coverageSourceDirs = arrayOf(
+        "src/commonMain",
+        "src/jvmMain"
+    )
+
+    val classFiles = File("$buildDir/classes/kotlin/jvm/")
+        .walkBottomUp()
+        .toSet()
+
+    classDirectories.setFrom(classFiles)
+    sourceDirectories.setFrom(files(coverageSourceDirs))
+
+    executionData.setFrom(files("$buildDir/jacoco/jvmTest.exec"))
+
+    reports {
+        xml.isEnabled = true
+        html.isEnabled = true
+    }
+
+    dependsOn("jvmTest")
 }
 
 val dokkaHtml by tasks.getting(org.jetbrains.dokka.gradle.DokkaTask::class)
