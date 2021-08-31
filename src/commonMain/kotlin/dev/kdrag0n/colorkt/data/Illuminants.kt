@@ -8,7 +8,7 @@ import kotlin.jvm.JvmField
  */
 public object Illuminants {
     /**
-     * CIE Standard Illuminant D65. ~6500K color temperature; approximates average daylight in Europe.
+     * sRGB variant of CIE Standard Illuminant D65. ~6500K color temperature; approximates average daylight in Europe.
      * This uses the white point chromaticities defined in the sRGB specification.
      *
      * @see <a href="https://en.wikipedia.org/wiki/SRGB">Wikipedia: sRGB</a>
@@ -21,7 +21,7 @@ public object Illuminants {
     )
 
     /**
-     * CIE Standard Illuminant D65. ~6500K color temperature; approximates average daylight in Europe.
+     * ASTM variant of CIE Standard Illuminant D65. ~6500K color temperature; approximates average daylight in Europe.
      * This uses the XYZ values defined in the ASTM E‑308 document.
      *
      * @see <a href="https://en.wikipedia.org/wiki/Illuminant_D65">Wikipedia: Illuminant D65</a>
@@ -34,8 +34,8 @@ public object Illuminants {
     )
 
     /**
-     * CIE Standard Illuminant D65. ~6500K color temperature; approximates average daylight in Europe.
-     * This uses XYZ values calculated from raw 1nm SPD data from the CIE, combined with the CIE 1931 2-degree
+     * Raw precise variant of CIE Standard Illuminant D65. ~6500K color temperature; approximates average daylight in Europe.
+     * This uses XYZ values calculated from raw 1nm SPD data, combined with the CIE 1931 2-degree
      * standard observer.
      *
      * @see <a href="https://www.rit.edu/cos/colorscience/rc_useful_data.php">RIT - Useful Color Data</a>
