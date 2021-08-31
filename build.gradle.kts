@@ -15,7 +15,7 @@ plugins {
 }
 
 group = "dev.kdrag0n"
-version = "1.0.1"
+version = "1.0.2"
 
 repositories {
     mavenCentral()
