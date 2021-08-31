@@ -50,8 +50,8 @@ public data class CieXyzAbs(
 
         @JvmSynthetic
         internal fun register() {
-            ConversionGraph.add<CieXyz, CieXyzAbs> { it.toAbs(DEFAULT_SDR_WHITE_LUMINANCE) }
-            ConversionGraph.add<CieXyzAbs, CieXyz> { it.toRel(DEFAULT_SDR_WHITE_LUMINANCE) }
+            ConversionGraph.add<CieXyz, CieXyzAbs> { it.toAbs() }
+            ConversionGraph.add<CieXyzAbs, CieXyz> { it.toRel() }
         }
 
         /**
