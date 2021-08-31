@@ -2,12 +2,27 @@ package dev.kdrag0n.colorkt.tests
 
 import dev.kdrag0n.colorkt.cam.Zcam
 import dev.kdrag0n.colorkt.cam.Zcam.Companion.toZcam
+import dev.kdrag0n.colorkt.data.Illuminants
+import dev.kdrag0n.colorkt.rgb.LinearSrgb.Companion.toLinear
+import dev.kdrag0n.colorkt.rgb.Srgb
+import dev.kdrag0n.colorkt.tristimulus.CieXyz
+import dev.kdrag0n.colorkt.tristimulus.CieXyz.Companion.toXyz
 import dev.kdrag0n.colorkt.tristimulus.CieXyzAbs
+import dev.kdrag0n.colorkt.tristimulus.CieXyzAbs.Companion.toAbs
+import dev.kdrag0n.colorkt.ucs.lab.CieLab
 import kotlin.math.abs
 import kotlin.test.Test
+import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 class ZcamTests {
+    private val defaultCond = Zcam.ViewingConditions(
+        surroundFactor = Zcam.ViewingConditions.SURROUND_AVERAGE,
+        adaptingLuminance = 0.4 * CieXyzAbs.DEFAULT_SDR_WHITE_LUMINANCE,
+        backgroundLuminance = CieLab(50.0, 0.0, 0.0).toXyz().toAbs().y,
+        referenceWhite = Illuminants.D65.toAbs(),
+    )
+
     @Test
     fun zcamExample1() {
         val cond = Zcam.ViewingConditions(
@@ -58,6 +73,32 @@ class ZcamTests {
             assertApprox(inverted.y, sample.y, comment)
             assertApprox(inverted.x, sample.x, comment)
             assertApprox(inverted.z, sample.z, comment)
+        }
+    }
+
+    @Test
+    fun testZcamAliases() {
+        val zcam = Srgb(0xff00ff).toLinear().toXyz().toAbs().toZcam(defaultCond)
+        zcam.apply {
+            assertEquals(Qz, brightness)
+            assertEquals(Jz, lightness)
+            assertEquals(Mz, colorfulness)
+            assertEquals(Cz, chroma)
+            assertEquals(hz, hue)
+            assertEquals(Sz, saturation)
+            assertEquals(Vz, vividness)
+            assertEquals(Kz, blackness)
+            assertEquals(Wz, whiteness)
+        }
+    }
+
+    @Test
+    fun testViewingConditionParams() {
+        defaultCond.apply {
+            assertEquals(surroundFactor, Zcam.ViewingConditions.SURROUND_AVERAGE)
+            assertEquals(referenceWhite, Illuminants.D65.toAbs())
+            assertEquals(backgroundLuminance, CieLab(50.0, 0.0, 0.0).toXyz().toAbs().y)
+            assertEquals(adaptingLuminance, CieXyz(0.0, 0.4, 0.0).toAbs().y)
         }
     }
 }
