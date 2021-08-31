@@ -213,13 +213,11 @@ public object OklabGamut {
         rgb: LinearSrgb,
         method: ClipMethod,
         alpha: Double,
-        oklab: Oklab?,
+        lab: Oklab,
     ): LinearSrgb {
         if (rgb.isInGamut()) {
             return rgb
         }
-
-        val lab = oklab ?: rgb.toOklab()
 
         val L = lab.L
         val C = max(CLIP_EPSILON, sqrt(lab.a * lab.a + lab.b * lab.b))
@@ -362,6 +360,6 @@ public object OklabGamut {
         rgb = toLinearSrgb(),
         method = method,
         alpha = alpha,
-        oklab = this,
+        lab = this,
     )
 }
