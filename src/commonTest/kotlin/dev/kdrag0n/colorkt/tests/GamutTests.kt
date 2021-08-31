@@ -31,10 +31,10 @@ class GamutTests {
     )
 
     @Test
-    fun oklabClipRgbk() {
-        // R, G, B, black
-        for (channel in 2 downTo -1) {
-            val src = Srgb(0xff shl (channel * 8))
+    fun oklabClipRgbkw() {
+        // R, G, B, black, white
+        for (channel in 2 downTo -2) {
+            val src = Srgb(if (channel == -2) 0xffffff else 0xff shl (channel * 8))
             val srcLinear = src.toLinear()
             val lch = src.convert<Oklch>()
 
@@ -55,10 +55,10 @@ class GamutTests {
     }
 
     @Test
-    fun zcamClipRgbk() {
-        // R, G, B, black
-        for (channel in 2 downTo -1) {
-            val src = Srgb(0xff shl (channel * 8))
+    fun zcamClipRgbkw() {
+        // R, G, B, black, white
+        for (channel in 2 downTo -2) {
+            val src = Srgb(if (channel == -2) 0xffffff else 0xff shl (channel * 8))
             val srcLinear = src.toLinear()
             val zcam = src.convert<CieXyzAbs>().toZcam(cond, include2D = false)
 
