@@ -48,11 +48,17 @@ class ZcamTests {
             assertApprox(Wz, 90.94725313)
         }
 
-        // Now invert it
-        val inverted = zcam.toXyzAbs(Zcam.LuminanceSource.LIGHTNESS, Zcam.ChromaSource.COLORFULNESS)
-        assertApprox(inverted.x, sample.x)
-        assertApprox(inverted.y, sample.y)
-        assertApprox(inverted.z, sample.z)
+        // Now invert it using all combinations of methods
+        val invertedResults = Zcam.LuminanceSource.values()
+            .flatMap { ls -> Zcam.ChromaSource.values().map { cs -> ls to cs } }
+            .map { (ls, cs) -> Triple(ls, cs, zcam.toXyzAbs(ls, cs)) }
+        invertedResults.forEach { (ls, cs, inverted) ->
+            val comment = "Inverted with $ls, $cs"
+            println("$ls $cs $inverted")
+            assertApprox(inverted.y, sample.y, comment)
+            assertApprox(inverted.x, sample.x, comment)
+            assertApprox(inverted.z, sample.z, comment)
+        }
     }
 }
 
