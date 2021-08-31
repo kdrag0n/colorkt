@@ -68,6 +68,9 @@ public data class Oklab(
         internal fun register() {
             ConversionGraph.add<LinearSrgb, Oklab> { it.toOklab() }
             ConversionGraph.add<Oklab, LinearSrgb> { it.toLinearSrgb() }
+
+            ConversionGraph.add<CieXyz, Oklab> { it.toOklab() }
+            ConversionGraph.add<Oklab, CieXyz> { it.toXyz() }
         }
 
         private fun lmsToOklab(l: Double, m: Double, s: Double): Oklab {

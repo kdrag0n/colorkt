@@ -14,7 +14,7 @@ class ConversionTests {
     fun longConversion() {
         val jzczhz = CieLch(50.0, 20.0, 1.0)
         val autoOklch = jzczhz.convert<Oklch>()
-        val manualOklch = jzczhz.toCieLab().toXyz().toLinearSrgb().toOklab().toOklch()
+        val manualOklch = jzczhz.toCieLab().toXyz().toOklab().toOklch()
         assertEquals(autoOklch, manualOklch)
     }
 
