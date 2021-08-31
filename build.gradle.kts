@@ -67,11 +67,11 @@ jacoco {
 
 val jacocoTestReport by tasks.creating(JacocoReport::class) {
     val coverageSourceDirs = arrayOf(
-        "src/commonMain",
-        "src/jvmMain"
+        "src/commonMain/kotlin",
+        "src/jvmMain/kotlin"
     )
 
-    val classFiles = File("$buildDir/classes/kotlin/jvm/")
+    val classFiles = File("$buildDir/classes/kotlin/jvm/main")
         .walkBottomUp()
         .toSet()
 
@@ -81,7 +81,6 @@ val jacocoTestReport by tasks.creating(JacocoReport::class) {
     executionData.setFrom(files("$buildDir/jacoco/jvmTest.exec"))
 
     reports {
-        xml.isEnabled = true
         html.isEnabled = true
     }
 
