@@ -5,10 +5,10 @@ import kotlin.test.assertTrue
 
 private const val TEST_EPSILON = 0.001
 
-infix fun Double.approx(x: Double) = abs(this - x) <= TEST_EPSILON
+fun Double.approx(x: Double, epsilon: Double = TEST_EPSILON) = abs(this - x) <= epsilon
 
-fun assertApprox(actual: Double, expected: Double, comment: String? = null) {
+fun assertApprox(actual: Double, expected: Double, comment: String? = null, epsilon: Double = TEST_EPSILON) {
     val msgBase = "Expected $expected, got $actual"
     val msg = if (comment != null) "$msgBase ($comment)" else msgBase
-    assertTrue(actual approx expected, msg)
+    assertTrue(actual.approx(expected, epsilon), msg)
 }
