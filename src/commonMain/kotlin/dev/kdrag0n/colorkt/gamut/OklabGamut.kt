@@ -212,8 +212,8 @@ public object OklabGamut {
     private fun clip(
         rgb: LinearSrgb,
         method: ClipMethod,
-        alpha: Double = 0.05,
-        oklab: Oklab? = null,
+        alpha: Double,
+        oklab: Oklab?,
     ): LinearSrgb {
         if (rgb.r in 0.0..1.0 && rgb.g in 0.0..1.0 && rgb.b in 0.0..1.0) {
             return rgb
