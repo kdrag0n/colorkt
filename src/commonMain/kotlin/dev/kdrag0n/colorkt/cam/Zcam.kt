@@ -122,9 +122,9 @@ public data class Zcam(
         /* Step 5 */
         val I = Iz + EPSILON
 
-        val r = pqInv(I + 0.2772100865*az +  0.1160946323*bz)
-        val g = pqInv(I)
-        val b = pqInv(I + 0.0425858012*az + -0.7538445799*bz)
+        val r = pq(I + 0.2772100865*az +  0.1160946323*bz)
+        val g = pq(I)
+        val b = pq(I + 0.0425858012*az + -0.7538445799*bz)
 
         val xp =  1.9242264358*r + -1.0047923126*g +  0.0376514040*b
         val yp =  0.3503167621*r +  0.7264811939*g + -0.0653844229*b
@@ -271,16 +271,16 @@ public data class Zcam(
 
         // Transfer function and inverse
         private fun pq(x: Double): Double {
-            val num = C1 + C2*(x / 10000).pow(ETA)
-            val denom = 1.0 + C3*(x / 10000).pow(ETA)
-
-            return (num / denom).pow(RHO)
-        }
-        private fun pqInv(x: Double): Double {
             val num = C1 - x.pow(1.0/RHO)
             val denom = C3*x.pow(1.0/RHO) - C2
 
             return 10000.0 * (num / denom).pow(1.0/ETA)
+        }
+        private fun pqInv(x: Double): Double {
+            val num = C1 + C2*(x / 10000).pow(ETA)
+            val denom = 1.0 + C3*(x / 10000).pow(ETA)
+
+            return (num / denom).pow(RHO)
         }
 
         // Intermediate conversion, also used in ViewingConditions
@@ -290,9 +290,9 @@ public data class Zcam(
             val xp = B*xyz.x - (B-1)*xyz.z
             val yp = G*xyz.y - (G-1)*xyz.x
 
-            val rp = pq(0.41478972*xp + 0.579999*yp + 0.0146480*xyz.z)
-            val gp = pq(-0.2015100*xp + 1.120649*yp + 0.0531008*xyz.z)
-            val bp = pq(-0.0166008*xp + 0.264800*yp + 0.6684799*xyz.z)
+            val rp = pqInv(0.41478972*xp + 0.579999*yp + 0.0146480*xyz.z)
+            val gp = pqInv(-0.2015100*xp + 1.120649*yp + 0.0531008*xyz.z)
+            val bp = pqInv(-0.0166008*xp + 0.264800*yp + 0.6684799*xyz.z)
 
             val az = 3.524000*rp + -4.066708*gp +  0.542708*bp
             val bz = 0.199076*rp +  1.096799*gp + -1.295875*bp
