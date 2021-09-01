@@ -285,7 +285,7 @@ public data class Zcam(
 
         // Intermediate conversion, also used in ViewingConditions
         private fun xyzToIzazbz(xyz: CieXyzAbs): DoubleArray {
-            // This equation (#9) is wrong in the paper; below is the correct version.
+            // This equation (#4) is wrong in the paper; below is the correct version.
             // It can be derived from the inverse model (supplementary paper) or the original Jzazbz paper.
             val xp = B*xyz.x - (B-1)*xyz.z
             val yp = G*xyz.y - (G-1)*xyz.x
