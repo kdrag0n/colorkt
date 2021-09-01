@@ -183,7 +183,8 @@ class ZcamTests {
         assertSimilar(zcam.Mz, Mz)
         assertSimilar(zcam.Cz, Cz)
         assertSimilar(zcam.Sz, Sz)
-        assertSimilar(zcam.Vz, Vz, epsilon = 0.7)
+        assertSimilar(zcam.Vz, Vz)
+        assertSimilar(zcam.Kz, Kz, epsilon = 0.8)
         assertSimilar(zcam.Wz, Wz)
 
         // Now invert it using all combinations of methods
