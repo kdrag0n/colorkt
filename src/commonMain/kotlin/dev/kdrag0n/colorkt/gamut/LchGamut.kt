@@ -122,19 +122,19 @@ public object LchGamut {
         alpha: Double = 0.05,
     ): LinearSrgb {
         val l0 = when (method) {
-            ClipMethod.PRESERVE_LIGHTNESS -> this.lightness
+            ClipMethod.PRESERVE_LIGHTNESS -> lightness
             ClipMethod.PROJECT_TO_MID -> 50.0
             ClipMethod.ADAPTIVE_TOWARDS_MID -> OklabGamut.calcAdaptiveMidL(
-                L = this.lightness / 100.0,
-                C = this.chroma / 100.0,
+                L = lightness / 100.0,
+                C = chroma / 100.0,
                 alpha = alpha,
             ) * 100.0
         }
 
         return clip(
-            l1 = this.lightness,
-            c1 = this.chroma,
-            hue = this.hue,
+            l1 = lightness,
+            c1 = chroma,
+            hue = hue,
             l0 = l0,
             epsilon = EPSILON_100,
             maxLightness = 100.0
