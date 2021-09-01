@@ -330,7 +330,7 @@ public data class Zcam(
             include2D: Boolean = true,
         ): Zcam {
             /* Step 2 */
-            // Achromatic response
+            // Raw responses (similar to Jzazbz)
             val (Iz, az, bz) = xyzToIzazbz(this)
 
             /* Step 3 */
