@@ -290,9 +290,9 @@ public data class Zcam(
             val xp = B*xyz.x - (B-1)*xyz.z
             val yp = G*xyz.y - (G-1)*xyz.x
 
-            val rp = pq( 0.41478972*xp + 0.579999*yp + 0.0146480*xyz.z)
-            val gp = pq(-0.20151000*xp + 1.120649*yp + 0.0531008*xyz.z)
-            val bp = pq(-0.01660080*xp + 0.264800*yp + 0.6684799*xyz.z)
+            val rp = pq(0.41478972*xp + 0.579999*yp + 0.0146480*xyz.z)
+            val gp = pq(-0.2015100*xp + 1.120649*yp + 0.0531008*xyz.z)
+            val bp = pq(-0.0166008*xp + 0.264800*yp + 0.6684799*xyz.z)
 
             val az = 3.524000*rp + -4.066708*gp +  0.542708*bp
             val bz = 0.199076*rp +  1.096799*gp + -1.295875*bp
