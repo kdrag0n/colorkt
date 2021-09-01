@@ -29,13 +29,23 @@ class ZcamTests {
             surroundFactor = Zcam.ViewingConditions.SURROUND_AVERAGE,
             adaptingLuminance = 264.0,
             backgroundLuminance = 100.0,
-            //referenceWhite = CieXyzAbs(256.0, 264.0, 202.0),
-            referenceWhite = CieXyzAbs(250.92408, 264.0, 287.45112), // adapted to D65
+            referenceWhite = CieXyzAbs(256.0, 264.0, 202.0), // unadapted
+            //referenceWhite = Illuminants.D65.toAbs(264.0),
+            //referenceWhite = CieXyzAbs(250.92408, 264.0, 287.45112), // adapted with colour-science
+            //referenceWhite = CieXyzAbs(250.97474535, 264.0, 286.59818871), // adapted with colorio CAT02, ASTM D65
         )
 
-        //val sample = CieXyzAbs(185.0, 206.0, 163.0)
-        val sample = CieXyzAbs(182.232347, 206.57991269, 231.87358528) // adapted to D65
+        //val sample = CieXyzAbs(185.0, 206.0, 163.0) //unadapted
+        //val sample = CieXyzAbs(182.232347, 206.57991269, 231.87358528) // adapted with colour-science
+        val sample = CieXyzAbs(182.25997236, 206.57412429, 231.18612283) // adapted with colorio CAT02, ASTM D65, F=1, L_a=264
+        //val sample = CieXyzAbs(182.25793729, 206.57453216, 231.23410074) // adapted with colorio CAT02, sRGB D65, F=1, L_a=264
+        //val sample = CieXyzAbs(182.26007822, 206.57411859, 231.18585671) // adapted with colorio CAT02, CIE D65, F=1, L_a=264
+        //val sample = CieXyzAbs(182.232347, 206.57991269, 231.87358528) // adapted with colorio CAT02, ASTM D65, D=0, L_a=264
+        //val sample = CieXyzAbs(183.09031943, 206.40013976, 210.52277384) // adapted with colorio CAT02, ASTM D65, D=0.69, L_a=264
+        //val sample = CieXyzAbs(183.10938093, 206.39614576, 210.04842475) // adapted with colorio CAT02, ASTM D65, D=0.69, L_a=264
+        //val sample = CieXyzAbs(182.24610085, 206.57458501, 231.17979287) // adapted with colorio CAT02, MATLAB D65, F=1, L_a=264
         val zcam = sample.toZcam(cond)
+        println(zcam)
 
         // TODO: assert for more exact values once the paper authors provide a clarification
         zcam.apply {
@@ -51,6 +61,7 @@ class ZcamTests {
         }
 
         // Test against luxpy
+        /*
         zcam.apply {
             assertApprox(hz, 197.26438822)
             assertApprox(Qz, 321.37946798)
@@ -61,7 +72,7 @@ class ZcamTests {
             assertApprox(Vz, 33.91507829)
             assertApprox(Kz, 26.51716672)
             assertApprox(Wz, 90.94725313)
-        }
+        }*/
 
         // Now invert it using all combinations of methods
         val invertedResults = Zcam.LuminanceSource.values()
@@ -104,5 +115,5 @@ class ZcamTests {
 }
 
 private fun assertSimilar(actual: Double, expected: Double) {
-    assertTrue(abs(actual - expected) <= 1.25, "Expected $expected, got $actual")
+    assertTrue(abs(actual - expected) <= 0.6, "Expected $expected, got $actual")
 }
