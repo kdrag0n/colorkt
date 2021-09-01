@@ -183,7 +183,7 @@ class ZcamTests {
         assertSimilar(zcam.Mz, Mz)
         assertSimilar(zcam.Cz, Cz)
         assertSimilar(zcam.Sz, Sz)
-        assertSimilar(zcam.Vz, Vz)
+        assertSimilar(zcam.Vz, Vz, epsilon = 0.7)
         assertSimilar(zcam.Wz, Wz)
 
         // Now invert it using all combinations of methods
@@ -200,6 +200,6 @@ class ZcamTests {
     }
 }
 
-private fun assertSimilar(actual: Double, expected: Double) {
-    assertTrue(abs(actual - expected) <= 0.7, "Expected $expected, got $actual")
+private fun assertSimilar(actual: Double, expected: Double, epsilon: Double = 0.1) {
+    assertTrue(abs(actual - expected) <= epsilon, "Expected $expected, got $actual")
 }
