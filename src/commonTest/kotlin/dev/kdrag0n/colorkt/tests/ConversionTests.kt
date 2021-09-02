@@ -7,10 +7,11 @@ import dev.kdrag0n.colorkt.ucs.lch.CieLch
 import dev.kdrag0n.colorkt.ucs.lch.Oklch
 import dev.kdrag0n.colorkt.ucs.lch.Oklch.Companion.toOklch
 import dev.kdrag0n.colorkt.conversion.ConversionGraph.convert
+import dev.kdrag0n.colorkt.conversion.UnsupportedConversionException
 import dev.kdrag0n.colorkt.tristimulus.CieXyz
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertFails
+import kotlin.test.assertFailsWith
 
 class ConversionTests {
     @Test
@@ -29,7 +30,7 @@ class ConversionTests {
 
     @Test
     fun unsupportedConversion() {
-        assertFails {
+        assertFailsWith<UnsupportedConversionException> {
             UnknownColor().convert<CieXyz>()
         }
     }
