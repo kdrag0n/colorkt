@@ -30,18 +30,24 @@ class GamutTests {
         referenceWhite = Illuminants.D65.toAbs(),
     )
 
+    private val srgbRgbkw = listOf(
+        0xff0000,
+        0x00ff00,
+        0x0000ff,
+        0x000000,
+        0xffffff,
+    ).map { Srgb(it) }
+
     @Test
     fun oklabClipRgbkw() {
-        // R, G, B, black, white
-        for (channel in 2 downTo -2) {
-            val src = Srgb(if (channel == -2) 0xffffff else 0xff shl (channel * 8))
+        for (src in srgbRgbkw) {
             val srcLinear = src.toLinear()
             val lch = src.convert<Oklch>()
 
             // Boost the chroma and clip lightness
             val clipped = lch.copy(chroma = lch.chroma * 5).toOklab().clipToLinearSrgb()
 
-            // Now check
+            // Make sure it's the same
             assertApprox(clipped.r, srcLinear.r)
             assertApprox(clipped.g, srcLinear.g)
             assertApprox(clipped.b, srcLinear.b)
@@ -56,9 +62,7 @@ class GamutTests {
 
     @Test
     fun zcamClipRgbkw() {
-        // R, G, B, black, white
-        for (channel in 2 downTo -2) {
-            val src = Srgb(if (channel == -2) 0xffffff else 0xff shl (channel * 8))
+        for (src in srgbRgbkw) {
             val srcLinear = src.toLinear()
             val zcam = src.convert<CieXyzAbs>().toZcam(cond, include2D = false)
 
