@@ -26,8 +26,8 @@ class GamutTests {
     private val cond = Zcam.ViewingConditions(
         surroundFactor = Zcam.ViewingConditions.SURROUND_AVERAGE,
         adaptingLuminance = 0.4 * DEFAULT_SDR_WHITE_LUMINANCE,
-        backgroundLuminance = CieLab(50.0, 0.0, 0.0).toXyz().y * DEFAULT_SDR_WHITE_LUMINANCE,
-        referenceWhite = Illuminants.D65.toAbs(DEFAULT_SDR_WHITE_LUMINANCE),
+        backgroundLuminance = CieLab(50.0, 0.0, 0.0).toXyz().toAbs().y,
+        referenceWhite = Illuminants.D65.toAbs(),
     )
 
     @Test
