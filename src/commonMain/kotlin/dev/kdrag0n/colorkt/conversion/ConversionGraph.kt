@@ -60,7 +60,7 @@ public object ConversionGraph {
         val visited = HashSet<ConversionEdge>()
         val pathQueue = ArrayDeque(listOf(
             // Initial path: from node
-            listOf(ConversionEdge(from, from) { it })
+            listOf(ConversionEdge(from, from) { it }),
         ))
 
         while (pathQueue.isNotEmpty()) {
@@ -70,7 +70,7 @@ public object ConversionGraph {
             val node = path.last()
 
             if (node.to == to) {
-                return path.map { it.converter }
+                return path.drop(1).map { it.converter }
             } else if (node !in visited) {
                 visited += node
                 val neighbors = graph[node.to] ?: continue
