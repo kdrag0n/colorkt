@@ -8,29 +8,29 @@ import kotlin.jvm.JvmField
  */
 public object Illuminants {
     /**
-     * sRGB variant of CIE Standard Illuminant D65. ~6500K color temperature; approximates average daylight in Europe.
-     * This uses the white point chromaticities defined in the sRGB specification.
-     *
-     * @see <a href="https://en.wikipedia.org/wiki/SRGB">Wikipedia: sRGB</a>
-     */
-    @JvmField
-    public val D65: CieXyz = CieXyz(
-        x = xyToX(0.3127, 0.3290),
-        y = 1.0,
-        z = xyToZ(0.3127, 0.3290),
-    )
-
-    /**
      * ASTM variant of CIE Standard Illuminant D65. ~6500K color temperature; approximates average daylight in Europe.
      * This uses the XYZ values defined in the ASTM E‑308 document.
      *
      * @see <a href="https://en.wikipedia.org/wiki/Illuminant_D65">Wikipedia: Illuminant D65</a>
      */
     @JvmField
-    public val D65_ASTM: CieXyz = CieXyz(
+    public val D65: CieXyz = CieXyz(
         x = 0.95047,
         y = 1.0,
         z = 1.08883,
+    )
+
+    /**
+     * sRGB variant of CIE Standard Illuminant D65. ~6500K color temperature; approximates average daylight in Europe.
+     * This uses the white point chromaticities defined in the sRGB specification.
+     *
+     * @see <a href="https://en.wikipedia.org/wiki/SRGB">Wikipedia: sRGB</a>
+     */
+    @JvmField
+    public val D65_SRGB: CieXyz = CieXyz(
+        x = xyToX(0.3127, 0.3290),
+        y = 1.0,
+        z = xyToZ(0.3127, 0.3290),
     )
 
     /**

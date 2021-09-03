@@ -21,7 +21,7 @@ class Srlab2Tests {
     )
     @Test
     fun colorioSample3() = xyzSrlabTest(
-        xyz = Illuminants.D65_ASTM,
+        xyz = Illuminants.D65,
         srlab2 = Srlab2(99.99977248346777, -0.004069281557519844, -0.00039226988315022027),
     )
     @Test

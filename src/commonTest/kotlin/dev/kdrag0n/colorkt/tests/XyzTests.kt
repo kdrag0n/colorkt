@@ -31,7 +31,7 @@ class XyzTests {
 
         println("max = $maxChroma")
         println("avg = $avgChroma")
-        assertTrue(maxChroma <= 5.978733960281817e-14, "Max neutral chroma = $maxChroma")
-        assertTrue(avgChroma <= 1.1564648410521476e-14, "Average neutral chroma = $avgChroma")
+        assertTrue(maxChroma <= 7.108895957933346e-14, "Max neutral chroma = $maxChroma")
+        assertTrue(avgChroma <= 1.3133161994387564e-14, "Average neutral chroma = $avgChroma")
     }
 }
