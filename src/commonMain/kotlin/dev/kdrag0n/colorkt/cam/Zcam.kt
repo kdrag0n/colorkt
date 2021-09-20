@@ -229,7 +229,7 @@ public data class Zcam(
             val F_b = sqrt(backgroundLuminance / referenceWhite.y)
             val F_l = 0.171 * cbrt(adaptingLuminance) * (1.0 - exp(-48.0 / 9.0 * adaptingLuminance))
 
-            Iz_coeff = 2700.0 * surroundFactor.pow(2.2) * F_b.pow(0.5) * F_l.pow(0.2)
+            Iz_coeff = 2700.0 * surroundFactor.pow(2.2) * sqrt(F_b) * F_l.pow(0.2)
             ez_coeff = F_l.pow(0.2)
             Qz_denom = F_b.pow(0.12)
             Sz_coeff = F_l.pow(0.6)
