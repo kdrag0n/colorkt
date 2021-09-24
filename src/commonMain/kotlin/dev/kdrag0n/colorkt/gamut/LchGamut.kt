@@ -26,7 +26,7 @@ private fun interface LchFactory {
  */
 public object LchGamut {
     // Epsilon for color spaces where lightness ranges from 0 to 100
-    private const val EPSILON_100 = 0.0001
+    private const val EPSILON_100 = 0.001
 
     private fun evalLine(slope: Double, intercept: Double, x: Double) =
         slope * x + intercept
