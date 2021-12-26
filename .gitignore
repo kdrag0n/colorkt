@@ -112,3 +112,6 @@ gradle-app.setting
 
 # Maven publishing
 local.properties
+
+# Kotlin/JS build
+/kotlin-js-store/
