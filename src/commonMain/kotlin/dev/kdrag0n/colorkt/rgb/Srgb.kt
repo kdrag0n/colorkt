@@ -61,6 +61,6 @@ public data class Srgb(
 
     private companion object {
         // Clamp out-of-bounds values
-        private fun quantize8(n: Double) = (n * 255.0).roundToInt() and 0xff
+        private fun quantize8(n: Double) = (n * 255.0).roundToInt().coerceIn(0, 255)
     }
 }
