@@ -3,7 +3,6 @@ package dev.kdrag0n.colorkt.cam
 import dev.kdrag0n.colorkt.Color
 import dev.kdrag0n.colorkt.tristimulus.CieXyzAbs
 import dev.kdrag0n.colorkt.ucs.lch.Lch
-import dev.kdrag0n.colorkt.util.math.cbrt
 import dev.kdrag0n.colorkt.util.math.square
 import dev.kdrag0n.colorkt.util.math.toDegrees
 import dev.kdrag0n.colorkt.util.math.toRadians

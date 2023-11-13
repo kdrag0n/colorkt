@@ -3,12 +3,12 @@ package dev.kdrag0n.colorkt.ucs.lab
 import dev.kdrag0n.colorkt.tristimulus.CieXyz
 import dev.kdrag0n.colorkt.data.Illuminants
 import dev.kdrag0n.colorkt.conversion.ConversionGraph
-import dev.kdrag0n.colorkt.util.math.cbrt
 import dev.kdrag0n.colorkt.util.math.cube
 import kotlin.jvm.JvmName
 import kotlin.jvm.JvmOverloads
 import kotlin.jvm.JvmStatic
 import kotlin.jvm.JvmSynthetic
+import kotlin.math.cbrt
 
 /**
  * A color in the CIE L*a*b* uniform color space, which represents colors in [dev.kdrag0n.colorkt.ucs.lab.Lab] form.
