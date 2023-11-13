@@ -3,15 +3,15 @@ import java.io.FileInputStream
 import java.util.Base64
 
 plugins {
-    kotlin("multiplatform") version "1.6.10"
+    kotlin("multiplatform") version "1.9.20"
     // Tests
     jacoco
     // Docs
-    id("org.jetbrains.dokka") version "1.6.0"
+    id("org.jetbrains.dokka") version "1.9.10"
     // Publishing
-    id("io.github.gradle-nexus.publish-plugin") version "1.1.0"
-    `maven-publish`
-    signing
+    id("io.github.gradle-nexus.publish-plugin") version "1.3.0"
+    id("maven-publish")
+    id("signing")
 }
 
 group = "dev.kdrag0n"
@@ -25,26 +25,30 @@ kotlin {
     explicitApi()
 
     jvm {
-        compilations.all {
-            kotlinOptions.jvmTarget = "1.8"
-        }
-        testRuns["test"].executionTask.configure {
-            useJUnitPlatform()
+        jvmToolchain(8)
+        withJava()
+        testRuns.named("test") {
+            executionTask.configure {
+                useJUnitPlatform()
+            }
         }
     }
     js {
         nodejs()
     }
+
     val hostOs = System.getProperty("os.name")
+    val isArm64 = System.getProperty("os.arch") == "aarch64"
     val isMingwX64 = hostOs.startsWith("Windows")
     val nativeTarget = when {
-        hostOs == "Mac OS X" -> macosX64("native")
-        hostOs == "Linux" -> linuxX64("native")
+        hostOs == "Mac OS X" && isArm64 -> macosArm64("native")
+        hostOs == "Mac OS X" && !isArm64 -> macosX64("native")
+        hostOs == "Linux" && isArm64 -> linuxArm64("native")
+        hostOs == "Linux" && !isArm64 -> linuxX64("native")
         isMingwX64 -> mingwX64("native")
         else -> throw GradleException("Host OS is not supported in Kotlin/Native.")
     }
 
-    
     sourceSets {
         val commonMain by getting
         val commonTest by getting {
@@ -67,22 +71,17 @@ jacoco {
 
 val jacocoTestReport by tasks.creating(JacocoReport::class) {
     val coverageSourceDirs = arrayOf(
-        "src/commonMain/kotlin",
-        "src/jvmMain/kotlin"
+        "src/commonMain/kotlin", "src/jvmMain/kotlin"
     )
 
-    val classFiles = File("$buildDir/classes/kotlin/jvm/main")
-        .walkBottomUp()
-        .toSet()
+    val classFiles = layout.buildDirectory.dir("classes/kotlin/jvm/main")
 
     classDirectories.setFrom(classFiles)
     sourceDirectories.setFrom(files(coverageSourceDirs))
 
-    executionData.setFrom(files("$buildDir/jacoco/jvmTest.exec"))
+    executionData.setFrom(layout.buildDirectory.files("jacoco/jvmTest.exec"))
 
-    reports {
-        html.isEnabled = true
-    }
+    reports {}
 
     dependsOn("jvmTest")
 }
